@@ -1,0 +1,15 @@
+hydra:
+  run:
+    dir: ./ns-3.35/scratch/wifi_exp/
+  output_subdir: null  # Disables the creation of subdirectories within the output directory
+
+  job_logging:
+    root:
+      handlers: null  # This will disable logging to files
+
+min: 1000
+max: 2500
+input_filepath: "./node_coordinates.txt"
+output_filepath: "./client_datarates.txt"  # The output file name
+
+

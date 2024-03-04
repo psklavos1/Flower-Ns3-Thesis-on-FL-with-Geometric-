@@ -1,0 +1,13 @@
+hydra:
+  run:
+    dir: ./ns-3.35/scratch/wifi_exp/
+  output_subdir: null  # Disables the creation of subdirectories within the output directory
+
+  job_logging:
+    root:
+      handlers: null  # This will disable logging to files
+
+min: 10
+max: 20
+output_path: "./node_coordinates.txt"
+num_nodes: 20

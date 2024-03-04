@@ -1,0 +1,31 @@
+ns3:
+  sleep: 4
+  tcp_ip: "127.0.0.1"
+  port: 8080
+  path: "../../ns-3.35/"
+  program: "wifi_exp"
+  visualize: False
+  clients: 
+    total: ${num_clients}
+    for_fit: 3
+    for_eval: 2
+  network_type: "wifi" 
+  network:
+    wifi:
+      tx_gain: 20
+      max_packet_size: 1024
+    ethernet:
+      max_packet_size: 1024
+  model_type: ${dataset}
+  model:
+    mnist:
+      size: 1400.00
+    fashion_mnist:
+      size: 2000.00
+    cifar10:
+      size: 5000.00
+    cifar100:
+      size: 70000.00
+  data_rate: "80Mbps"
+  device_type: "400"
+  server: "sync"

@@ -1,0 +1,23 @@
+defaults:
+  - common
+  - network
+
+flower_server_cfg:
+  flower_server_address: ${server_address}
+  metric_server_address: ${metric_server_address}
+  num_rounds: 3
+
+  fit_cfg: 
+    epochs: 3
+    verbose: 2
+    batch_size: 32
+
+  eval_cfg: 
+    verbose: 1
+    batch_size: 64
+
+metric_server_cfg:
+  threshold: 25
+  thres_discount_factor: 0.8
+  thread_max_workers: 10
+  metric_server_address: ${metric_server_address}

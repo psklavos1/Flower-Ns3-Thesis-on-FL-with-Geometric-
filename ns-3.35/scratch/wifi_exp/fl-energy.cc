@@ -81,7 +81,7 @@ FLEnergy::SetLearningModel (std::string name)
 
   if (m_learningModel.compare ("MNIST") == 0)
     {
-    //   NS_LOG_UNCOND ("MNIST Energy Setup");
+      //   NS_LOG_UNCOND ("MNIST Energy Setup");
 
       if (m_deviceType == "4")
         {
@@ -100,11 +100,11 @@ FLEnergy::SetLearningModel (std::string name)
           m_tp = 3.8896;
         }
       m_freq = 4000;
-    //   m_MAC = 229300000;
+      //   m_MAC = 229300000;
     }
   else if (m_learningModel.compare ("FashionMNIST") == 0)
     {
-    //   NS_LOG_UNCOND ("FashionMNIST Energy Setup");
+      //   NS_LOG_UNCOND ("FashionMNIST Energy Setup");
       if (m_deviceType == "4")
         {
           m_A = 1.08 * 0.001; //constants for comp time
@@ -126,7 +126,7 @@ FLEnergy::SetLearningModel (std::string name)
     }
   else if (m_learningModel.compare ("CIFAR-10") == 0)
     {
-    //   NS_LOG_UNCOND ("CIFAR-10 Energy Setup");
+      //   NS_LOG_UNCOND ("CIFAR-10 Energy Setup");
 
       if (m_deviceType == "4")
         {
@@ -201,7 +201,7 @@ FLEnergy::CalcComputationTime ()
   long double n = m_A * (m_MAC * (100 + (6 * m_epochs))) * 600;
   long double d = m_freq * 1000000;
   double time = (n / d) + m_B;
-  NS_LOG_UNCOND ("Computational Time Calculation " << time);
+  // NS_LOG_UNCOND ("Computational Time Calculation " << time);
 
   return time;
 }

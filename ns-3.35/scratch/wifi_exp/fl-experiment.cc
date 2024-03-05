@@ -32,7 +32,7 @@
 #include "ns3/reliability-module.h"
 #include "ns3/yans-error-rate-model.h"
 #include "ns3/olsr-helper.h"
-// #include "ns3/aodv-module.h"
+#include "ns3/aodv-module.h"
 
 #include <algorithm> // For std::shuffle
 #include <random> // For std::default_random_engine
@@ -242,14 +242,6 @@ Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>
   return devices;
 }
 
-const char *wifi_strings[] = {
-    "750kbps", "1000kbps", "1250kbps", "1500kbps", "1750kbps", "2000kbps",
-};
-
-const char *ethernet_strings[] = {
-    "80kbps", "160kbps", "320kbps", "640kbps", "1024kbps", "2048kbps",
-};
-
 std::map<int, FlwrProvider::Message>
 Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
                          ns3::Time &timeOffset)
@@ -286,8 +278,15 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
 
   InternetStackHelper internet;
   // OlsrHelper olsr;
-  // internet.SetRoutingHelper (olsr); // Use olsr routing
+  // Ipv4StaticRoutingHelper staticRouting;
 
+  // Ipv4ListRoutingHelper list;
+  // list.Add (staticRouting, 0);
+  // list.Add (olsr, 10);
+
+  // internet.SetRoutingHelper (list);
+  // AodvHelper aodv;
+  // internet.SetRoutingHelper(aodv); // Set AODV as the routing protocol
   internet.Install (c);
   Ipv4AddressHelper ipv4;
   ipv4.SetBase ("10.1.1.0", "255.255.255.0");
@@ -348,6 +347,7 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
   NS_LOG_UNCOND ("================= Starting Ns3 Round Simulation ===================");
 
   Simulator::Run ();
+  NS_LOG_UNCOND ("Return From sim");
 
   TimeValue endTime;
   sinkApps.Get (0)->GetObject<ns3::Server> ()->GetAttribute ("TimeOffset", endTime);
@@ -358,36 +358,7 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
   // First are the the stats about the server receiving the model after training
   if (m_bAsync == false)
     {
-      auto s1 = sinkApps.Get (0)->GetObject<ns3::Server> ();
-
-      auto sk = s1->GetAcceptedSockets ();
       std::map<Ipv4Address, FlwrProvider::Message> stats;
-      std::map<Ipv4Address, double> uplinkRound;
-      for (auto itr = sk.begin (); itr != sk.end (); itr++)
-        {
-          auto beginUplink = itr->second->m_timeBeginReceivingModelFromClient;
-          auto endUplink = itr->second->m_timeEndReceivingModelFromClient;
-          auto clientAddress = InetSocketAddress::ConvertFrom (itr->second->m_address).GetIpv4 ();
-
-          NS_LOG_UNCOND ("[SERVER]  "
-                         << clientAddress << " -> 10.1.1.1" << std::endl
-                         << "  Sent=     " << itr->second->m_bytesSent << " bytes" << std::endl
-                         << "  Recv=     " << itr->second->m_bytesReceived << " bytes" << std::endl
-                         << "  Begin uplink=" << beginUplink.As (Time::S) << std::endl
-                         << "  End uplink=" << endUplink.As (Time::S) << std::endl
-                         << "  Difference=" << (endUplink - beginUplink).As (Time::S));
-
-          // Tweaked Implementation so that the computational time being Extracted from flower instead of the simulator
-          // stats[clientAddress].roundTime = endUplink.GetDouble ();
-          // Initially the roundTime was calculated starting from the moment the server started sending the model
-          // to the client to the point where the moment the client sent the whole model back
-          double tu = endUplink.GetDouble () - beginUplink.GetDouble ();
-          stats[clientAddress].roundTime = tu;
-
-          stats[clientAddress].throughput =
-              itr->second->m_bytesReceived * 8.0 / 1000.0 /
-              ((endUplink.GetDouble () - beginUplink.GetDouble ()) / 1000000000.0);
-        }
 
       // The below code is for the server sending the model to the clients before the fit has started.
       for (int j = 1; j <= numClients; j++)
@@ -414,13 +385,44 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
                              << "  Recv=" << rec.Get () << " bytes" << std::endl
                              << "  Begin downlink=" << beginDownLink.Get ().As (Time::S)
                              << std::endl
-                             << "  End downlink=" << endDownLink.Get ().As (Time::S));
-              // Updated for tc being calculated on flower and now taking into account only tu and td
-              // stats[clientAddress].roundTime =
-              //     (stats[clientAddress].roundTime - beginDownLink.Get ().GetDouble ()) / 1000000000.0;
-              double td = endDownLink.Get ().GetDouble () - beginDownLink.Get ().GetDouble ();
-              stats[clientAddress].roundTime = (stats[clientAddress].roundTime + td) / 1000000000.0;
+                             << "  End downlink=" << endDownLink.Get ().As (Time::S) << std::endl
+                             << "  Downlink duration="
+                             << (endDownLink.Get () - beginDownLink.Get ()).As (Time::S));
+
+              // temp value to update below. This is the start of the round for the client i
+              stats[clientAddress].roundTime = beginDownLink.Get ().GetDouble ();
+
+              // double td = endDownLink.Get ().GetDouble () - beginDownLink.Get ().GetDouble ();
+              // stats[clientAddress].roundTime = (stats[clientAddress].roundTime + td) / 1000000000.0;
             }
+        }
+
+      auto s1 = sinkApps.Get (0)->GetObject<ns3::Server> ();
+      auto sk = s1->GetAcceptedSockets ();
+      std::map<Ipv4Address, double> uplinkRound;
+      for (auto itr = sk.begin (); itr != sk.end (); itr++)
+        {
+          auto beginUplink = itr->second->m_timeBeginReceivingModelFromClient;
+          auto endUplink = itr->second->m_timeEndReceivingModelFromClient;
+          auto clientAddress = InetSocketAddress::ConvertFrom (itr->second->m_address).GetIpv4 ();
+
+          NS_LOG_UNCOND ("[SERVER]  "
+                         << clientAddress << " -> 10.1.1.1" << std::endl
+                         << "  Sent=     " << itr->second->m_bytesSent << " bytes" << std::endl
+                         << "  Recv=     " << itr->second->m_bytesReceived << " bytes" << std::endl
+                         << "  Begin uplink=" << beginUplink.As (Time::S) << std::endl
+                         << "  End uplink=" << endUplink.As (Time::S) << std::endl
+                         << "  Uplink duration=" << (endUplink - beginUplink).As (Time::S));
+
+          // Tweaked Implementation so that the computational time being Extracted from flower instead of the simulator
+          // stats[clientAddress].roundTime = endUplink.GetDouble ();
+          // Initially the roundTime was calculated starting from the moment the server started sending the model
+          // to the client to the point where the moment the client sent the whole model back
+          stats[clientAddress].roundTime = (endUplink.GetDouble() - stats[clientAddress].roundTime)/1000000000.0;
+
+          stats[clientAddress].throughput =
+              itr->second->m_bytesReceived * 8.0 / 1000.0 /
+              ((endUplink.GetDouble () - beginUplink.GetDouble ()) / 1000000000.0);
         }
 
       for (auto itr : stats)

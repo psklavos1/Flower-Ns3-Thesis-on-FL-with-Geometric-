@@ -173,6 +173,7 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
   Address localAddress;
   while ((packet = socket->RecvFrom (from)))
     {
+
       if (packet->GetSize () == 0)
         { //EOF
           break;
@@ -182,6 +183,7 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
       if (itr == m_socketList.end ())
         {
+          NS_LOG_UNCOND ("In Return");
           return;
         }
 
@@ -195,6 +197,8 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
       if (itr->second->m_bytesModelToReceive == 0)
         {
+          NS_LOG_UNCOND ("Received whole model from client");
+
           itr->second->m_timeEndReceivingModelFromClient = Simulator::Now ();
 
           auto endUplink = itr->second->m_timeEndReceivingModelFromClient.GetSeconds () +
@@ -211,11 +215,11 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
           energy.SetDeviceType (m_deviceType);
           energy.SetLearningModel (m_modelType);
-          energy.SetEpochs (.3);
+          energy.SetEpochs (1);
           double compEnergy = energy.CalcComputationalEnergy (beginUplink - endDownlink);
           double tranEnergy = energy.CalcTransmissionEnergy (endUplink - beginUplink);
           // Uncomment to see energy consumption
-          // NS_LOG_UNCOND ("Energy: " << energy.GetA ());
+          NS_LOG_UNCOND ("Energy: " << energy.GetA ());
           fprintf (m_fp, "%i,%u,%f,%f,%f,%f,%f,%f\n", m_round,
                    m_clientSessionManager->ResolveToIdFromServer (socket), beginUplink, endUplink,
                    beginDownlink, endDownlink, compEnergy, tranEnergy);
@@ -273,8 +277,11 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
             }
         }
 
+      // NS_LOG_UNCOND ("Get_Sock_Namae in loop");
+
       socket->GetSockName (localAddress);
     }
+  // NS_LOG_UNCOND ("Out of loop");
 }
 
 void
@@ -382,6 +389,7 @@ Server::SendModel (Ptr<Socket> socket)
       Time nextTime (Seconds ((bytes * 8) / static_cast<double> (m_dataRate.GetBitRate ())));
 
       m_sendEvent = Simulator::Schedule (nextTime, &Server::SendModel, this, socket);
+      // NS_LOG_UNCOND ("Schedule Server Send");
     }
   else
     {

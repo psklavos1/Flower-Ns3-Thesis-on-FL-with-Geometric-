@@ -99,8 +99,6 @@ void
 ClientApplication::ErrorClose (Ptr<Socket> socket)
 {
   NS_LOG_UNCOND ("Error Close ...");
-  NS_LOG_UNCOND ("Error Close ...");
-
 }
 
 void
@@ -138,16 +136,18 @@ ClientApplication::Send (Ptr<Socket> socket)
 
       if (m_bytesModelToSend)
         {
-          
+
           Time nextTime (
               Seconds ((bytesSent * 8) /
                        static_cast<double> (m_dataRate.GetBitRate ()))); // Time till next packet
 
           m_sendEvent = Simulator::Schedule (nextTime, &ClientApplication::Send, this, socket);
+          // NS_LOG_UNCOND ("Schedule Send by Clent");
+
         }
       else
         {
-          // NS_LOG_UNCOND ("Whole model Sent");
+          NS_LOG_UNCOND ("Whole model Sent");
           m_bytesModelToReceive = m_bytesModel;
         }
     }
@@ -167,7 +167,7 @@ ClientApplication::ConnectionSucceeded (Ptr<Socket> socket)
   m_bytesModelToReceive = m_bytesModel;
   m_bytesModelToSend = 0;
 
-  NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () + 1) << " " << m_bytesModelToReceive);
+  NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " " << m_bytesModelToReceive);
 }
 
 void
@@ -196,7 +196,7 @@ ClientApplication::HandleRead (Ptr<Socket> socket)
         {
           m_timeEndReceivingModelFromServer = Simulator::Now ();
 
-          NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () + 1) << " "
+          NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " "
                                    << "recv full model");
 
           //
@@ -207,6 +207,7 @@ ClientApplication::HandleRead (Ptr<Socket> socket)
           energy.SetEpochs (1);
           Simulator::Schedule (Seconds (energy.CalcComputationTime ()),
                                &ClientApplication::StartWriting, this);
+          // NS_LOG_UNCOND ("Schedule Start Writing Client");
         }
     }
 }
@@ -224,7 +225,7 @@ ClientApplication::StartWriting ()
 void
 ClientApplication::ConnectionFailed (Ptr<Socket> socket)
 {
-  NS_LOG_UNCOND ("Not Connected ..." << socket->GetNode ()->GetId ());
+  NS_LOG_UNCOND ("Not Connected ..." << socket->GetNode ()->GetId () - 1);
 }
 
 ClientApplication::~ClientApplication ()

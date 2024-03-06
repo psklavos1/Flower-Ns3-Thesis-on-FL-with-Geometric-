@@ -1,4 +1,0 @@
-[2024-02-22 21:41:28,078][tensorflow][INFO] - Assets written to: /tmp/tmprs62mzdh/assets
-[2024-02-22 21:41:28,090][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2024-02-22 21:41:28,092][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-02-22 21:41:28,093][flwr][DEBUG] - ChannelConnectivity.READY

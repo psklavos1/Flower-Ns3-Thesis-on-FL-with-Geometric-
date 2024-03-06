@@ -1,4 +1,0 @@
-[2024-01-17 16:02:07,422][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2024-01-17 16:02:07,424][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-01-17 16:02:07,427][flwr][DEBUG] - ChannelConnectivity.CONNECTING
-[2024-01-17 16:02:07,427][flwr][DEBUG] - ChannelConnectivity.READY

@@ -1,6 +1,0 @@
-[2024-01-24 01:48:40,450][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
-[2024-01-24 01:48:40,490][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
-[2024-01-24 01:48:40,676][tensorflow][INFO] - Assets written to: /tmp/tmp0l9wrt99/assets
-[2024-01-24 01:48:40,680][tensorflow][INFO] - Assets written to: /tmp/tmpys5vm59z/assets
-[2024-01-24 01:51:16,007][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
-[2024-01-24 01:51:16,140][tensorflow][INFO] - Assets written to: my_model/assets

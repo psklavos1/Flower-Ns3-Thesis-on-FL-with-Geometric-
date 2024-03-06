@@ -1,6 +1,0 @@
-[2024-02-07 19:20:56,716][tensorflow][INFO] - Assets written to: /tmp/tmp0sdb1kn5/assets
-[2024-02-07 19:20:56,727][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2024-02-07 19:20:56,729][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-02-07 19:20:56,732][flwr][DEBUG] - ChannelConnectivity.READY
-[2024-02-07 19:20:57,735][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-02-07 19:21:00,367][flwr][DEBUG] - gRPC channel closed

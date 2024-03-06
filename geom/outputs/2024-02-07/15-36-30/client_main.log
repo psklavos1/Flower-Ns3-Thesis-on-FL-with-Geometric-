@@ -1,5 +1,0 @@
-[2024-02-07 15:36:32,775][tensorflow][INFO] - Assets written to: /tmp/tmpc651s4js/assets
-[2024-02-07 15:36:32,790][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2024-02-07 15:36:32,794][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-02-07 15:36:32,795][flwr][DEBUG] - ChannelConnectivity.CONNECTING
-[2024-02-07 15:36:32,796][flwr][DEBUG] - ChannelConnectivity.READY

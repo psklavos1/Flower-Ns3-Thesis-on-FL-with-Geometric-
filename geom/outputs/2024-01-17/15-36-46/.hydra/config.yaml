@@ -1,4 +1,0 @@
-client_id: 0
-num_clients: 2
-server_address: 127.0.0.1:8080
-metric_server_address: 127.0.0.1:8081

@@ -1,4 +1,0 @@
-server_address: 0.0.0.0:8090
-metric_server_address: 127.0.0.1:8091
-dataset: mnist
-num_clients: 4

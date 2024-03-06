@@ -1,9 +1,0 @@
-[2024-03-03 15:12:11,031][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2024-03-03 15:12:11,035][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-03-03 15:12:11,037][flwr][DEBUG] - ChannelConnectivity.CONNECTING
-[2024-03-03 15:12:11,039][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
-[2024-03-03 15:12:11,241][flwr][DEBUG] - gRPC channel closed
-[2024-03-03 15:12:11,949][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
-[2024-03-03 15:12:11,953][flwr][DEBUG] - ChannelConnectivity.IDLE
-[2024-03-03 15:12:11,958][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
-[2024-03-03 15:12:12,160][flwr][DEBUG] - gRPC channel closed

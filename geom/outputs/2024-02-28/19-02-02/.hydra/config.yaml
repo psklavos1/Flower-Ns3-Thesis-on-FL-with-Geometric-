@@ -1,7 +1,0 @@
-partition_id: 0
-num_clients: 2
-server_address: 127.0.0.1:8090
-metric_server_address: 127.0.0.1:8091
-dataset: mnist
-non_iid: true
-bias_template: 0

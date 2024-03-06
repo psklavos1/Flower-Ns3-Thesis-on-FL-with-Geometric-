@@ -1,0 +1,25 @@
+[2024-02-22 16:43:51,346][tensorflow][WARNING] - Skipping full serialization of Keras layer <client.model.CustomModel object at 0x7f8174b454e0>, because it is not built.
+[2024-02-22 16:43:51,355][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.convolutional.conv2d.Conv2D object at 0x7f81749f2c80>, because it is not built.
+[2024-02-22 16:43:51,359][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.pooling.max_pooling2d.MaxPooling2D object at 0x7f81749f00d0>, because it is not built.
+[2024-02-22 16:43:51,362][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.reshaping.flatten.Flatten object at 0x7f81749f19c0>, because it is not built.
+[2024-02-22 16:43:51,364][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.core.dense.Dense object at 0x7f81749ffd90>, because it is not built.
+[2024-02-22 16:43:51,365][tensorflow][WARNING] - Skipping full serialization of Keras layer <client.model.CustomModel object at 0x7fc53f4e1480>, because it is not built.
+[2024-02-22 16:43:51,366][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.core.dense.Dense object at 0x7f81749fd690>, because it is not built.
+[2024-02-22 16:43:51,386][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.convolutional.conv2d.Conv2D object at 0x7fc53f38ec50>, because it is not built.
+[2024-02-22 16:43:51,392][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.pooling.max_pooling2d.MaxPooling2D object at 0x7fc53f38c0a0>, because it is not built.
+[2024-02-22 16:43:51,396][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.reshaping.flatten.Flatten object at 0x7fc53f38d990>, because it is not built.
+[2024-02-22 16:43:51,399][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.core.dense.Dense object at 0x7fc53f39bd60>, because it is not built.
+[2024-02-22 16:43:51,400][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.src.layers.core.dense.Dense object at 0x7fc53f399660>, because it is not built.
+[2024-02-22 16:43:51,472][tensorflow][INFO] - Assets written to: /tmp/tmpwqz7c583/assets
+[2024-02-22 16:43:51,490][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-22 16:43:51,493][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-22 16:43:51,494][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-22 16:43:51,494][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-22 16:43:51,514][tensorflow][INFO] - Assets written to: /tmp/tmpdy_7tvgv/assets
+[2024-02-22 16:43:51,531][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-22 16:43:51,535][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-22 16:43:51,537][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-22 16:44:23,673][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-22 16:44:23,673][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-22 16:44:42,888][flwr][DEBUG] - gRPC channel closed
+[2024-02-22 16:44:42,898][flwr][DEBUG] - gRPC channel closed

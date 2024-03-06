@@ -1,0 +1,4 @@
+[2024-02-09 16:17:38,617][tensorflow][INFO] - Assets written to: /tmp/tmpptiv20yi/assets
+[2024-02-09 16:17:38,627][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-09 16:17:38,629][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 16:17:38,632][flwr][DEBUG] - ChannelConnectivity.READY

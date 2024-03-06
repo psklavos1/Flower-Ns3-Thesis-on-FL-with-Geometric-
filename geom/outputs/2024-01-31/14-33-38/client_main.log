@@ -1,0 +1,16 @@
+[2024-01-31 14:33:45,783][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-31 14:33:45,803][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-31 14:33:46,036][tensorflow][INFO] - Assets written to: /tmp/tmp2narthiz/assets
+[2024-01-31 14:33:46,040][tensorflow][INFO] - Assets written to: /tmp/tmp82og3zzy/assets
+[2024-01-31 14:33:46,073][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-31 14:33:46,081][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-31 14:33:46,090][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-31 14:33:46,092][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-31 14:33:46,094][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-31 14:33:46,094][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-31 14:33:46,096][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-31 14:33:46,096][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-31 14:34:16,523][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-31 14:34:16,523][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-31 14:34:16,726][flwr][DEBUG] - gRPC channel closed
+[2024-01-31 14:34:17,537][flwr][DEBUG] - gRPC channel closed

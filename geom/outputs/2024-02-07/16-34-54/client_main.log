@@ -1,0 +1,18 @@
+[2024-02-07 16:34:56,368][tensorflow][INFO] - Assets written to: /tmp/tmpt8kpxg84/assets
+[2024-02-07 16:34:56,380][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-07 16:34:56,383][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-07 16:34:56,386][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-07 16:34:56,421][tensorflow][INFO] - Assets written to: /tmp/tmp4x4lrv4e/assets
+[2024-02-07 16:34:56,435][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-07 16:34:56,437][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-07 16:34:56,438][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-07 16:34:56,601][tensorflow][INFO] - Assets written to: /tmp/tmpx3bjrm77/assets
+[2024-02-07 16:34:56,613][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-07 16:34:56,614][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-07 16:34:56,616][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-07 16:34:57,957][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-07 16:34:57,957][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-07 16:34:57,957][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-07 16:35:26,079][flwr][DEBUG] - gRPC channel closed
+[2024-02-07 16:35:26,088][flwr][DEBUG] - gRPC channel closed
+[2024-02-07 16:35:26,092][flwr][DEBUG] - gRPC channel closed

@@ -1,0 +1,25 @@
+[2024-03-05 23:07:13,376][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=3, round_timeout=None)
+[2024-03-05 23:07:13,380][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-03-05 23:07:13,380][flwr][INFO] - Initializing global parameters
+[2024-03-05 23:07:13,380][flwr][INFO] - Requesting initial parameters from one random client
+[2024-03-05 23:07:16,603][flwr][INFO] - Received initial parameters from one random client
+[2024-03-05 23:07:16,604][flwr][INFO] - Evaluating initial parameters
+[2024-03-05 23:07:16,604][flwr][INFO] - FL starting
+[2024-03-05 23:07:42,952][flwr][DEBUG] - fit_round 1: strategy sampled 2 clients (out of 4)
+[2024-03-05 23:07:58,898][flwr][DEBUG] - fit_round 1 received 2 results and 0 failures
+[2024-03-05 23:07:58,907][flwr][DEBUG] - evaluate_round 1: strategy sampled 2 clients (out of 4)
+[2024-03-05 23:08:03,394][flwr][DEBUG] - evaluate_round 1 received 2 results and 0 failures
+[2024-03-05 23:08:31,364][flwr][DEBUG] - fit_round 2: strategy sampled 2 clients (out of 4)
+[2024-03-05 23:08:49,012][flwr][DEBUG] - fit_round 2 received 2 results and 0 failures
+[2024-03-05 23:08:49,019][flwr][DEBUG] - evaluate_round 2: strategy sampled 2 clients (out of 4)
+[2024-03-05 23:08:52,447][flwr][DEBUG] - evaluate_round 2 received 2 results and 0 failures
+[2024-03-05 23:09:17,583][flwr][DEBUG] - fit_round 3: strategy sampled 2 clients (out of 4)
+[2024-03-05 23:09:38,512][flwr][DEBUG] - fit_round 3 received 2 results and 0 failures
+[2024-03-05 23:09:38,517][flwr][DEBUG] - evaluate_round 3: strategy sampled 2 clients (out of 4)
+[2024-03-05 23:09:42,252][flwr][DEBUG] - evaluate_round 3 received 2 results and 0 failures
+[2024-03-05 23:09:42,253][flwr][INFO] - FL finished in 145.64895190699826
+[2024-03-05 23:09:42,254][flwr][INFO] - app_fit: losses_distributed [(1, 1.239301323890686), (2, 0.5402083396911621), (3, 0.43840453028678894)]
+[2024-03-05 23:09:42,254][flwr][INFO] - app_fit: metrics_distributed_fit {'average_norm': [(1, 24.15216636657715), (2, 17.069218635559082), (3, 14.393359661102295)], 'round_time': [(1, 23.562631284), (2, 26.800346499), (3, 26.8263118)], 'average_throughput': [(1, 1963.785116468314), (2, 1505.7166922521712), (3, 1505.7347272173045)], 'dropouts': [(1, 0), (2, 0), (3, 0)]}
+[2024-03-05 23:09:42,254][flwr][INFO] - app_fit: metrics_distributed {'accuracy': [(1, 0.6980000138282776), (2, 0.8367999792098999), (3, 0.8675000071525574)]}
+[2024-03-05 23:09:42,254][flwr][INFO] - app_fit: losses_centralized []
+[2024-03-05 23:09:42,255][flwr][INFO] - app_fit: metrics_centralized {}

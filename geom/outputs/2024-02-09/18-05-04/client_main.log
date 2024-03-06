@@ -1,0 +1,27 @@
+[2024-02-09 18:05:07,760][tensorflow][INFO] - Assets written to: /tmp/tmpw9wjy6i2/assets
+[2024-02-09 18:05:07,760][tensorflow][INFO] - Assets written to: /tmp/tmpoy4l6zzl/assets
+[2024-02-09 18:05:07,760][tensorflow][INFO] - Assets written to: /tmp/tmppu2bl7wq/assets
+[2024-02-09 18:05:07,781][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-09 18:05:07,780][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-09 18:05:07,780][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-09 18:05:07,795][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:05:07,795][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:05:07,796][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:05:07,800][tensorflow][INFO] - Assets written to: /tmp/tmpcjg976s6/assets
+[2024-02-09 18:05:07,808][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-09 18:05:07,807][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-09 18:05:07,807][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-09 18:05:07,809][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-09 18:05:07,809][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-09 18:05:07,810][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-09 18:05:07,825][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-09 18:05:07,828][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:05:07,830][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-09 18:05:07,833][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-09 18:06:07,566][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:06:07,566][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:06:07,567][flwr][DEBUG] - gRPC channel closed
+[2024-02-09 18:06:07,567][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-09 18:06:07,768][flwr][DEBUG] - gRPC channel closed
+[2024-02-09 18:06:07,769][flwr][DEBUG] - gRPC channel closed
+[2024-02-09 18:06:07,769][flwr][DEBUG] - gRPC channel closed

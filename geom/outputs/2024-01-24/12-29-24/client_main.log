@@ -1,0 +1,24 @@
+[2024-01-24 12:29:28,882][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-24 12:29:28,897][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-24 12:29:28,989][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-24 12:29:29,174][tensorflow][INFO] - Assets written to: /tmp/tmpklkj33dh/assets
+[2024-01-24 12:29:29,184][tensorflow][INFO] - Assets written to: /tmp/tmpjz66tt4j/assets
+[2024-01-24 12:29:29,214][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-24 12:29:29,216][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-24 12:29:29,222][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-24 12:29:29,224][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-24 12:29:29,234][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-24 12:29:29,239][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-24 12:29:29,241][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-24 12:29:29,243][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-24 12:29:29,274][tensorflow][INFO] - Assets written to: /tmp/tmpyhkot_l4/assets
+[2024-01-24 12:29:29,325][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-24 12:29:29,329][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-24 12:29:29,350][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-24 12:29:29,351][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-24 12:32:31,059][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-24 12:32:31,059][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-24 12:32:31,060][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-24 12:32:31,263][flwr][DEBUG] - gRPC channel closed
+[2024-01-24 12:32:31,263][flwr][DEBUG] - gRPC channel closed
+[2024-01-24 12:32:31,263][flwr][DEBUG] - gRPC channel closed

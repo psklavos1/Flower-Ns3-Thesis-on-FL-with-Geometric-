@@ -1,0 +1,24 @@
+[2024-01-29 11:36:30,003][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-29 11:36:30,356][tensorflow][INFO] - Assets written to: /tmp/tmpjnqifl9a/assets
+[2024-01-29 11:36:30,413][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-29 11:36:30,422][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-29 11:36:30,423][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-29 11:36:30,439][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-29 11:36:30,445][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-29 11:36:30,512][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-29 11:36:30,680][tensorflow][INFO] - Assets written to: /tmp/tmpitkridr7/assets
+[2024-01-29 11:36:30,687][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.
+[2024-01-29 11:36:30,728][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-29 11:36:30,731][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-29 11:36:30,735][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-29 11:36:30,739][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-29 11:36:30,775][tensorflow][INFO] - Assets written to: /tmp/tmpw3plea49/assets
+[2024-01-29 11:36:30,804][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-29 11:36:30,807][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-29 11:36:30,810][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-29 11:36:30,813][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-01-29 11:36:30,939][tensorflow][INFO] - Assets written to: /tmp/tmpqd_24e81/assets
+[2024-01-29 11:36:30,970][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-01-29 11:36:30,975][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-01-29 11:36:30,977][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-01-29 11:36:30,982][flwr][DEBUG] - ChannelConnectivity.READY

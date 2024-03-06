@@ -1,0 +1,10 @@
+[2024-02-27 16:30:20,662][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-27 16:30:20,665][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-27 16:30:20,668][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-27 16:30:20,670][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-27 16:30:20,837][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-02-27 16:30:20,840][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-27 16:30:20,842][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-02-27 16:30:20,844][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-02-27 16:30:22,516][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-02-27 16:30:22,517][flwr][DEBUG] - ChannelConnectivity.IDLE

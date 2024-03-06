@@ -18,7 +18,7 @@ class Ns3_Round:
         self.aggregate_time = 0.0
 
     def round_exec(self, t_start) -> float:
-        
+
         # {0: {'roundTime', 'throughput', 'dropout'}, ...}
         ret_dict = {}
         self.start_time = t_start
@@ -29,13 +29,13 @@ class Ns3_Round:
         for client in self.clients:
             # If dropped. FAILURE
             if net_sim_data[client]["roundTime"] < 0:
-                ret_dict[client]['dropout'] = 1
+                ret_dict[client]["dropout"] = 1
                 self.dropouts.append(1)
                 print("Dropped " + str(client))
                 print("RoundTime" + str(net_sim_data[client]["roundTime"]))
                 continue
             # SUCCESS
-            ret_dict[client]['dropout'] = 0
+            ret_dict[client]["dropout"] = 0
             self.dropouts.append(0)
             self.roundTimes.append(net_sim_data[client]["roundTime"])
             self.throughputs.append(net_sim_data[client]["throughput"])
@@ -47,15 +47,11 @@ class Ns3_Round:
             )
 
         print("================ Ns3 Stats ================")
-        # print("Dropouts: " + str(self.dropouts))
-        # print("RoundTimes")
-        # print(self.roundTimes)
-        # print("Throughputs")
-        # print(self.throughputs)
         self.total_round_time = max(self.roundTimes)
         print(f"Total Round Time: {self.total_round_time}")
         print(f"Average throughput: {self.avg_throughput}")
         print(f"Dropouts: {self.dropouts}")
+        print("===========================================\n")
 
         return ret_dict
 

@@ -1,0 +1,18 @@
+[2024-03-03 12:44:44,785][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=3, round_timeout=None)
+[2024-03-03 12:44:44,788][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-03-03 12:44:44,789][flwr][INFO] - Initializing global parameters
+[2024-03-03 12:44:44,789][flwr][INFO] - Requesting initial parameters from one random client
+[2024-03-03 12:44:47,302][flwr][INFO] - Received initial parameters from one random client
+[2024-03-03 12:44:47,303][flwr][INFO] - Evaluating initial parameters
+[2024-03-03 12:44:47,303][flwr][INFO] - FL starting
+[2024-03-03 12:45:15,849][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 113, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 165, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 81, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed

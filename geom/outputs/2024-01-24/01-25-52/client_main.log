@@ -1,0 +1,9 @@
+[2024-01-24 01:25:54,402][tensorflow][WARNING] - Skipping full serialization of Keras layer <client.model.CustomModel object at 0x7fb4e51df040>, because it is not built.
+[2024-01-24 01:25:54,413][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.convolutional.conv2d.Conv2D object at 0x7fb4e51def20>, because it is not built.
+[2024-01-24 01:25:54,418][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.pooling.max_pooling2d.MaxPooling2D object at 0x7fb4e51dee30>, because it is not built.
+[2024-01-24 01:25:54,421][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.convolutional.conv2d.Conv2D object at 0x7fb4e51df850>, because it is not built.
+[2024-01-24 01:25:54,425][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.pooling.max_pooling2d.MaxPooling2D object at 0x7fb4e51de290>, because it is not built.
+[2024-01-24 01:25:54,428][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.reshaping.flatten.Flatten object at 0x7fb4e51dd4e0>, because it is not built.
+[2024-01-24 01:25:54,433][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.core.dense.Dense object at 0x7fb4e51dd0f0>, because it is not built.
+[2024-01-24 01:25:54,436][tensorflow][WARNING] - Skipping full serialization of Keras layer <keras.layers.core.dense.Dense object at 0x7fb4e51dd000>, because it is not built.
+[2024-01-24 01:25:54,456][absl][WARNING] - Found untraced functions such as test_step, train_step, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 4 of 4). These functions will not be directly callable after loading.

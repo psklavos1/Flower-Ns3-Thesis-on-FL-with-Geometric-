@@ -60,6 +60,7 @@ class FedAvgWithGeometric(FedAvg):
 
         # * Given From Ns3
         self.ns3_res = {}
+        self.dropouts = []
 
     def configure_fit(
         self,
@@ -72,8 +73,10 @@ class FedAvgWithGeometric(FedAvg):
         # Ns3 results
         self.ns3_res = self.ns3_simulation(fit_clients, server_round)
         # * If client is a dropout. Dont participate in training
+        self.dropouts.clear()
         for i, (client_proxy, _) in enumerate(fit_clients):
             if self.ns3_res[self.monitor.get_index(client_proxy.cid)]["dropout"] == 1:
+                self.dropouts.append(client_proxy)
                 fit_clients.pop(i)
 
         num_fit_clients = len(fit_clients)
@@ -98,11 +101,32 @@ class FedAvgWithGeometric(FedAvg):
         self.metric_client.reset_round_state(server_round)
         self.monitor.set_fit_clients(0)
         # results[id_client][ClientProxy==0, FitRes== 1],
-        # TODO Append to Results
+        # * Append to Results
         for client, res in results:
             for id, data_dict in self.ns3_res.items():
                 if self.monitor.get_cid(id) == client.cid:
                     res.metrics.update(data_dict)
+
+        empty_metrics = {
+            "done_processing": False,
+            "l2_norm": 0,
+            "roundTime": 0,
+            "throughput": 0,
+            "dropout": 1,
+        }
+        empty_parameters = Parameters(tensors=[], tensor_type="empty parameter")
+        for i in range(len(self.dropouts)):
+            results.append(
+                (
+                    self.dropouts[i],
+                    FitRes(
+                        status=None,
+                        parameters=empty_parameters,
+                        num_examples=0,
+                        metrics=empty_metrics,
+                    ),
+                )
+            )
 
         return super().aggregate_fit(server_round, results, failures)
 
@@ -125,9 +149,9 @@ class FedAvgWithGeometric(FedAvg):
         # ns3 Simulation
         print("===================== NS3 Round Simulation =====================")
         ns3_round = Ns3_Round(self.network, clients, server_round)
-
         # The order here is with increasing index.
         ns3_res = ns3_round.round_exec(self.t_start)
+        print("================================================================")
 
         max_round_time = max(entry["roundTime"] for entry in ns3_res.values())
         self.t_end = self.t_start + max_round_time
@@ -189,7 +213,11 @@ def metric_handlig(data):
     )
 
     # dropouts
-    total_dropouts = sum(res_dict["dropout"] for _, res_dict in data)
+    total_dropouts = sum(item[1]["dropout"] for item in data)
+    print(data)
+    print(total_dropouts)
+    input()
+    # total_dropouts = sum(res_dict["dropout"] for _, res_dict in data)
     return {
         "average_norm": avg_l2_norm,
         "round_time": round_time,

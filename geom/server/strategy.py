@@ -26,9 +26,6 @@ from server.grpc_metric_client import GRPCMetricClient
 from network.network import Network
 from network.ns3_round import Ns3_Round
 
-## TODO LIST.
-# ? TODO 1. FIX Time issues
-
 
 class FedAvgWithGeometric(FedAvg):
     """Custom FedAvg"""
@@ -107,26 +104,16 @@ class FedAvgWithGeometric(FedAvg):
                 if self.monitor.get_cid(id) == client.cid:
                     res.metrics.update(data_dict)
 
-        empty_metrics = {
-            "done_processing": False,
-            "l2_norm": 0,
-            "roundTime": 0,
-            "throughput": 0,
-            "dropout": 1,
-        }
-        empty_parameters = Parameters(tensors=[], tensor_type="empty parameter")
-        for i in range(len(self.dropouts)):
-            results.append(
-                (
-                    self.dropouts[i],
-                    FitRes(
-                        status=None,
-                        parameters=empty_parameters,
-                        num_examples=0,
-                        metrics=empty_metrics,
-                    ),
-                )
-            )
+        # empty_metrics = {
+        #     "done_processing": False,
+        #     "l2_norm": 0,
+        #     "roundTime": 0,
+        #     "throughput": 0,
+        #     "dropout": 1,
+        # }
+        # empty_parameters = Parameters(tensors=[], tensor_type="empty parameter")
+        # for i in range(len(self.dropouts)):
+        #     failures.append((DropoutException))
 
         return super().aggregate_fit(server_round, results, failures)
 
@@ -137,6 +124,8 @@ class FedAvgWithGeometric(FedAvg):
 
     def ns3_simulation(self, fit_clients, server_round):
         num_fit_clients = len(fit_clients)
+        # print(num_fit_clients)
+        # input()
 
         # * clients: is an array of clients that participate in fit
         # * in the format [0, 2, 3] which is the representation of
@@ -153,7 +142,10 @@ class FedAvgWithGeometric(FedAvg):
         ns3_res = ns3_round.round_exec(self.t_start)
         print("================================================================")
 
-        max_round_time = max(entry["roundTime"] for entry in ns3_res.values())
+        max_round_time = max(
+            entry["downlinkTime"] + entry["uplinkTime"] + entry["computationTime"]
+            for entry in ns3_res.values()
+        )
         self.t_end = self.t_start + max_round_time
 
         # TODO Fix Time
@@ -161,6 +153,17 @@ class FedAvgWithGeometric(FedAvg):
         # Preparation for next round
         self.t_start = self.t_end
         return ns3_res
+
+
+class DropoutException(Exception):
+    """Exception raised for client dropouts in federated learning."""
+
+    def __init__(self, message="Client dropped out"):
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f"DropoutException: {self.message}"
 
 
 # Out of Class
@@ -190,39 +193,48 @@ def get_eval_config_fn(config: DictConfig):
 def metric_handlig(data):
     # data: Tuple (int: num_samples, dict: results from aggregate_fit)
     # (1600, {'done_processing': False, 'l2_norm': 25.036333084106445, 'roundTime': 10.78390491, 'throughput': 1179.1668024261412, 'dropout': 0})
+    count_data = len(data)
     # l2_norm
-    l2_norm_sum = sum(
-        res_dict["l2_norm"] for _, res_dict in data if res_dict["dropout"] != 1
+    l2_norm_sum = sum(res_dict["l2_norm"] for _, res_dict in data)
+    avg_l2_norm = float(l2_norm_sum / count_data) if count_data > 0 else float("nan")
+
+    # avg downlink time
+    downlink_time_sum = sum(res_dict["downlinkTime"] for _, res_dict in data)
+    avg_downlink_time = (
+        float(downlink_time_sum / count_data) if count_data > 0 else float("nan")
     )
-    valid_l2_norm_count = sum(1 for _, res_dict in data if res_dict["dropout"] != 1)
-    avg_l2_norm = float(l2_norm_sum / valid_l2_norm_count)
+
+    # avg uplink time
+    uplink_time_sum = sum(res_dict["uplinkTime"] for _, res_dict in data)
+    avg_uplink_time = (
+        float(uplink_time_sum / count_data) if count_data > 0 else float("nan")
+    )
+
+    # avg computation time
+    computation_time_sum = sum(res_dict["computationTime"] for _, res_dict in data)
+    avg_computation_time = (
+        float(computation_time_sum / count_data) if count_data > 0 else float("nan")
+    )
 
     # round time
-    round_time = max(res_dict["roundTime"] for _, res_dict in data)
+    round_time = max(
+        res_dict["downlinkTime"] + res_dict["computationTime"] + res_dict["uplinkTime"]
+        for _, res_dict in data
+    )
 
     # throughput
-    total_throughput = sum(
-        res_dict["throughput"] for _, res_dict in data if res_dict["dropout"] != 1
-    )
-    valid_throughput_count = sum(1 for _, res_dict in data if res_dict["dropout"] != 1)
-
+    total_throughput = sum(res_dict["throughput"] for _, res_dict in data)
     avg_throughput = (
-        total_throughput / valid_throughput_count
-        if valid_throughput_count > 0
-        else float("nan")
+        float(total_throughput / count_data) if count_data > 0 else float("nan")
     )
 
-    # dropouts
-    total_dropouts = sum(item[1]["dropout"] for item in data)
-    print(data)
-    print(total_dropouts)
-    input()
-    # total_dropouts = sum(res_dict["dropout"] for _, res_dict in data)
     return {
         "average_norm": avg_l2_norm,
         "round_time": round_time,
+        "average_downlink_time": avg_downlink_time,
+        "average_computation_time": avg_computation_time,
+        "average_uplink_time": avg_uplink_time,
         "average_throughput": avg_throughput,
-        "dropouts": total_dropouts,
     }
 
 

@@ -1,0 +1,95 @@
+[2024-01-24 02:09:44,481][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=6, round_timeout=None)
+[2024-01-24 02:09:44,483][flwr][INFO] - Flower ECE: gRPC server running (6 rounds), SSL is disabled
+[2024-01-24 02:09:44,484][flwr][INFO] - Initializing global parameters
+[2024-01-24 02:09:44,486][flwr][INFO] - Requesting initial parameters from one random client
+[2024-01-24 02:10:42,888][flwr][INFO] - Received initial parameters from one random client
+[2024-01-24 02:10:42,913][flwr][INFO] - Evaluating initial parameters
+[2024-01-24 02:10:42,915][flwr][INFO] - FL starting
+[2024-01-24 02:11:41,820][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:11:44,106][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:11:46,094][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:11:49,196][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:11:52,428][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:11:54,669][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:11:56,880][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed
+[2024-01-24 02:12:07,934][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 107, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 162, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/flower/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 78, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed

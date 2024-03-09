@@ -143,11 +143,10 @@ ClientApplication::Send (Ptr<Socket> socket)
 
           m_sendEvent = Simulator::Schedule (nextTime, &ClientApplication::Send, this, socket);
           // NS_LOG_UNCOND ("Schedule Send by Clent");
-
         }
       else
         {
-          NS_LOG_UNCOND ("Whole model Sent");
+          NS_LOG_UNCOND ("Whole model Sent from client" << Simulator::Now ().GetSeconds ());
           m_bytesModelToReceive = m_bytesModel;
         }
     }
@@ -195,6 +194,7 @@ ClientApplication::HandleRead (Ptr<Socket> socket)
       if (m_bytesModelToReceive == 0) //All bytes received, start transmitting
         {
           m_timeEndReceivingModelFromServer = Simulator::Now ();
+          NS_LOG_UNCOND ("Received whole model :");
 
           NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " "
                                    << "recv full model");
@@ -217,7 +217,7 @@ ClientApplication::StartWriting ()
 {
 
   m_bytesModelToSend = m_bytesModel;
-  // NS_LOG_UNCOND ("In Strat Writing. Bytes: " << m_bytesModelToSend);
+  NS_LOG_UNCOND ("Start Sending Client: " << Simulator::Now ().GetSeconds ());
 
   Send (m_socket);
 }

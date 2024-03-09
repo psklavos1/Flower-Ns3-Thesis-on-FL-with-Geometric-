@@ -197,7 +197,7 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
       if (itr->second->m_bytesModelToReceive == 0)
         {
-          NS_LOG_UNCOND ("Received whole model from client");
+          // NS_LOG_UNCOND ("Received whole model from client");
 
           itr->second->m_timeEndReceivingModelFromClient = Simulator::Now ();
 
@@ -205,10 +205,10 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
                            m_timeOffset.GetSeconds ();
           auto beginUplink = itr->second->m_timeBeginReceivingModelFromClient.GetSeconds () +
                              m_timeOffset.GetSeconds ();
-          auto beginDownlink = itr->second->m_timeBeginSendingModelFromClient.GetSeconds () +
+          auto beginDownlink = itr->second->m_timeBeginSendingModelToClient.GetSeconds () +
                                m_timeOffset.GetSeconds ();
-          auto endDownlink = itr->second->m_timeEndSendingModelFromClient.GetSeconds () +
-                             m_timeOffset.GetSeconds ();
+          auto endDownlink =
+              itr->second->m_timeEndSendingModelToClient.GetSeconds () + m_timeOffset.GetSeconds ();
 
           auto energy = FLEnergy ();
           // NS_LOG_UNCOND ("To Setup ");
@@ -219,7 +219,7 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
           double compEnergy = energy.CalcComputationalEnergy (beginUplink - endDownlink);
           double tranEnergy = energy.CalcTransmissionEnergy (endUplink - beginUplink);
           // Uncomment to see energy consumption
-          NS_LOG_UNCOND ("Energy: " << energy.GetA ());
+          // NS_LOG_UNCOND ("Energy: " << energy.GetA ());
           fprintf (m_fp, "%i,%u,%f,%f,%f,%f,%f,%f\n", m_round,
                    m_clientSessionManager->ResolveToIdFromServer (socket), beginUplink, endUplink,
                    beginDownlink, endDownlink, compEnergy, tranEnergy);
@@ -344,9 +344,11 @@ Server::StartSendingModel (Ptr<Socket> socket)
   itr->second->m_bytesModelToReceive = m_bytesModel;
   itr->second->m_bytesModelToSend = m_bytesModel;
   if (m_clientSessionManager->GetRound (socket) == 0)
-    itr->second->m_timeBeginSendingModelFromClient;
+    itr->second->m_timeBeginSendingModelToClient;
   else
-    itr->second->m_timeBeginSendingModelFromClient = Simulator::Now ();
+    itr->second->m_timeBeginSendingModelToClient = Simulator::Now ();
+  NS_LOG_UNCOND ("Server Start Sending :" << Simulator::Now ().GetSeconds ());
+
   SendModel (socket);
 }
 
@@ -389,11 +391,12 @@ Server::SendModel (Ptr<Socket> socket)
       Time nextTime (Seconds ((bytes * 8) / static_cast<double> (m_dataRate.GetBitRate ())));
 
       m_sendEvent = Simulator::Schedule (nextTime, &Server::SendModel, this, socket);
-      // NS_LOG_UNCOND ("Schedule Server Send");
     }
   else
     {
-      itr->second->m_timeEndSendingModelFromClient = Simulator::Now ();
+      NS_LOG_UNCOND ("Server Sent Whole Model " << Simulator::Now ().GetSeconds ());
+
+      itr->second->m_timeEndSendingModelToClient = Simulator::Now ();
     }
 }
 

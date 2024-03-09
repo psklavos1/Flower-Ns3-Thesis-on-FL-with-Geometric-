@@ -60,8 +60,8 @@ namespace ns3 {
 
             ns3::Time m_timeBeginReceivingModelFromClient;    //!<Set time when connected
             ns3::Time m_timeEndReceivingModelFromClient;      //!<Set time when last message received by server
-            ns3::Time m_timeBeginSendingModelFromClient;      //!<Set time when connected
-            ns3::Time m_timeEndSendingModelFromClient;        //!<Set time when last message is sent to client
+            ns3::Time m_timeBeginSendingModelToClient;      //!<Set time when connected
+            ns3::Time m_timeEndSendingModelToClient;        //!<Set time when last message is sent to client
             uint32_t m_bytesReceived;                         //!<Total number of bytes received
             uint32_t m_bytesSent;                             //!<Total number of bytes sent
             uint32_t m_bytesModelToSend;                      //!<Remaining number of bytes to send

@@ -25,20 +25,28 @@ class Ns3_Round:
         # parse: init format[0,2,3] -> parsed format[1,0,1,1]
         parsed_clients = self.network.parse_clients(self.clients)
         net_sim_data = self.network.sendRequest(requestType=1, array=parsed_clients)
+
         ret_dict = net_sim_data
         for client in self.clients:
             # If dropped. FAILURE
-            if net_sim_data[client]["roundTime"] < 0:
+            if (
+                net_sim_data[client]["downlinkTime"] <= 0
+                or net_sim_data[client]["uplinkTime"] <= 0
+                or net_sim_data[client]["computationTime"] <= 0
+            ):
                 ret_dict[client]["dropout"] = 1
                 self.dropouts.append(1)
-                print("Dropped " + str(client))
-                print("RoundTime" + str(net_sim_data[client]["roundTime"]))
+                print(f"Client {str(client)} Dropped out due to network")
                 continue
             # SUCCESS
             ret_dict[client]["dropout"] = 0
             self.dropouts.append(0)
-            self.roundTimes.append(net_sim_data[client]["roundTime"])
             self.throughputs.append(net_sim_data[client]["throughput"])
+            self.roundTimes.append(
+                net_sim_data[client]["downlinkTime"]
+                + net_sim_data[client]["computationTime"]
+                + net_sim_data[client]["uplinkTime"]
+            )
             self.processed_clients.append(client)
 
         if len(self.throughputs) > 0:

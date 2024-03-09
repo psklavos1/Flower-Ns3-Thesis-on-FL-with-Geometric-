@@ -59,8 +59,11 @@ namespace ns3 {
          */
         struct Message {
             uint64_t id;
-            double roundTime;
             double throughput;
+            double downlinkTime;
+            double computationTime;
+            double uplinkTime;
+
         };
 
         /**

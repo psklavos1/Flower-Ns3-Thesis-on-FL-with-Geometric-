@@ -171,7 +171,7 @@ Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>
 
   YansWifiChannelHelper wifiChannel = YansWifiChannelHelper ();
 
-  //wifiPhy.Set("TxGain", DoubleValue(m_txGain));//-23.5) );
+  // wifiPhy.Set ("TxGain", DoubleValue (m_txGain)); //-23.5) );
 
   wifiPhy.SetErrorRateModel ("ns3::YansErrorRateModel");
   // phyHelper.Set("TxPowerStart", DoubleValue(m_txGain)); // Transmission power
@@ -335,7 +335,9 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
 
           clients[j - 1]->SetClient (source);
           clients[j - 1]->SetCycle (0);
-          NS_LOG_UNCOND ("In Round Client " << j - 1 << " Datarate: " << client_datarate);
+          NS_LOG_UNCOND ("In Round Client "
+                         << j - 1 << " Datarate: " << client_datarate
+                         << " Distance from Server: " << clients[j - 1]->GetRadius ());
         }
     }
 
@@ -347,7 +349,6 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
   NS_LOG_UNCOND ("================= Starting Ns3 Round Simulation ===================");
 
   Simulator::Run ();
-  NS_LOG_UNCOND ("Return From sim");
 
   TimeValue endTime;
   sinkApps.Get (0)->GetObject<ns3::Server> ()->GetAttribute ("TimeOffset", endTime);
@@ -379,18 +380,21 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
               clientAddress = InetSocketAddress::ConvertFrom (
                                   InetSocketAddress (interfaces.GetAddress (j, 0), 80))
                                   .GetIpv4 ();
+
+              stats[clientAddress].downlinkTime =
+                  (endDownLink.Get () - beginDownLink.Get ()).GetDouble () / 1000000000.0;
+              // temp value to update below. This is the start of the round for the client i
+              stats[clientAddress].computationTime = endDownLink.Get ().GetDouble ();
+
               NS_LOG_UNCOND ("[CLIENT]  "
                              << "10.1.1.1 -> " << clientAddress << std::endl
-                             << "  Sent=" << sent.Get () << " bytes" << std::endl
                              << "  Recv=" << rec.Get () << " bytes" << std::endl
+                             << "  Sent=" << sent.Get () << " bytes" << std::endl
                              << "  Begin downlink=" << beginDownLink.Get ().As (Time::S)
                              << std::endl
                              << "  End downlink=" << endDownLink.Get ().As (Time::S) << std::endl
-                             << "  Downlink duration="
-                             << (endDownLink.Get () - beginDownLink.Get ()).As (Time::S));
-
-              // temp value to update below. This is the start of the round for the client i
-              stats[clientAddress].roundTime = beginDownLink.Get ().GetDouble ();
+                             << "  Downlink duration=" << stats[clientAddress].downlinkTime
+                             << std::endl);
 
               // double td = endDownLink.Get ().GetDouble () - beginDownLink.Get ().GetDouble ();
               // stats[clientAddress].roundTime = (stats[clientAddress].roundTime + td) / 1000000000.0;
@@ -418,7 +422,9 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
           // stats[clientAddress].roundTime = endUplink.GetDouble ();
           // Initially the roundTime was calculated starting from the moment the server started sending the model
           // to the client to the point where the moment the client sent the whole model back
-          stats[clientAddress].roundTime = (endUplink.GetDouble() - stats[clientAddress].roundTime)/1000000000.0;
+          stats[clientAddress].uplinkTime = (endUplink - beginUplink).GetDouble () / 1000000000.0;
+          stats[clientAddress].computationTime =
+              (beginUplink.GetDouble () - stats[clientAddress].computationTime) / 1000000000.0;
 
           stats[clientAddress].throughput =
               itr->second->m_bytesReceived * 8.0 / 1000.0 /
@@ -431,11 +437,15 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
           int id = m_addrMap[itr.first];
 
           NS_LOG_UNCOND ("ID " << id << "  ,ADDRESS: " << itr.first
-                               << " ,Round Latency=" << itr.second.roundTime
+                               << " ,Round DownlinkTime=" << itr.second.downlinkTime
+                               << " ,Round ComputationTime=" << itr.second.computationTime
+                               << " ,Round UplinkTime=" << itr.second.uplinkTime
                                << "s ,Round Throughput= " << itr.second.throughput << "kbps");
 
           roundStats[id].throughput = itr.second.throughput;
-          roundStats[id].roundTime = itr.second.roundTime;
+          roundStats[id].downlinkTime = itr.second.downlinkTime;
+          roundStats[id].computationTime = itr.second.computationTime;
+          roundStats[id].uplinkTime = itr.second.uplinkTime;
         }
     }
   Simulator::Destroy ();

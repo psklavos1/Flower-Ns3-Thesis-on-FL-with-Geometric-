@@ -133,22 +133,22 @@ FlwrProvider::end ()
 }
 
 void
-FlwrProvider::send (std::map<int, Message> &roundTime)
+FlwrProvider::send (std::map<int, Message> &roundStats)
 {
   //NS_LOG_FUNCTION(this);
 
   COMMAND r;
   r.command = COMMAND::Type::RESPONSE;
-  r.nItems = roundTime.size ();
+  r.nItems = roundStats.size ();
   write (m_new_socket, (char *) &r, sizeof (r));
 
-  for (auto it = roundTime.begin (); it != roundTime.end (); it++)
+  for (auto it = roundStats.begin (); it != roundStats.end (); it++)
     {
       Message &temp = it->second;
       temp.id = it->first;
       write (m_new_socket, (char *) &it->second, sizeof (Message));
     }
 
-  roundTime.clear ();
+  roundStats.clear ();
 }
 } // namespace ns3

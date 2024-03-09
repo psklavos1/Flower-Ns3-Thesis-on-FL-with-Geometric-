@@ -12,7 +12,7 @@ ns3:
   network_type: "wifi" 
   network:
     wifi:
-      tx_gain: 20
+      tx_gain: 0
       max_packet_size: 1024
     ethernet:
       max_packet_size: 1024

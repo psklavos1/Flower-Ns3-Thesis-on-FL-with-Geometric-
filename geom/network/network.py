@@ -228,9 +228,12 @@ class Network(object):
         command, nItems = struct.unpack("II", resp)
         ret = {}
         for i in range(nItems):
-            dr = self.socket.recv(8 * 3)
-            eid, roundTime, throughput = struct.unpack("Qdd", dr)
-            temp = {"roundTime": roundTime, "throughput": throughput}
+            dr = self.socket.recv(8 * 5)
+            eid, throughput, downlinkTime,computationTime, uplinkTime,  = struct.unpack(
+                "Qdddd", dr
+            )
+            
+            temp = {"downlinkTime": downlinkTime, "computationTime": computationTime,"uplinkTime": uplinkTime, "throughput": throughput}
             ret[eid] = temp
         print("Response received")
 

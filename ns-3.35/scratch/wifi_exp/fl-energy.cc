@@ -100,7 +100,7 @@ FLEnergy::SetLearningModel (std::string name)
           m_tp = 3.8896;
         }
       m_freq = 4000;
-      //   m_MAC = 229300000;
+      m_MAC = 229300000;
     }
   else if (m_learningModel.compare ("FashionMNIST") == 0)
     {
@@ -201,7 +201,7 @@ FLEnergy::CalcComputationTime ()
   long double n = m_A * (m_MAC * (100 + (6 * m_epochs))) * 600;
   long double d = m_freq * 1000000;
   double time = (n / d) + m_B;
-  // NS_LOG_UNCOND ("Computational Time Calculation " << time);
+  NS_LOG_UNCOND ("Computational Time Calculation " << m_MAC);
 
   return time;
 }

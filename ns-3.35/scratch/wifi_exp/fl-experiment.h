@@ -61,9 +61,12 @@ namespace ns3 {
         * \param dataRate        Datarate for server
         * \param bAsync          If running async experiment, true
         * \param pFlwrProvider  pointer to an flwr-interface (used to communicate with flower)
+        * \param server_coordinates    coordinates of server used in NetAnim
+
         */
         Experiment(int numClients, std::string &networkType, int maxPacketSize, double txGain, std::string &modelType, double modelSize,
-                   std::string &dataRate,std::string &deviceType, bool bAsync, FlwrProvider *pFlwrProvider, FILE *fp, int round);
+                   std::string &dataRate,std::string &deviceType, bool bAsync, FlwrProvider *pFlwrProvider, FILE *fp,  std::vector<double> server_coordinates,
+        int round);
 
         /**
         * \brief Runs network experiment
@@ -82,7 +85,15 @@ namespace ns3 {
         * \param radius      Radius location of node
         * \param theta       Angular location of node
         */
-        void SetPosition(Ptr <Node> node, double radius, double theta);
+        void SetPositionPolar(Ptr <Node> node, double radius, double theta);
+
+        /**
+        * \brief Set position of node in network
+        * \param node        Node to set position of
+        * \param x           x location of node
+        * \param y           y location of node
+        */
+        void SetPositionCartesian(Ptr <Node> node, double x, double y);
 
         /**
         * \brief Gets position of node
@@ -113,7 +124,9 @@ namespace ns3 {
         bool m_bAsync;                    //!< Indicator bool for whether experiement is async
         FlwrProvider *m_flwrProvider;     //!< pointer to an flwr-interface (used to communicate with flower)
         FILE *m_fp;                       //!< pointer to logfile
+        std::vector<double> m_server_coordinates; //!< coordinates of server used in NetAnim
         int m_round;                      //!< experiment round
+
     };
 }
 

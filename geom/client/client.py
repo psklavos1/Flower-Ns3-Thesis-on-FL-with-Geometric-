@@ -1,6 +1,4 @@
 # third party
-import random
-import tensorflow as tf
 import flwr as fl
 
 # built-in
@@ -30,7 +28,6 @@ class FlexibleClient(fl.client.NumPyClient):
         bias_template=0,
     ):
         self.batch_pointer = 0
-        self.epoch_pointer = 0
 
         # Map dataset names to their respective functions
         dataset_model_map = {
@@ -48,10 +45,14 @@ class FlexibleClient(fl.client.NumPyClient):
             class_percentages = None
             if non_iid == True:
                 class_percentages = generate_class_percentages(
-                    dataset_name, bias_template, partition_id
+                    dataset_name, bias_template
                 )
 
-            self.local_trainset, self.local_testset = get_dataset(
+            (
+                self.local_trainset,
+                self.local_testset,
+                self.local_validationset,
+            ) = get_dataset(
                 num_partitions=num_clients,
                 partition_index=partition_id,
                 ds_name=dataset_name,
@@ -59,7 +60,7 @@ class FlexibleClient(fl.client.NumPyClient):
                 class_percentages=class_percentages,
             )
 
-            self.model: CustomModel = model_class(ds_name=dataset_name)        
+            self.model: CustomModel = model_class(ds_name=dataset_name)
         else:
             raise ValueError(f"Invalid dataset name '{ds_name}'")
 
@@ -82,61 +83,37 @@ class FlexibleClient(fl.client.NumPyClient):
             config["verbose"],
         )
 
-        x_train, y_train = self.local_trainset
         metrics = {}
 
         # Round start resets
         self.model.train_l2_norm.set_weight_mean(self.model.trainable_weights)
         self.model.resume_train()
-        
+
         # Train the local model
-        processed_samples, self.batch_pointer,self.epoch_pointer, l2_norm = self.model.fit(
-            x_train,
-            y_train,
+        batches_in_epoch, self.batch_pointer, l2_norm = self.model.fit(
+            self.local_trainset,
             epochs=num_epochs,
             batch_size=batch_size,
             batch_pointer=self.batch_pointer,
-            epoch_pointer = self.epoch_pointer,
             verbose=verbose,
+            validation_data=self.local_validationset,
             callbacks=[CustomCallback(self.model)],
         )
-
+        processed_samples = batches_in_epoch * self.batch_pointer
         metrics["l2_norm"] = l2_norm
-        metrics["done_processing"] = processed_samples == len(x_train)
-
         return self.model.get_weights(), processed_samples, metrics
 
     def evaluate(self, parameters, config):
-        print("Evaluate")
-        # self.model.summary()
-        # self.model.get_pickle_size()
         # Decrypt config:
         verbose, batch_size = config["verbose"], config["batch_size"]
-        x_test, y_test = self.local_testset
         # Set the weights to the ones sent by the global server
         self.model.set_weights(parameters)
+        x_test, y_test = self.local_testset
+
         res = self.model.evaluate(
             x_test, y_test, batch_size=batch_size, verbose=verbose
         )
+
         _, _, loss, accuracy = res
         metrics = {"accuracy": accuracy}
         return loss, len(x_test), metrics
-
-
-# * Networking
-# def set_link(self, config):
-
-#     # Set the Gaussian distribution for link speed in Kbytes
-#     self.speed_min = config.link.min
-#     self.speed_max = config.link.max
-#     self.speed_mean = random.uniform(self.speed_min, self.speed_max)
-#     self.speed_std = config.link.std
-#     self.model_size = self.model.get_size()
-#     # Set estimated delay
-#     self.est_latency = self.model_size / self.speed_mean
-
-# def set_delay(self):
-#     # Set the link speed and delay for the upcoming run
-#     link_speed = random.normalvariate(self.speed_mean, self.speed_std)
-#     link_speed = max(min(link_speed, self.speed_max), self.speed_min)
-#     self.delay = self.model_size / link_speed  # upload delay in sec

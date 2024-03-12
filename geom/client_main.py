@@ -11,7 +11,7 @@ from client.client import FlexibleClient
 def client_main(cfg: DictConfig):
     print("\n\n=================== Config File ===================\n")
     print(OmegaConf.to_yaml(cfg))
-    print("===========================================\n")
+    print("====================== End ========================\n")
 
     fl.client.start_client(
         server_address=cfg.server_address,

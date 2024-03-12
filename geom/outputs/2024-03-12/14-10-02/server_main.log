@@ -1,0 +1,40 @@
+[2024-03-12 14:10:09,174][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=20, round_timeout=None)
+[2024-03-12 14:10:09,179][flwr][INFO] - Flower ECE: gRPC server running (20 rounds), SSL is disabled
+[2024-03-12 14:10:09,180][flwr][INFO] - Initializing global parameters
+[2024-03-12 14:10:09,180][flwr][INFO] - Requesting initial parameters from one random client
+[2024-03-12 14:10:28,844][flwr][INFO] - Received initial parameters from one random client
+[2024-03-12 14:10:28,846][flwr][INFO] - Evaluating initial parameters
+[2024-03-12 14:10:28,847][flwr][INFO] - FL starting
+[2024-03-12 14:10:30,781][flwr][DEBUG] - fit_round 1: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:10:34,942][flwr][DEBUG] - fit_round 1 received 3 results and 0 failures
+[2024-03-12 14:10:34,961][flwr][DEBUG] - evaluate_round 1: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:10:38,464][flwr][DEBUG] - evaluate_round 1 received 2 results and 0 failures
+[2024-03-12 14:10:39,284][flwr][DEBUG] - fit_round 2: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:10:48,014][flwr][DEBUG] - fit_round 2 received 3 results and 0 failures
+[2024-03-12 14:10:48,023][flwr][DEBUG] - evaluate_round 2: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:10:51,475][flwr][DEBUG] - evaluate_round 2 received 2 results and 0 failures
+[2024-03-12 14:10:52,224][flwr][DEBUG] - fit_round 3: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:11:03,629][flwr][DEBUG] - fit_round 3 received 3 results and 0 failures
+[2024-03-12 14:11:03,649][flwr][DEBUG] - evaluate_round 3: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:11:07,111][flwr][DEBUG] - evaluate_round 3 received 2 results and 0 failures
+[2024-03-12 14:11:07,866][flwr][DEBUG] - fit_round 4: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:11:22,041][flwr][DEBUG] - fit_round 4 received 3 results and 0 failures
+[2024-03-12 14:11:22,049][flwr][DEBUG] - evaluate_round 4: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:11:25,508][flwr][DEBUG] - evaluate_round 4 received 2 results and 0 failures
+[2024-03-12 14:11:26,416][flwr][DEBUG] - fit_round 5: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:11:40,233][flwr][DEBUG] - fit_round 5 received 3 results and 0 failures
+[2024-03-12 14:11:40,242][flwr][DEBUG] - evaluate_round 5: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:11:43,589][flwr][DEBUG] - evaluate_round 5 received 2 results and 0 failures
+[2024-03-12 14:11:44,229][flwr][DEBUG] - fit_round 6: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:11:59,293][flwr][DEBUG] - fit_round 6 received 3 results and 0 failures
+[2024-03-12 14:11:59,299][flwr][DEBUG] - evaluate_round 6: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:12:02,719][flwr][DEBUG] - evaluate_round 6 received 2 results and 0 failures
+[2024-03-12 14:12:03,428][flwr][DEBUG] - fit_round 7: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:12:19,394][flwr][DEBUG] - fit_round 7 received 3 results and 0 failures
+[2024-03-12 14:12:19,402][flwr][DEBUG] - evaluate_round 7: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:12:22,886][flwr][DEBUG] - evaluate_round 7 received 2 results and 0 failures
+[2024-03-12 14:12:23,604][flwr][DEBUG] - fit_round 8: strategy sampled 3 clients (out of 4)
+[2024-03-12 14:12:41,180][flwr][DEBUG] - fit_round 8 received 3 results and 0 failures
+[2024-03-12 14:12:41,195][flwr][DEBUG] - evaluate_round 8: strategy sampled 2 clients (out of 4)
+[2024-03-12 14:12:45,292][flwr][DEBUG] - evaluate_round 8 received 2 results and 0 failures
+[2024-03-12 14:12:46,112][flwr][DEBUG] - fit_round 9: strategy sampled 3 clients (out of 4)

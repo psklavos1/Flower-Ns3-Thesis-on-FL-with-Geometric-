@@ -41,7 +41,6 @@ class CustomModel(tf.keras.Model):
         self.init_metrics()
 
         # Monitoring
-        self.processed_samples = 0
         self.stop_training = False
 
         # Additional setup steps
@@ -285,100 +284,75 @@ class CustomModel(tf.keras.Model):
 
     def fit(
         self,
-        x,
-        y,
+        train_dataset: tf.data.Dataset,
         batch_pointer=0,
-        epoch_pointer=0,
         batch_size=32,
         epochs=1,
         verbose=1,
         validation_data=None,
         callbacks=[],
     ):
-        # print(f"batch pointer At start {batch_pointer}")
-        self.processed_samples = 0
+        batches_in_epoch = 0
         # Convert data to a tf.data.Dataset
-        train_dataset = tf.data.Dataset.from_tensor_slices((x, y)).batch(batch_size)
-        all_samples = len(x)
-        num_batches = all_samples // batch_size
+        train_dataset = train_dataset.batch(batch_size)
 
-        for epoch in range(epochs - epoch_pointer):
+        for epoch in range(epochs):
             epoch_start_time = time.time()
             elapsed_time = 0
-            print(
-                f"================ Epoch {epoch_pointer + 1}/{epochs} ================"
-            )
+            print(f"========================== Epoch Start ==========================")
 
             # Callback for the start of the epoch
             for callback in callbacks:
                 callback.on_epoch_begin(epoch)
 
             l2_norm_val = 0
-            # Batch change
-            batch_pointer = batch_pointer % num_batches
-
             train_dataset = train_dataset.skip(batch_pointer)
 
             # Iterate over the batches of the dataset.
             for step, (x_batch_train, y_batch_train) in enumerate(train_dataset):
                 # Stop check
                 if self.stop_training:
-                    print("Epoch Results")
-                    self.print_results(
-                        batch_pointer,
-                        num_batches,
-                        loss_val,
-                        time.time() - epoch_start_time,
-                    )
-                    # print(f"batch pointer before return {batch_pointer}")
-                    self.reset_train_metrics()
-                    distinct_samples = (
-                        self.processed_samples
-                        if self.processed_samples < all_samples
-                        else all_samples
-                    )
-                    return distinct_samples, batch_pointer, epoch_pointer, l2_norm_val
+                    break
 
                 # callback for start of batch
                 for callback in callbacks:
                     callback.on_train_batch_begin(step)
 
                 loss_val = self.train_step(x_batch_train, y_batch_train)
+                batches_in_epoch += 1
                 batch_pointer += 1
 
-                self.processed_samples += len(x_batch_train)
                 l2_norm_val = float(self.train_l2_norm.result())
 
                 # callback for end of batch
                 for callback in callbacks:
                     callback.on_train_batch_end(step)
 
-                elapsed_time = time.time() - epoch_start_time
                 # Verbose = 0: Silent, 1: per 200 batches, 2: per 10 batches
                 if verbose == 1:
                     if step % 200 == 0:
+                        elapsed_time = time.time() - epoch_start_time
                         self.print_results(
-                            batch_pointer, num_batches, loss_val, elapsed_time
+                            batches_in_epoch, batch_pointer, loss_val, elapsed_time
                         )
 
                 elif verbose == 2:
                     # Log every 10 batches.
                     if step % 10 == 0:
+                        elapsed_time = time.time() - epoch_start_time
                         self.print_results(
-                            batch_pointer, num_batches, loss_val, elapsed_time
+                            batches_in_epoch, batch_pointer, loss_val, elapsed_time
                         )
 
                 else:
-                    if batch_pointer + step == 0:
+                    if batches_in_epoch + step == 0:
                         print(
                             "Verbose not set. Awaiting Results\nThis message will be printed once."
                         )
 
             # Display metrics at the end of each epoch.
-            epoch_pointer += 1
-            print("Epoch Results")
-            self.print_results(batch_pointer, num_batches, loss_val, elapsed_time)
-
+            print("Epoch Results:")
+            self.print_results(batches_in_epoch, batch_pointer, loss_val, elapsed_time)
             # Reset training metrics at the end of each epoch
             self.reset_train_metrics()
 
@@ -387,6 +361,7 @@ class CustomModel(tf.keras.Model):
                 callback.on_epoch_end(epoch)
 
             if validation_data is not None:
+                print(f"========================= Validation =========================")
                 # Run a validation loop at the end of each epoch.
                 for x_batch_val, y_batch_val in validation_data:
                     self.test_step(x_batch_val, y_batch_val)
@@ -398,12 +373,7 @@ class CustomModel(tf.keras.Model):
                     f"Validation Avg Results\t Loss:{float(val_loss)}\t Accuracy: {float(val_acc):.4f}"
                 )
 
-        distinct_samples = (
-            self.processed_samples
-            if self.processed_samples < all_samples
-            else all_samples
-        )
-        return distinct_samples, batch_pointer, epoch_pointer, l2_norm_val
+        return batches_in_epoch, batch_pointer, l2_norm_val
 
     def reset_train_metrics(self):
         self.train_loss_tracker.reset_states()
@@ -417,9 +387,9 @@ class CustomModel(tf.keras.Model):
     def resume_train(self):
         self.stop_training = False
 
-    def print_results(self, batch_pointer, num_batches, loss_val, elapsed_time):
+    def print_results(self, batches_in_epoch, batch_pointer, loss_val, elapsed_time):
         print(
-            f"{batch_pointer}/{num_batches+1} - inst_loss: {float(loss_val):.4f} - Mean loss: {float(self.train_loss_tracker.result()):.4f} - acc: {float(self.train_accuracy.result()):.4f} - norm: {float(self.train_l2_norm.result()):.2f} - {elapsed_time:.2f}s"
+            f"(In epoch/Overall): ({batches_in_epoch}/{batch_pointer})| inst_loss: {float(loss_val):.4f} - Mean loss: {float(self.train_loss_tracker.result()):.4f} - acc: {float(self.train_accuracy.result()):.4f} - norm: {float(self.train_l2_norm.result()):.2f} - {elapsed_time:.2f}s"
         )
 
     def get_pickle_size(self):

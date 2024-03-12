@@ -347,7 +347,7 @@ Server::StartSendingModel (Ptr<Socket> socket)
     itr->second->m_timeBeginSendingModelToClient;
   else
     itr->second->m_timeBeginSendingModelToClient = Simulator::Now ();
-  NS_LOG_UNCOND ("Server Start Sending :" << Simulator::Now ().GetSeconds ());
+  NS_LOG_UNCOND ("Server Start Sending : " << Simulator::Now ().GetSeconds () << "s");
 
   SendModel (socket);
 }
@@ -394,7 +394,7 @@ Server::SendModel (Ptr<Socket> socket)
     }
   else
     {
-      NS_LOG_UNCOND ("Server Sent Whole Model " << Simulator::Now ().GetSeconds ());
+      NS_LOG_UNCOND ("Server Sent Whole Model: " << Simulator::Now ().GetSeconds () << "s");
 
       itr->second->m_timeEndSendingModelToClient = Simulator::Now ();
     }

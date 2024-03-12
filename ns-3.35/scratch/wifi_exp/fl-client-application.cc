@@ -146,7 +146,7 @@ ClientApplication::Send (Ptr<Socket> socket)
         }
       else
         {
-          NS_LOG_UNCOND ("Whole model Sent from client" << Simulator::Now ().GetSeconds ());
+          NS_LOG_UNCOND ("Client Sent Whole Model: " << Simulator::Now ().GetSeconds () << "s");
           m_bytesModelToReceive = m_bytesModel;
         }
     }
@@ -217,7 +217,7 @@ ClientApplication::StartWriting ()
 {
 
   m_bytesModelToSend = m_bytesModel;
-  NS_LOG_UNCOND ("Start Sending Client: " << Simulator::Now ().GetSeconds ());
+  NS_LOG_UNCOND ("Client Start Sending : " << Simulator::Now ().GetSeconds () << "s");
 
   Send (m_socket);
 }

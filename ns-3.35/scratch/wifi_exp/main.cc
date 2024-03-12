@@ -44,7 +44,6 @@ main (int argc, char *argv[])
   // std::ofstream logFile ("./scratch/wifi_exp/log_file.txt");
   // Save the old buffers of std::cout and std::cerr
   // so they can be restored later.
-  // auto oldCoutBuf = std::cout.rdbuf ();
   // auto oldCerrBuf = std::cerr.rdbuf ();
 
   // Redirect std::cout and std::cerr to logFile (log_file.txt).
@@ -142,33 +141,23 @@ main (int argc, char *argv[])
 
   // Generate Coordinates
   std::string node_coordinates_file_name = "./scratch/wifi_exp/node_coordinates.txt";
-  vector<vector<double>> coord_array;
-  std::vector<PolarCoordinate> polar_coord_array =
-      readCoordinatesFileToPolar (node_coordinates_file_name);
-  // printCoordinateArray (node_coordinates_file_name.c_str (),coord_array);
-
+  vector<vector<double>> coord_array = readCoordinatesFile (node_coordinates_file_name);
+  printCoordinatesArray (coord_array, numClients);
   //  Get DataRates
   const char *dataRates_file_name = "./scratch/wifi_exp/client_datarates.txt";
   char **client_dataRates = read_dataRates (dataRates_file_name, numClients);
   print_dataRates (client_dataRates, numClients);
-  // To pause execution
-  // std::string stringValue;
-  // std::getline(std::cin, stringValue); // Take string input, including spaces
-
-  NS_LOG_UNCOND ("\n===================== Coordinates Around Server =====================");
+  int server = 0;
+  int x;
+  int y;
   for (int j = 0; j < numClients; j++)
     {
-      // std::string stringValue;
-      // std::getline(std::cin, stringValue); // Take string input, including spaces
       char *client_dataRate = client_dataRates[j];
-      PolarCoordinate polar = polar_coord_array[j + 1];
-      double radius = polar.radius;
-      //double theta = t_dist(generator);
-      double theta = polar.theta;
-
-      NS_LOG_UNCOND ("INIT:J=" << j << " r=" << radius << " th=" << theta);
-      g_clients[j] =
-          std::shared_ptr<ClientSession> (new ClientSession (j, radius, theta, client_dataRate));
+      x = coord_array[j + 1][0];
+      y = coord_array[j + 1][1];
+      // NS_LOG_UNCOND ("INIT: ID = " << j << " Distance from server = "
+      //                              << getDistance (coord_array[j + 1], coord_array[server]));
+      g_clients[j] = std::shared_ptr<ClientSession> (new ClientSession (j, x, y, client_dataRate));
     }
   ns3::Time timeOffset (0);
 
@@ -195,18 +184,19 @@ main (int argc, char *argv[])
             }
         }
 
-      auto experiment = Experiment (numClients, networkType, maxPacketSize, TxGain, modelType,
-                                    modelSize, dataRate, deviceType, bAsync, FlwrProvider, fp, round
+      auto experiment =
+          Experiment (numClients, networkType, maxPacketSize, TxGain, modelType, modelSize,
+                      dataRate, deviceType, bAsync, FlwrProvider, fp, coord_array[server], round
 
-      );
+          );
       NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nBefore: " << timeOffset
                                                            << "\n"
-                                                              ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                                                              ">>>>>>>>>>>>>>>>>>>>>>>>>");
       auto roundStats = experiment.WeakNetwork (g_clients, timeOffset);
 
       NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nTIME_OFFSET:" << timeOffset
                                                                << "\n"
-                                                                  ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                                                                  ">>>>>>>>>>>>>>>>>>>>>>>>>");
 
       if (FlwrProvider && !bAsync)
         {

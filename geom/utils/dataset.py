@@ -263,16 +263,43 @@ def generate_class_percentages(ds_name, bias_template, seed=None):
     return percentages
 
 
+def _validation_support(x_train, y_train, validation_split=0.1):
+    """Partition training data into training and validation sets."""
+    # Shuffle the training data
+    shuffled_indices = np.random.permutation(len(x_train))
+    x_train_shuffled = x_train[shuffled_indices]
+    y_train_shuffled = y_train[shuffled_indices]
+
+    # Calculate the number of samples for validation
+    num_validation_samples = int(len(x_train) * validation_split)
+
+    # Split the data
+    x_val = x_train_shuffled[:num_validation_samples]
+    y_val = y_train_shuffled[:num_validation_samples]
+    x_train_new = x_train_shuffled[num_validation_samples:]
+    y_train_new = y_train_shuffled[num_validation_samples:]
+
+    return x_train_new, y_train_new, x_val, y_val
+
+
 def get_dataset(
     num_partitions,
     partition_index,
     ds_name="mnist",
     non_iid=False,
     class_percentages=None,
+    validation=False,
+    validation_split=0.1,
 ):
     """Load and preprocess dataset based on ds_name, then partition it."""
     (x_train, y_train), (x_test, y_test) = _load_dataset(ds_name)
     x_train, x_test = _preprocess_data(x_train, x_test, ds_name)
+
+    # If validation support is required, split the training data
+    if validation:
+        x_train, y_train, x_val, y_val = _validation_support(
+            x_train, y_train, validation_split
+        )
 
     if non_iid:
         assert class_percentages is not None
@@ -285,8 +312,52 @@ def get_dataset(
             partition_index,
         )
     else:
+        # needed to create a ranodom dataset.
         x_train_shuffled, y_train_shuffled = _shuffle_data(x_train, y_train)
         x_train_partition, y_train_partition = _partition_data(
             x_train_shuffled, y_train_shuffled, num_partitions, partition_index
         )
-    return (x_train_partition, y_train_partition), (x_test, y_test)
+
+    # Convert to tf.data.Dataset for training
+    train_dataset = tf.data.Dataset.from_tensor_slices(
+        (x_train_partition, y_train_partition)
+    )
+    train_dataset = (
+        train_dataset.cache().shuffle(buffer_size=len(x_train_partition)).repeat()
+    )
+
+    test_dataset = (x_test, y_test)
+
+    # If validation is enabled, also prepare the validation dataset
+    if validation:
+        validation_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
+    else:
+        validation_dataset = None
+
+    return train_dataset, test_dataset, validation_dataset
+
+
+def is_dataset_batched(dataset: tf.data.Dataset):
+    try:
+        # Attempt to take one element from the dataset
+        for element in dataset.take(1):
+            # Check if the element is a tuple (input, target)
+            if isinstance(element, tuple):
+                # Assuming the input is the first element of the tuple
+                input_element = element[0]
+                # Check if the input element has a batch dimension
+                if isinstance(input_element, tf.Tensor):
+                    # If the first dimension (batch size) is None or an integer, it's likely batched
+                    if input_element.shape[0] is None or isinstance(
+                        input_element.shape[0], int
+                    ):
+                        return True
+            elif isinstance(element, tf.Tensor):
+                # If the dataset directly yields tensors, check their shape
+                if element.shape[0] is None or isinstance(element.shape[0], int):
+                    return True
+    except ValueError:
+        # Handle cases where elements cannot be iterated
+        return False
+    # If none of the above conditions are met, assume the dataset is not batched
+    return False

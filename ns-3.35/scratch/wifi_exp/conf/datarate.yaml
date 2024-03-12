@@ -1,6 +1,6 @@
 hydra:
   run:
-    dir: ./ns-3.35/scratch/wifi_exp/
+    dir: ./
   output_subdir: null  # Disables the creation of subdirectories within the output directory
 
   job_logging:

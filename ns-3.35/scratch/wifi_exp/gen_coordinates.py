@@ -4,14 +4,16 @@ import hydra
 from omegaconf import DictConfig
 
 
-def generate_coordinates(file_path, min_value, max_value, number_of_pairs):
+def generate_coordinates(
+    file_path, min_valueX, max_valueX, min_valueY, max_valueY, number_of_pairs
+):
     """Generate a file with pairs of numbers in the specified range."""
-    with open(file_path, 'w') as file:
+    with open(file_path, "w") as file:
         for _ in range(number_of_pairs):
             # Generate two random numbers within the specified range
-            number1 = random.uniform(min_value, max_value)
-            number2 = random.uniform(min_value, max_value)
-            
+            number1 = random.uniform(min_valueX, max_valueX)
+            number2 = random.uniform(min_valueY, max_valueY)
+
             # Write the numbers to the file, formatted as specified
             file.write(f"{number1:.2f}\t{number2:.2f}\n")
 
@@ -34,15 +36,18 @@ def main(cfg: DictConfig):
 
     # Print the current working directory
     num_nodes = cfg.num_nodes
-    min = cfg.min
-    max = cfg.max
+    minX = cfg.minX
+    maxX = cfg.maxX
+    minY = cfg.minY
+    maxY = cfg.maxY
     output_filepath = cfg.output_path
 
-    generate_coordinates(output_filepath, min,max, num_nodes)
+    generate_coordinates(output_filepath, minX, maxX, minY, maxY, num_nodes)
     print(f"Generated file '{output_filepath}' with {num_nodes} coordinates")
-    
+
     log_file = "./gen_coordinates.log"
     delete_file(log_file)
+
 
 if __name__ == "__main__":
     main()

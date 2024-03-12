@@ -15,7 +15,7 @@ from utils.monitor import Monitor
 def server_main(cfg: DictConfig):
     print("\n\n=================== Server Config File ===================\n")
     print(OmegaConf.to_yaml(cfg))
-    print("=================== End ===================\n")
+    print("=========================== End ==========================\n")
 
     monitor = Monitor()
     # Thread for Flower server

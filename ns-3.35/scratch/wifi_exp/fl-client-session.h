@@ -53,12 +53,12 @@ namespace ns3 {
         /**
         * \brief Construct client session
         * \param clientID_    Id for client
-        * \param radius_      Radius Location for Client
-        * \param theta_       Angular Location for Client (Radians)
+        * \param x_           x Location for Client
+        * \param y_           y Location for Client
         * \param dataRate_    The dataRate supported by the client
 
         */
-        ClientSession(int clientID_, double radius_, double theta_, char* dataRate_) ;
+        ClientSession(int clientID_, double x_, double y_, char* dataRate_) ;
 
         /**
         * \brief Gets the socket of client
@@ -102,16 +102,16 @@ namespace ns3 {
         void IncrementCycle();
 
         /**
-        * \brief Get radial location of client
-        * \return Radial location of client
+        * \brief Get x location of client
+        * \return x location of client
         */
-        double GetRadius();
+        double GetX();
 
         /**
-        * \brief Get angular location of client
-        * \return Angular location of client
+        * \brief Get y location of client
+        * \return y location of client
         */
-        double GetTheta();
+        double GetY();
 
         /**
         * \brief Get id of client
@@ -129,8 +129,8 @@ namespace ns3 {
 
     private:
         ns3::Ptr<ns3::Socket> m_client;     //!< Socket of client
-        double m_radius;                    //!< Radius location of client
-        double m_theta;                     //!< Angular location of client
+        double m_x;                    //!< Radius location of client
+        double m_y;                     //!< Angular location of client
         char* m_dataRate;                  //!< Data rate
         int m_clientID;                     //!< Client id
         int m_cycle;                        //!< Client cycle for async round

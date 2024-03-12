@@ -33,7 +33,9 @@
 #include "ns3/yans-error-rate-model.h"
 #include "ns3/olsr-helper.h"
 #include "ns3/aodv-module.h"
+#include "ns3/netanim-module.h"
 
+#include <iomanip> // For std::setprecision and std::fixed
 #include <algorithm> // For std::shuffle
 #include <random> // For std::default_random_engine
 #include <chrono> // For std::chrono::system_clock
@@ -43,7 +45,7 @@ namespace ns3 {
 Experiment::Experiment (int numClients, std::string &networkType, int maxPacketSize, double txGain,
                         std::string &modelType, double modelSize, std::string &dataRate,
                         std::string &deviceType, bool bAsync, FlwrProvider *flwr_provider, FILE *fp,
-                        int round)
+                        std::vector<double> server_coordinates, int round)
     : m_numClients (numClients),
       m_networkType (networkType),
       m_maxPacketSize (maxPacketSize),
@@ -55,15 +57,24 @@ Experiment::Experiment (int numClients, std::string &networkType, int maxPacketS
       m_bAsync (bAsync),
       m_flwrProvider (flwr_provider),
       m_fp (fp),
+      m_server_coordinates (server_coordinates),
       m_round (round)
 {
 }
 
 void
-Experiment::SetPosition (Ptr<Node> node, double radius, double theta)
+Experiment::SetPositionPolar (Ptr<Node> node, double radius, double theta)
 {
-  double x = radius * sin (theta * 2 * M_PI);
-  double y = radius * cos (theta * 2 * M_PI);
+  double x = radius * cos (theta);
+  double y = radius * sin (theta);
+  double z = 0;
+  Ptr<MobilityModel> mobility = node->GetObject<MobilityModel> ();
+  mobility->SetPosition (Vector (x, y, z));
+}
+
+void
+Experiment::SetPositionCartesian (Ptr<Node> node, double x, double y)
+{
   double z = 0;
   Ptr<MobilityModel> mobility = node->GetObject<MobilityModel> ();
   mobility->SetPosition (Vector (x, y, z));
@@ -89,134 +100,29 @@ Experiment::Ethernet (NodeContainer &c, std::map<int, std::shared_ptr<ClientSess
   return csmaDevices;
 }
 
-// NetDeviceContainer
-// Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients)
-// {
-
-//   WifiHelper wifi;
-//   WifiMacHelper wifiMac;
-//   YansWifiPhyHelper wifiPhy;
-
-//   YansWifiChannelHelper wifiChannel = YansWifiChannelHelper ();
-
-//   //wifiPhy.Set("TxGain", DoubleValue(m_txGain));//-23.5) );
-
-//   wifiPhy.SetErrorRateModel ("ns3::YansErrorRateModel");
-
-//   //90 Weak Network
-//   //70 Medium
-//   //30 Stong
-//   //double trigger = 30.0;
-
-//   Ptr<UniformRandomVariable> expVar = CreateObjectWithAttributes<UniformRandomVariable> (
-//       "Min", DoubleValue (m_txGain), "Max", DoubleValue (m_txGain + 30));
-
-//   wifiChannel.AddPropagationLoss ("ns3::RandomPropagationLossModel", "Variable",
-//                                   PointerValue (expVar));
-
-//   wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
-//   //wifiChannel.SetPropagationDelay("ns3::RandomPropagationDelayModel", "Variable", StringValue ("ns3::UniformRandomVariable[Min=0|Max=2]"));
-
-//   //std::string phyMode("HtMcs0");
-//   std::string phyMode ("DsssRate11Mbps");
-
-//   // Fix non-unicast data rate to be the same as that of unicast
-//   Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (phyMode));
-
-//   //wifi.SetStandard(WIFI_STANDARD_80211n_5GHZ);
-//   wifi.SetStandard (WIFI_STANDARD_80211b);
-//   // This is one parameter that matters when using FixedRssLossModel
-//   // set it to zero; otherwise, gain will be added
-//   wifiPhy.Set ("RxGain", DoubleValue (0));
-
-//   // ns-3 supports RadioTap and Prism tracing extensions for 802.11b
-//   //   wifiPhy.SetPcapDataLinkType(WifiPhyHelper::DLT_IEEE802_11_RADIO);
-
-//   wifiPhy.SetChannel (wifiChannel.Create ());
-
-//   // Add a mac and disable rate control
-//   wifi.SetRemoteStationManager ("ns3::ConstantRateWifiManager", "DataMode", StringValue (phyMode),
-//                                 "ControlMode", StringValue (phyMode));
-
-//   // Set it to adhoc mode
-//   wifiMac.SetType ("ns3::AdhocWifiMac");
-
-//   NetDeviceContainer devices = wifi.Install (wifiPhy, wifiMac, c);
-
-//   MobilityHelper mobility;
-//   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
-//   mobility.Install (c);
-
-//   int numClients = clients.size ();
-//   for (int j = 1; j <= numClients; j++)
-//     {
-//       if (clients[j - 1]->GetInRound ())
-//         {
-
-//           Experiment::SetPosition (c.Get (j), clients[j - 1]->GetRadius (),
-//                                    clients[j - 1]->GetTheta ());
-//         }
-//     }
-
-//   return devices;
-// }
-
 NetDeviceContainer
 Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients)
 {
 
+  YansWifiChannelHelper wifiChannel = YansWifiChannelHelper ();
+  YansWifiPhyHelper wifiPhy;
   WifiHelper wifi;
   WifiMacHelper wifiMac;
-  YansWifiPhyHelper wifiPhy;
 
-  YansWifiChannelHelper wifiChannel = YansWifiChannelHelper ();
-
-  // wifiPhy.Set ("TxGain", DoubleValue (m_txGain)); //-23.5) );
+  wifiChannel.AddPropagationLoss ("ns3::LogDistancePropagationLossModel", "Exponent",
+                                  DoubleValue (3.0), "ReferenceLoss", DoubleValue (40.0));
+  wifiChannel.AddPropagationLoss ("ns3::NakagamiPropagationLossModel");
+  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
 
   wifiPhy.SetErrorRateModel ("ns3::YansErrorRateModel");
-  // phyHelper.Set("TxPowerStart", DoubleValue(m_txGain)); // Transmission power
-  // phyHelper.Set("TxPowerEnd", DoubleValue(m_txGain));
-
-  //90 Weak Network
-  //70 Medium
-  //30 Stong
-  //double trigger = 30.0;
-
-  Ptr<UniformRandomVariable> expVar = CreateObjectWithAttributes<UniformRandomVariable> (
-      "Min", DoubleValue (m_txGain), "Max", DoubleValue (m_txGain + 30));
-
-  wifiChannel.AddPropagationLoss ("ns3::RandomPropagationLossModel", "Variable",
-                                  PointerValue (expVar));
-
-  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
-  //wifiChannel.SetPropagationDelay("ns3::RandomPropagationDelayModel", "Variable", StringValue ("ns3::UniformRandomVariable[Min=0|Max=2]"));
-
-  // std::string phyMode ("DsssRate11Mbps"); -- slower
-  // Direct Sequence Sepread Spectrum. This modulation technique spreads the signal into  a wider frequency band than the original data bandwidth.
-  // It offers benefits like resistance to interference and improved signal reception quality.
-  // the above may be obsolete try using the following
-  // VhtMcs8 -- faster or HtMc7
-  std::string phyMode (
-      "HtMcs7"); // better throughputs up to 150 Mbs than first(Up to 11Mbps) slower than second(1Gbps). Good for lab environment
-
-  // Fix non-unicast data rate to be the same as that of unicast
+  wifiPhy.SetChannel (wifiChannel.Create ());
+  wifiPhy.Set ("RxGain", DoubleValue (0));
+  std::string phyMode ("HtMcs7");
   Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (phyMode));
-  // wifi.SetStandard (WIFI_STANDARD_80211b);
+
   wifi.SetStandard (WIFI_STANDARD_80211n_5GHZ);
 
-  // This is one parameter that matters when using FixedRssLossModel
-  // set it to zero; otherwise, gain will be added
-  wifiPhy.Set ("RxGain", DoubleValue (0));
-
-  // ns-3 supports RadioTap and Prism tracing extensions for 802.11b
-  //   wifiPhy.SetPcapDataLinkType(WifiPhyHelper::DLT_IEEE802_11_RADIO);
-
-  wifiPhy.SetChannel (wifiChannel.Create ());
-
   // Add a mac and disable rate control
-  // The manager below has constant rate. So I try MinstrelHtWifiManager
-  // Designed for high throughput nets and changes the sending rate. Try and see
-  // how it responds.
   wifi.SetRemoteStationManager ("ns3::MinstrelHtWifiManager");
 
   // Set it to adhoc mode
@@ -229,14 +135,18 @@ Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>
   mobility.Install (c);
 
   int numClients = clients.size ();
+  // Set the server too
+  // In Polar system Server always in the middle
+  Experiment::SetPositionCartesian (c.Get (0), m_server_coordinates[0], m_server_coordinates[1]);
+  // clients used in round are positioned accordingly
   for (int j = 1; j <= numClients; j++)
     {
-      if (clients[j - 1]->GetInRound ())
-        {
+      // if (clients[j - 1]->GetInRound ())
+      // {
 
-          Experiment::SetPosition (c.Get (j), clients[j - 1]->GetRadius (),
-                                   clients[j - 1]->GetTheta ());
-        }
+      Experiment::SetPositionCartesian (c.Get (j), clients[j - 1]->GetX (),
+                                        clients[j - 1]->GetY ());
+      // }
     }
 
   return devices;
@@ -335,19 +245,50 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
 
           clients[j - 1]->SetClient (source);
           clients[j - 1]->SetCycle (0);
-          NS_LOG_UNCOND ("In Round Client "
-                         << j - 1 << " Datarate: " << client_datarate
-                         << " Distance from Server: " << clients[j - 1]->GetRadius ());
+          NS_LOG_UNCOND ("In Round Client " << j - 1 << " Datarate: " << client_datarate);
         }
     }
-
   ClientSessionManager client_session_manager (clients);
   sinkApps.Get (0)->GetObject<ns3::Server> ()->SetClientSessionManager (
       &client_session_manager, m_flwrProvider, m_fp, m_round);
 
+  // ======================== NetAnim Section =========================
+  // double imageScale = 100.0; // This is an arbitrary scale;
+
+  AnimationInterface anim ("animation.xml");
+  // Set the background image with a scale that includes all nodes
+
+  anim.SetBackgroundImage ("campus.jpg", 0, 0, .165, .145, 0.9);
+  anim.EnablePacketMetadata (true); // Optional: Depends on your ns-3 build configuration
+  anim.SetMobilityPollInterval (Seconds (10000)); // Not moving so no need to update
+  anim.SetStartTime (Seconds (5));
+
+  // Set the positions for the server and client nodes and configure their properties
+  for (uint32_t j = 0; j < c.GetN (); ++j)
+    {
+      // Vector pos = Experiment::GetPosition (c.Get (j));
+      // NS_LOG_UNCOND ("Node " << j << ": Position (" << pos.x << ", " << pos.y << ")");
+
+      if (j == 0) // The first node is the server
+        {
+          // Set the server properties
+          anim.UpdateNodeDescription (c.Get (j), "Server");
+          anim.UpdateNodeColor (c.Get (j), 0, 255, 0); // Green color for the server
+          anim.UpdateNodeSize (j, 4.0, 4.0); // Make the server node larger
+        }
+      else
+        {
+
+          // Set the client properties
+          anim.UpdateNodeDescription (c.Get (j), "Client " + std::to_string (j - 1));
+          anim.UpdateNodeColor (c.Get (j), 255, 0, 0); // Red color for the clients
+          anim.UpdateNodeSize (j, 3.0, 3.0); // Standard size for client nodes
+        }
+    }
+  // ========================= \NetAnim Section =========================
+
   Simulator::Stop (Seconds (1000000.0));
   NS_LOG_UNCOND ("================= Starting Ns3 Round Simulation ===================");
-
   Simulator::Run ();
 
   TimeValue endTime;
@@ -437,10 +378,14 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
           int id = m_addrMap[itr.first];
 
           NS_LOG_UNCOND ("ID " << id << "  ,ADDRESS: " << itr.first
-                               << " ,Round DownlinkTime=" << itr.second.downlinkTime
-                               << " ,Round ComputationTime=" << itr.second.computationTime
-                               << " ,Round UplinkTime=" << itr.second.uplinkTime
-                               << "s ,Round Throughput= " << itr.second.throughput << "kbps");
+                               << "| DownlinkTime= " << std::fixed << std::setprecision (2)
+                               << itr.second.downlinkTime << "s"
+                               << "| ComputationTime= " << std::fixed << std::setprecision (2)
+                               << itr.second.computationTime << "s"
+                               << "| UplinkTime= " << std::fixed << std::setprecision (2)
+                               << itr.second.uplinkTime << "s"
+                               << "| Round Throughput= " << std::fixed << std::setprecision (2)
+                               << itr.second.throughput << "kbps");
 
           roundStats[id].throughput = itr.second.throughput;
           roundStats[id].downlinkTime = itr.second.downlinkTime;
@@ -453,3 +398,84 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
 }
 
 } // namespace ns3
+
+// NetDeviceContainer
+// Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients)
+// {
+
+//   WifiHelper wifi;
+//   WifiMacHelper wifiMac;
+//   YansWifiPhyHelper wifiPhy;
+//   YansWifiChannelHelper wifiChannel = YansWifiChannelHelper ();
+
+//   // wifiPhy.Set ("TxGain", DoubleValue (m_txGain)); //-23.5) );
+
+//   wifiPhy.SetErrorRateModel ("ns3::YansErrorRateModel");
+//   // phyHelper.Set("TxPowerStart", DoubleValue(m_txGain)); // Transmission power
+//   // phyHelper.Set("TxPowerEnd", DoubleValue(m_txGain));
+
+//   //90 Weak Network
+//   //70 Medium
+//   //30 Stong
+//   //double trigger = 30.0;
+
+//   Ptr<UniformRandomVariable> expVar = CreateObjectWithAttributes<UniformRandomVariable> (
+//       "Min", DoubleValue (m_txGain), "Max", DoubleValue (m_txGain + 30));
+
+//   wifiChannel.AddPropagationLoss ("ns3::RandomPropagationLossModel", "Variable",
+//                                   PointerValue (expVar));
+
+//   wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
+//   //wifiChannel.SetPropagationDelay("ns3::RandomPropagationDelayModel", "Variable", StringValue ("ns3::UniformRandomVariable[Min=0|Max=2]"));
+
+//   // std::string phyMode ("DsssRate11Mbps"); -- slower
+//   // Direct Sequence Sepread Spectrum. This modulation technique spreads the signal into  a wider frequency band than the original data bandwidth.
+//   // It offers benefits like resistance to interference and improved signal reception quality.
+//   // the above may be obsolete try using the following
+//   // VhtMcs8 -- faster or HtMc7
+//   std::string phyMode (
+//       "HtMcs7"); // better throughputs up to 150 Mbs than first(Up to 11Mbps) slower than second(1Gbps). Good for lab environment
+
+//   // Fix non-unicast data rate to be the same as that of unicast
+//   Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (phyMode));
+//   // wifi.SetStandard (WIFI_STANDARD_80211b);
+//   wifi.SetStandard (WIFI_STANDARD_80211n_5GHZ);
+
+//   // This is one parameter that matters when using FixedRssLossModel
+//   // set it to zero; otherwise, gain will be added
+//   wifiPhy.Set ("RxGain", DoubleValue (0));
+
+//   // ns-3 supports RadioTap and Prism tracing extensions for 802.11b
+//   //   wifiPhy.SetPcapDataLinkType(WifiPhyHelper::DLT_IEEE802_11_RADIO);
+
+//   wifiPhy.SetChannel (wifiChannel.Create ());
+
+//   // Add a mac and disable rate control
+//   // The manager below has constant rate. So I try MinstrelHtWifiManager
+//   // Designed for high throughput nets and changes the sending rate. Try and see
+//   // how it responds.
+//   // wifi.SetRemoteStationManager ("ns3::MinstrelHtWifiManager");
+//   wifi.SetRemoteStationManager ("ns3::ConstantRateWifiManager", "DataMode", StringValue ("HtMcs7"),
+//                                 "ControlMode", StringValue ("HtMcs0"));
+//   // Set it to adhoc mode
+//   wifiMac.SetType ("ns3::AdhocWifiMac");
+
+//   NetDeviceContainer devices = wifi.Install (wifiPhy, wifiMac, c);
+
+//   MobilityHelper mobility;
+//   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
+//   mobility.Install (c);
+
+//   int numClients = clients.size ();
+//   for (int j = 1; j <= numClients; j++)
+//     {
+//       if (clients[j - 1]->GetInRound ())
+//         {
+
+//           Experiment::SetPosition (c.Get (j), clients[j - 1]->GetRadius (),
+//                                    clients[j - 1]->GetTheta ());
+//         }
+//     }
+
+//   return devices;
+// }

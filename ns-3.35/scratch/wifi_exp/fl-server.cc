@@ -126,12 +126,15 @@ Server::StartApplication () // Called at time specified by Start
         {
           NS_FATAL_ERROR ("Failed to bind socket");
         }
+      NS_LOG_UNCOND ("Accept is called from server " << Simulator::Now ().GetSeconds ());
+
       if (m_socket->Listen () == -1)
         {
           NS_FATAL_ERROR ("Failed to listen socket");
         }
     }
 
+  NS_LOG_UNCOND ("Start Server " << Simulator::Now ().GetSeconds ());
   m_socket->SetRecvCallback (MakeCallback (&Server::ReceivedDataCallback, this));
   m_socket->SetAcceptCallback (MakeCallback (&Server::ConnectionRequestCallback, this),
                                MakeCallback (&Server::NewConnectionCreatedCallback, this));
@@ -210,19 +213,22 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
           auto endDownlink =
               itr->second->m_timeEndSendingModelToClient.GetSeconds () + m_timeOffset.GetSeconds ();
 
-          auto energy = FLEnergy ();
-          // NS_LOG_UNCOND ("To Setup ");
+          // Not using energy in thiis experiment
+          // auto energy = FLEnergy ();
+          // // NS_LOG_UNCOND ("To Setup ");
 
-          energy.SetDeviceType (m_deviceType);
-          energy.SetLearningModel (m_modelType);
-          energy.SetEpochs (1);
-          double compEnergy = energy.CalcComputationalEnergy (beginUplink - endDownlink);
-          double tranEnergy = energy.CalcTransmissionEnergy (endUplink - beginUplink);
+          // energy.SetDeviceType (m_deviceType);
+          // energy.SetLearningModel (m_modelType);
+          // energy.SetEpochs (1);
+          // double compEnergy = energy.CalcComputationalEnergy (beginUplink - endDownlink);
+          // double tranEnergy = energy.CalcTransmissionEnergy (endUplink - beginUplink);
           // Uncomment to see energy consumption
           // NS_LOG_UNCOND ("Energy: " << energy.GetA ());
-          fprintf (m_fp, "%i,%u,%f,%f,%f,%f,%f,%f\n", m_round,
-                   m_clientSessionManager->ResolveToIdFromServer (socket), beginUplink, endUplink,
-                   beginDownlink, endDownlink, compEnergy, tranEnergy);
+          fprintf (m_fp,
+                   "Round: %i, Id: %u, beginUplink: %f, endUplink: %f, beginDownlink "
+                   "%f,endDownlink: %f,\n",
+                   m_round, m_clientSessionManager->ResolveToIdFromServer (socket), beginUplink,
+                   endUplink, beginDownlink, endDownlink);
           fflush (m_fp);
 
           if (m_bAsync)
@@ -281,24 +287,29 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
       socket->GetSockName (localAddress);
     }
-  // NS_LOG_UNCOND ("Out of loop");
 }
 
 void
 Server::HandlePeerClose (Ptr<Socket> socket)
 {
+  NS_LOG_UNCOND ("Peer Close " << Simulator::Now ().GetSeconds ());
+
   NS_LOG_FUNCTION (this << socket);
 }
 
 void
 Server::HandlePeerError (Ptr<Socket> socket)
 {
+  NS_LOG_UNCOND ("Peer Error " << Simulator::Now ().GetSeconds ());
+
   NS_LOG_FUNCTION (this << socket);
 }
 
 bool
 Server::ConnectionRequestCallback (Ptr<Socket> socket, const Address &address)
 {
+  NS_LOG_UNCOND ("Connection Request " << Simulator::Now ().GetSeconds ());
+
   NS_LOG_FUNCTION (this << socket << address);
   return true;
 }
@@ -306,12 +317,15 @@ Server::ConnectionRequestCallback (Ptr<Socket> socket, const Address &address)
 void
 Server::NewConnectionCreatedCallback (Ptr<Socket> socket, const Address &from)
 {
+  NS_LOG_UNCOND ("New Conection on server " << Simulator::Now ().GetSeconds ());
+
   NS_LOG_FUNCTION (this << socket << from);
   auto clientSession = std::make_shared<ClientSessionData> ();
 
   auto nsess = m_socketList.insert (std::make_pair (socket, clientSession));
   nsess.first->second->m_address = from;
   socket->SetRecvCallback (MakeCallback (&Server::ReceivedDataCallback, this));
+
   StartSendingModel (socket);
 
   NS_LOG_UNCOND ("Accept:" << m_clientSessionManager->ResolveToIdFromServer (socket));

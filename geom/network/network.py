@@ -146,23 +146,6 @@ class Network(object):
             cwd=self.path,
         )
 
-        # # Read and print output and errors
-        # while True:
-        #     output = proc.stdout.readline()
-        #     if output == "" and proc.poll() is not None:
-        #         break
-        #     if output:
-        #         print(output.strip())
-
-        # rc = proc.poll()
-        # print(f"Process exited with code {rc}")
-
-        # if proc.returncode != 0:
-        #     print("Error Occured executing command")
-        #     exit(-1)
-
-        # print("Execution completed successfully")
-
     def is_configured(self) -> bool:
         # Path to a file or directory that indicates configuration is done
         config_marker = os.path.join(self.path, "build/config.log")
@@ -228,12 +211,19 @@ class Network(object):
         command, nItems = struct.unpack("II", resp)
         ret = {}
         for i in range(nItems):
-            dr = self.socket.recv(8 * 5)
-            eid, throughput, downlinkTime,computationTime, uplinkTime,  = struct.unpack(
-                "Qdddd", dr
-            )
-            
-            temp = {"downlinkTime": downlinkTime, "computationTime": computationTime,"uplinkTime": uplinkTime, "throughput": throughput}
+            dr = self.socket.recv(8 * 4)
+            (
+                eid,
+                throughput,
+                downlinkTime,
+                uplinkTime,
+            ) = struct.unpack("Qddd", dr)
+
+            temp = {
+                "downlinkTime": downlinkTime,
+                "uplinkTime": uplinkTime,
+                "throughput": throughput,
+            }
             ret[eid] = temp
         print("Response received")
 

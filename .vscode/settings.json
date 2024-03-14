@@ -68,5 +68,19 @@
         "typeinfo": "cpp",
         "future": "cpp",
         "variant": "cpp"
+    },
+    "search.exclude": {
+        "**/build": true,
+        "**/.git": true,
+        "**/examples": true,
+        "**/test": true,
+        "**/netanim-3.108": true
+
+        // Add any other directories you want to exclude from search
+    },
+    "files.exclude": {
+        "**/build": true,
+        "**/.git": true,
+        // Add any other directories you want to exclude from the Explorer view
     }
 }

@@ -292,6 +292,7 @@ class CustomModel(tf.keras.Model):
         validation_data=None,
         callbacks=[],
     ):
+        start_fit = time.time()
         batches_in_epoch = 0
         # Convert data to a tf.data.Dataset
         train_dataset = train_dataset.batch(batch_size)
@@ -360,6 +361,7 @@ class CustomModel(tf.keras.Model):
             for callback in callbacks:
                 callback.on_epoch_end(epoch)
 
+            computation_time = time.time() - start_fit
             if validation_data is not None:
                 print(f"========================= Validation =========================")
                 # Run a validation loop at the end of each epoch.
@@ -373,7 +375,7 @@ class CustomModel(tf.keras.Model):
                     f"Validation Avg Results\t Loss:{float(val_loss)}\t Accuracy: {float(val_acc):.4f}"
                 )
 
-        return batches_in_epoch, batch_pointer, l2_norm_val
+        return batches_in_epoch, batch_pointer, l2_norm_val, computation_time
 
     def reset_train_metrics(self):
         self.train_loss_tracker.reset_states()

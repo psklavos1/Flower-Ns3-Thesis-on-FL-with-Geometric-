@@ -103,17 +103,8 @@ class FedAvgWithGeometric(FedAvg):
             for id, data_dict in self.ns3_res.items():
                 if self.monitor.get_cid(id) == client.cid:
                     res.metrics.update(data_dict)
-
-        # empty_metrics = {
-        #     "done_processing": False,
-        #     "l2_norm": 0,
-        #     "roundTime": 0,
-        #     "throughput": 0,
-        #     "dropout": 1,
-        # }
-        # empty_parameters = Parameters(tensors=[], tensor_type="empty parameter")
-        # for i in range(len(self.dropouts)):
-        #     failures.append((DropoutException))
+                    # ? Not beutiful way to handle dropout, but fastest solution to keep track
+                    res.metrics["dropout"] = len(self.dropouts)
 
         return super().aggregate_fit(server_round, results, failures)
 
@@ -142,16 +133,6 @@ class FedAvgWithGeometric(FedAvg):
         ns3_res = ns3_round.round_exec(self.t_start)
         print("================================================================")
 
-        max_round_time = max(
-            entry["downlinkTime"] + entry["uplinkTime"] + entry["computationTime"]
-            for entry in ns3_res.values()
-        )
-        self.t_end = self.t_start + max_round_time
-
-        # TODO Fix Time
-        ns3_round.update_aggregate_time()
-        # Preparation for next round
-        self.t_start = self.t_end
         return ns3_res
 
 
@@ -193,6 +174,7 @@ def get_eval_config_fn(config: DictConfig):
 def metric_handlig(data):
     # data: Tuple (int: num_samples, dict: results from aggregate_fit)
     # (1600, {'done_processing': False, 'l2_norm': 25.036333084106445, 'roundTime': 10.78390491, 'throughput': 1179.1668024261412, 'dropout': 0})
+
     count_data = len(data)
     # l2_norm
     l2_norm_sum = sum(res_dict["l2_norm"] for _, res_dict in data)
@@ -211,14 +193,14 @@ def metric_handlig(data):
     )
 
     # avg computation time
-    computation_time_sum = sum(res_dict["computationTime"] for _, res_dict in data)
+    computation_time_sum = sum(res_dict["computation_time"] for _, res_dict in data)
     avg_computation_time = (
         float(computation_time_sum / count_data) if count_data > 0 else float("nan")
     )
-
     # round time
+    # TODO: add time tracking componennt for training only
     round_time = max(
-        res_dict["downlinkTime"] + res_dict["computationTime"] + res_dict["uplinkTime"]
+        res_dict["downlinkTime"] + res_dict["computation_time"] + res_dict["uplinkTime"]
         for _, res_dict in data
     )
 
@@ -228,6 +210,9 @@ def metric_handlig(data):
         float(total_throughput / count_data) if count_data > 0 else float("nan")
     )
 
+    # Dropouts
+    total_dropouts = data[0][1]["dropout"]
+
     return {
         "average_norm": avg_l2_norm,
         "round_time": round_time,
@@ -235,6 +220,7 @@ def metric_handlig(data):
         "average_computation_time": avg_computation_time,
         "average_uplink_time": avg_uplink_time,
         "average_throughput": avg_throughput,
+        "dropouts": total_dropouts,
     }
 
 

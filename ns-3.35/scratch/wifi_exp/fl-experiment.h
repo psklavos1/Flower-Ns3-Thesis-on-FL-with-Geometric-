@@ -36,6 +36,9 @@
 #include "ns3/packet-socket-address.h"
 #include "flwr-interface.h"
 #include "fl-client-session.h"
+#include "ns3/netanim-module.h"
+#include "fl-server.h"
+
 
 #include <memory>
 #include <string>
@@ -65,7 +68,7 @@ namespace ns3 {
 
         */
         Experiment(int numClients, std::string &networkType, int maxPacketSize, double txGain, std::string &modelType, double modelSize,
-                   std::string &dataRate,std::string &deviceType, bool bAsync, FlwrProvider *pFlwrProvider, FILE *fp,  std::vector<double> server_coordinates,
+                   std::string &dataRate,std::string &deviceType,bool bAsync, FlwrProvider *pFlwrProvider, FILE *fp,  std::vector<double> server_coordinates,
         int round);
 
         /**
@@ -74,9 +77,8 @@ namespace ns3 {
         * \param timeOffset        Async, make timeline between rounds continious
         * \return                  map of <client id, message>, messages to send back to flower for each client
         */
-        //TODO: Change to run and change packet recieved
         std::map<int, FlwrProvider::Message>
-        WeakNetwork(std::map<int, std::shared_ptr<ClientSession> > &packetsReceived, ns3::Time &timeOffset);
+        Run_Round(std::map<int, std::shared_ptr<ClientSession> > &clients, ns3::Time &timeOffset);
 
     private:
         /**
@@ -111,6 +113,19 @@ namespace ns3 {
         * \brief Sets up ethernet network
         */
         NetDeviceContainer Ethernet(NodeContainer &c, std::map<int, std::shared_ptr<ClientSession> > &clients);
+
+        NetDeviceContainer SetupDevices(NodeContainer& c, std::map<int, std::shared_ptr<ClientSession>>& clients);
+        Ipv4InterfaceContainer SetupInternetStack(NodeContainer& c, NetDeviceContainer& devices);
+        Ptr<Server> SetupServer (Ptr<Node> server, Ipv4InterfaceContainer &interfaces, ns3::Time &timeOffset, 
+            double start_time, double stop_time);
+        ApplicationContainer SetupClients (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients,
+                          Ipv4InterfaceContainer &interfaces, std::map<Ipv4Address, int> &m_addrMap,
+                          ns3::Time &timeOffset, double start_time, double stop_time);
+        AnimationInterface ConfigureAnimation(NodeContainer &c,double start_time);
+        void ExtractDownlinkResults(std::map<int, std::shared_ptr<ClientSession>> &clients, Ipv4InterfaceContainer &interfaces, std::map<Ipv4Address, FlwrProvider::Message> &stats);
+        void ExtractUplinkResults(Ptr<Server> server, std::map<Ipv4Address, FlwrProvider::Message> &stats);
+        std::map<int, FlwrProvider::Message> ProcessResults(std::map<Ipv4Address, int> m_addrMap,std::map<Ipv4Address, FlwrProvider::Message> &stats);
+
 
         int m_numClients;                 //!< Number of clients in experiment
         std::string m_networkType;        //!< Network type

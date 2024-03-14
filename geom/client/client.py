@@ -90,7 +90,12 @@ class FlexibleClient(fl.client.NumPyClient):
         self.model.resume_train()
 
         # Train the local model
-        batches_in_epoch, self.batch_pointer, l2_norm = self.model.fit(
+        (
+            batches_in_epoch,
+            self.batch_pointer,
+            l2_norm,
+            computation_time,
+        ) = self.model.fit(
             self.local_trainset,
             epochs=num_epochs,
             batch_size=batch_size,
@@ -101,6 +106,7 @@ class FlexibleClient(fl.client.NumPyClient):
         )
         processed_samples = batches_in_epoch * self.batch_pointer
         metrics["l2_norm"] = l2_norm
+        metrics["computation_time"] = computation_time
         return self.model.get_weights(), processed_samples, metrics
 
     def evaluate(self, parameters, config):

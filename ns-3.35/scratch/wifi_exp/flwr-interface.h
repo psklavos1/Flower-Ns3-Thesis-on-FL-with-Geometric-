@@ -61,7 +61,6 @@ namespace ns3 {
             uint64_t id;
             double throughput;
             double downlinkTime;
-            double computationTime;
             double uplinkTime;
 
         };

@@ -18,6 +18,9 @@
  * Author: Emily Ekaireb <eekaireb@ucsd.edu>
  */
 #include "flwr-interface.h"
+#include "ns3/log.h"
+
+NS_LOG_COMPONENT_DEFINE ("Flower-Interface");
 
 namespace ns3 {
 void
@@ -119,8 +122,18 @@ FlwrProvider::send (AsyncMessage *pMessage)
   COMMAND r;
   r.command = COMMAND::Type::RESPONSE;
   r.nItems = 1;
-  write (m_new_socket, (char *) &r, sizeof (r));
-  write (m_new_socket, pMessage, sizeof (AsyncMessage));
+
+  if (write (m_new_socket, (char *) &r, sizeof (r)) == -1)
+    {
+      // Handle the error, for example, print a message or throw an exception
+      NS_LOG_ERROR ("Write to socket failed: " << strerror (errno));
+    }
+
+  if (write (m_new_socket, pMessage, sizeof (AsyncMessage)) == -1)
+    {
+      // Handle the error, for example, print a message or throw an exception
+      NS_LOG_ERROR ("Write to socket failed: " << strerror (errno));
+    }
 }
 
 void
@@ -129,7 +142,11 @@ FlwrProvider::end ()
   COMMAND r;
   r.command = COMMAND::Type::ENDSIM;
   r.nItems = 0;
-  write (m_new_socket, (char *) &r, sizeof (r));
+  if (write (m_new_socket, (char *) &r, sizeof (r)) == -1)
+    {
+      // Handle the error, for example, print a message or throw an exception
+      NS_LOG_ERROR ("Write to socket failed: " << strerror (errno));
+    }
 }
 
 void
@@ -140,13 +157,21 @@ FlwrProvider::send (std::map<int, Message> &roundStats)
   COMMAND r;
   r.command = COMMAND::Type::RESPONSE;
   r.nItems = roundStats.size ();
-  write (m_new_socket, (char *) &r, sizeof (r));
+  if (write (m_new_socket, (char *) &r, sizeof (r)) == -1)
+    {
+      // Handle the error, for example, print a message or throw an exception
+      NS_LOG_ERROR ("Write to socket failed: " << strerror (errno));
+    }
 
   for (auto it = roundStats.begin (); it != roundStats.end (); it++)
     {
       Message &temp = it->second;
       temp.id = it->first;
-      write (m_new_socket, (char *) &it->second, sizeof (Message));
+      if (write (m_new_socket, (char *) &it->second, sizeof (Message)) == -1)
+        {
+          // Handle the error, for example, print a message or throw an exception
+          NS_LOG_ERROR ("Write to socket failed: " << strerror (errno));
+        }
     }
 
   roundStats.clear ();

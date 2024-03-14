@@ -73,7 +73,7 @@ printCoordinatesArray (vector<vector<double>> coord_array, int numEntries)
               else
                 {
 
-                  std::cout << "Client_" << i << ": (" << std::setw (6) << std::left
+                  std::cout << "Client_" << i - 1 << ": (" << std::setw (6) << std::left
                             << coord_array[i][0] << ", " << std::setw (6) << std::left
                             << coord_array[i][1] << ") " << std::setw (20) << std::right
                             << "-> Distance From Server: " << std::setw (6) << std::left
@@ -146,7 +146,7 @@ print_dataRates (char **dataRates, int numEntries)
     {
       for (int i = 0; i < numEntries; i++)
         {
-          printf ("%s\n", dataRates[i]);
+          printf ("Client_%d: %s\n", i, dataRates[i]);
         }
     }
   printf ("======================================================\n");

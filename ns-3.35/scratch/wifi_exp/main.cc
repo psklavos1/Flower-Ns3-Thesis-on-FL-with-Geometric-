@@ -130,14 +130,9 @@ main (int argc, char *argv[])
   std::strftime (buf, sizeof (buf), "%Y-%m-%d_%H-%H-%S.csv", std::localtime (&now));
 
   char strbuff[100];
-  snprintf (strbuff, 99, "%s_%s_%.2f_%s", learningModel.c_str (), networkType.c_str (), TxGain,
-            buf);
+  snprintf (strbuff, 99, "%s_%s_%d_%s", networkType.c_str (), modelType.c_str (), numClients, buf);
 
   FILE *fp = fopen (strbuff, "w");
-
-  std::default_random_engine generator;
-  std::uniform_real_distribution<double> r_dist (1.0, 4.0);
-  //std::uniform_real_distribution<double> t_dist(0,1.0);
 
   // Generate Coordinates
   std::string node_coordinates_file_name = "./scratch/wifi_exp/node_coordinates.txt";
@@ -148,15 +143,12 @@ main (int argc, char *argv[])
   char **client_dataRates = read_dataRates (dataRates_file_name, numClients);
   print_dataRates (client_dataRates, numClients);
   int server = 0;
-  int x;
-  int y;
+
   for (int j = 0; j < numClients; j++)
     {
       char *client_dataRate = client_dataRates[j];
-      x = coord_array[j + 1][0];
-      y = coord_array[j + 1][1];
-      // NS_LOG_UNCOND ("INIT: ID = " << j << " Distance from server = "
-      //                              << getDistance (coord_array[j + 1], coord_array[server]));
+      int x = coord_array[j + 1][0];
+      int y = coord_array[j + 1][1];
       g_clients[j] = std::shared_ptr<ClientSession> (new ClientSession (j, x, y, client_dataRate));
     }
   ns3::Time timeOffset (0);
@@ -169,8 +161,7 @@ main (int argc, char *argv[])
   int round = 0;
 
   while (true)
-    {
-
+    { // Repetitive setup as at each round in used Simulator::Destroy that cleans up the setup to avoid leaks
       round++;
 
       if (FlwrProvider)
@@ -189,14 +180,10 @@ main (int argc, char *argv[])
                       dataRate, deviceType, bAsync, FlwrProvider, fp, coord_array[server], round
 
           );
-      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nBefore: " << timeOffset
-                                                           << "\n"
-                                                              ">>>>>>>>>>>>>>>>>>>>>>>>>");
-      auto roundStats = experiment.WeakNetwork (g_clients, timeOffset);
 
-      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nTIME_OFFSET:" << timeOffset
-                                                               << "\n"
-                                                                  ">>>>>>>>>>>>>>>>>>>>>>>>>");
+      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>> Start >>>>>>>>>>>>>>>>>>>>>>>>>");
+      auto roundStats = experiment.Run_Round (g_clients, timeOffset);
+      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>> End >>>>>>>>>>>>>>>>>>>>>>>>>");
 
       if (FlwrProvider && !bAsync)
         {

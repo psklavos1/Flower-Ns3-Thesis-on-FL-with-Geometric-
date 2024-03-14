@@ -160,7 +160,7 @@ void
 ClientApplication::ConnectionSucceeded (Ptr<Socket> socket)
 {
 
-  NS_LOG_UNCOND ("Client Connected");
+  NS_LOG_UNCOND ("Client Connected: " << Simulator::Now ().GetSeconds () << "s");
   socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
 
   m_bytesModelToReceive = m_bytesModel;
@@ -199,14 +199,13 @@ ClientApplication::HandleRead (Ptr<Socket> socket)
           NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " "
                                    << "recv full model");
 
-          //
-          //Todo[] Add a meaningful delay
-          auto energy = FLEnergy ();
-          energy.SetDeviceType (m_deviceType);
-          energy.SetLearningModel (m_learningModel);
-          energy.SetEpochs (1);
-          Simulator::Schedule (Seconds (energy.CalcComputationTime ()),
-                               &ClientApplication::StartWriting, this);
+          // At this moment not using computational time calculations because of Lab setup complexity
+          // auto energy = FLEnergy ();
+          // energy.SetDeviceType (m_deviceType);
+          // energy.SetLearningModel (m_learningModel);
+          // energy.SetEpochs (1);
+          // Let some seconds in simulator just to showcase that there would have been a computation round
+          Simulator::Schedule (Seconds (20), &ClientApplication::StartWriting, this);
           // NS_LOG_UNCOND ("Schedule Start Writing Client");
         }
     }
@@ -226,6 +225,7 @@ void
 ClientApplication::ConnectionFailed (Ptr<Socket> socket)
 {
   NS_LOG_UNCOND ("Not Connected ..." << socket->GetNode ()->GetId () - 1);
+
 }
 
 ClientApplication::~ClientApplication ()
@@ -264,10 +264,14 @@ ClientApplication::StartApplication (void)
   m_socket->Bind ();
   m_socket->Connect (m_peer);
 
+
   m_timeBeginReceivingModelFromServer = Simulator::Now ();
+  NS_LOG_UNCOND ("Application Client Started" << Simulator::Now ().GetSeconds ());
 
   m_socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
 }
+
+
 
 void
 ClientApplication::StopApplication (void)

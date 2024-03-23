@@ -10,7 +10,6 @@ from server.flower_server import FlowerServer
 from server.metric_server import MetricServer
 from utils.monitor import Monitor
 
-
 @hydra.main(config_path="conf", config_name="server", version_base="1.1")
 def server_main(cfg: DictConfig):
     print("\n\n=================== Server Config File ===================\n")

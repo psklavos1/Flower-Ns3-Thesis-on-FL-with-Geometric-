@@ -1,14 +1,9 @@
 ns3:
-  sleep: 4
   tcp_ip: "127.0.0.1"
   port: 8080
   path: "../../ns-3.35/"
   program: "wifi_exp"
-  visualize: False
-  clients: 
-    total: ${num_clients}
-    for_fit: 3
-    for_eval: 2
+  visualize: False # To Run PyVis for replication(Not working well in parallel with sim. Prefer NetAnim)
   network_type: "wifi" 
   network:
     wifi:
@@ -16,8 +11,9 @@ ns3:
       max_packet_size: 1024
     ethernet:
       max_packet_size: 1024
-  model_type: ${dataset}
-  model:
+  model_type: ${dataset} # Used merged in server.yaml to load together. 
+  
+  model: # Approximation of serialized model sizes
     mnist:
       size: 1400.00
     fashion_mnist:
@@ -26,6 +22,7 @@ ns3:
       size: 5000.00
     cifar100:
       size: 70000.00
-  data_rate: "80Mbps"
+  
+  # Not being utilized currently
   device_type: "400"
   server: "sync"

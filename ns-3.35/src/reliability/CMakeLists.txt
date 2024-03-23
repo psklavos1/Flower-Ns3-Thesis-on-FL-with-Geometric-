@@ -29,4 +29,4 @@ set(header_files
 set(libraries_to_link ${libcore} )
 
 
-build_lib("${name}" "${source_files}" "${header_files}" "${libraries_to_link}" "")
+# build_lib("${name}" "${source_files}" "${header_files}" "${libraries_to_link}" "")

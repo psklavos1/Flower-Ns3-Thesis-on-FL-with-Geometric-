@@ -13,23 +13,24 @@
 using namespace std;
 
 vector<vector<double>>
-readCoordinatesFile (string node_coordinates_file_name)
+readCoordinates (string node_coordinates_file_name, int numEntries)
 {
-  ifstream node_coordinates_file;
-  node_coordinates_file.open (node_coordinates_file_name.c_str (), ios::in);
+  ifstream node_coordinates_file (node_coordinates_file_name.c_str (), ios::in);
   if (node_coordinates_file.fail ())
     {
       throw runtime_error ("File " + node_coordinates_file_name + " not found");
     }
   vector<vector<double>> coord_array;
 
-  while (!node_coordinates_file.eof ())
+  string line;
+  int readEntries = 0; // Counter for the number of entries read
+
+  // Read lines from the file up to numEntries or until no more lines are available
+  while (getline (node_coordinates_file, line) && readEntries < numEntries)
     {
-      string line;
-      getline (node_coordinates_file, line);
       if (line.empty ())
         {
-          break;
+          break; // Exit if an empty line is encountered
         }
 
       istringstream iss (line);
@@ -48,6 +49,7 @@ readCoordinatesFile (string node_coordinates_file_name)
       else
         {
           coord_array.push_back (row);
+          ++readEntries; // Increment the counter since a valid entry was added
         }
     }
 
@@ -56,13 +58,13 @@ readCoordinatesFile (string node_coordinates_file_name)
 }
 
 void
-printCoordinatesArray (vector<vector<double>> coord_array, int numEntries)
+printCoordinates (vector<vector<double>> coord_array)
 {
   printf ("===================== Coordinates ====================\n");
   if (!coord_array.empty ())
     {
-      std::cout << std::fixed << std::setprecision (2);
-      for (int i = 0; i <= numEntries; ++i)
+      cout << fixed << setprecision (2);
+      for (size_t i = 0; i < coord_array.size (); ++i)
         {
           if (!coord_array[i].empty ())
             {
@@ -72,12 +74,19 @@ printCoordinatesArray (vector<vector<double>> coord_array, int numEntries)
                 }
               else
                 {
+<<<<<<< Updated upstream
 
                   std::cout << "Client_" << i << ": (" << std::setw (6) << std::left
                             << coord_array[i][0] << ", " << std::setw (6) << std::left
                             << coord_array[i][1] << ") " << std::setw (20) << std::right
                             << "-> Distance From Server: " << std::setw (6) << std::left
                             << getDistance (coord_array[i], coord_array[0]) << "\n";
+=======
+                  cout << "Client_" << i - 1 << ": (" << setw (6) << left << coord_array[i][0]
+                       << ", " << setw (6) << left << coord_array[i][1] << ") " << setw (20)
+                       << right << "-> Distance From Server: " << setw (6) << left
+                       << getDistance (coord_array[i], coord_array[0]) << "\n";
+>>>>>>> Stashed changes
                 }
             }
         }
@@ -93,54 +102,33 @@ getDistance (std::vector<double> node, std::vector<double> refNode)
   return sqrt (deltaX * deltaX + deltaY * deltaY);
 }
 
-#define MAX_STRING_LENGTH 10
-
-char **
-read_dataRates (const char *filePath, int numEntries)
+std::vector<std::string>
+readDataRates (std::string filename, int numEntries)
 {
-  char **dataRates =
-      (char **) malloc (numEntries * sizeof (char *)); // Allocate array of string pointers
-  FILE *file;
-  char buffer[MAX_STRING_LENGTH];
-  int i = 0;
+  std::vector<std::string> dataRates;
+  std::ifstream file (filename);
+  std::string buffer;
 
-  // Open the file
-  file = fopen (filePath, "r");
-  if (file == NULL)
+  if (!file)
     {
-      perror ("Error opening file");
-      free (dataRates); // Clean up allocated memory on error
-      return NULL;
+      std::perror ("Error opening file");
+      return {}; // Return an empty vector
     }
 
-  // Read strings from the file and store them in the array
-  while (i < numEntries && fscanf (file, "%9s", buffer) == 1)
-    { // Read up to STRING_LENGTH - 1 characters
-      dataRates[i] =
-          (char *) malloc (MAX_STRING_LENGTH * sizeof (char)); // Allocate memory for each string
-      if (dataRates[i] == NULL)
-        {
-          perror ("Memory allocation failed for dataRates string");
-          for (int j = 0; j < i; j++)
-            { // Free any previously allocated strings
-              free (dataRates[j]);
-            }
-          free (dataRates);
-          fclose (file);
-          return NULL;
-        }
-
-      strcpy (dataRates[i], buffer); // Copy the string from buffer to the array
-      i++;
+  // Read strings from the file and store them in the vector
+  while (numEntries-- > 0 && file >> buffer)
+    {
+      // Push each read string into the vector
+      dataRates.push_back (buffer);
     }
-  fclose (file);
 
-  return dataRates; // Return the array of strings
+  return dataRates; // Return the vector of strings
 }
 
 void
-print_dataRates (char **dataRates, int numEntries)
+printDataRates (std::vector<std::string> dataRates)
 {
+<<<<<<< Updated upstream
   printf ("===================== Data Rates =====================\n");
   if (dataRates != NULL)
     {
@@ -151,18 +139,23 @@ print_dataRates (char **dataRates, int numEntries)
     }
   printf ("======================================================\n");
 }
+=======
+  std::cout << "===================== Data Rates =====================\n";
+>>>>>>> Stashed changes
 
-void
-clean_dataRates (char **dataRates, int numEntries)
-{
-  if (dataRates != NULL)
+  for (size_t i = 0; i < dataRates.size (); ++i)
     {
-      for (int i = 0; i < numEntries; i++)
+      if (i == 0)
         {
-          free (dataRates[i]);
+          std::cout << "Server: " << dataRates[i] << "\n";
         }
-      free (dataRates);
+      else
+        {
+          std::cout << "Client_" << i - 1 << ": " << dataRates[i] << "\n";
+        }
     }
+
+  std::cout << "======================================================\n";
 }
 
 // Obsolete
@@ -227,7 +220,7 @@ readNxNMatrix (string adj_mat_file_name)
 
 // Function to read coordinates from a file and convert them to polar coordinates
 std::vector<PolarCoordinate>
-readCoordinatesFileToPolar (const std::string &filename)
+readCoordinatesFileToPolar (std::string &filename)
 {
   std::ifstream file (filename);
   std::vector<PolarCoordinate> polarCoordinates;

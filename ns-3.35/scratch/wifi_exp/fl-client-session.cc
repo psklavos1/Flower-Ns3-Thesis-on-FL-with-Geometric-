@@ -1,7 +1,3 @@
-//
-// Created by emily on 1/5/22.
-//
-
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2022 Emily Ekaireb
@@ -26,7 +22,7 @@
 
 namespace ns3 {
 
-ClientSession::ClientSession (int clientID_, double x_, double y_, char *dataRate_)
+ClientSession::ClientSession (int clientID_, double x_, double y_, std::string dataRate_)
     : m_client (nullptr),
       m_x (x_),
       m_y (y_),
@@ -73,6 +69,7 @@ ClientSession::SetCycle (int cycle)
 {
   m_cycle = cycle;
 }
+
 void
 ClientSession::IncrementCycle ()
 {
@@ -91,7 +88,7 @@ ClientSession::GetY ()
   return m_y;
 }
 
-char *
+std::string
 ClientSession::GetDataRate ()
 {
   return m_dataRate;
@@ -103,6 +100,7 @@ ClientSession::GetClientId ()
   return m_clientID;
 }
 
+//-------------------------------- Client Session Manager --------------------------------
 ClientSessionManager::ClientSessionManager (std::map<int, std::shared_ptr<ClientSession>> &inn)
     : m_clientSessionById (inn), m_nInRound (0), m_nInRoundFirstCycleDone (0)
 {

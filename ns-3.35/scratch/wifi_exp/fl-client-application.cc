@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
+ *s
  * Author: Emily Ekaireb <eekaireb@ucsd.edu>
  */
 
 #include "fl-client-application.h"
-
 #include "ns3/internet-module.h"
 #include "fl-energy.h"
 
 namespace ns3 {
+
 NS_LOG_COMPONENT_DEFINE ("ClientApplication");
 NS_OBJECT_ENSURE_REGISTERED (ClientApplication);
 
@@ -90,15 +90,119 @@ ClientApplication::GetTypeId (void)
 }
 
 void
-ClientApplication::NormalClose (Ptr<Socket> socket)
+ClientApplication::Setup (Ptr<Socket> socket, Address address, uint32_t packetSize,
+                          uint32_t nBytesModel, DataRate dataRate, std::string deviceType,
+                          std::string learningModel)
 {
-  NS_LOG_UNCOND (" Close ...");
+  m_socket = socket;
+  m_peer = address;
+  m_packetSize = packetSize;
+  m_bytesModel = nBytesModel;
+  m_dataRate = dataRate;
+  m_deviceType = deviceType;
+  m_learningModel = learningModel;
+}
+
+ClientApplication::~ClientApplication ()
+{
 }
 
 void
-ClientApplication::ErrorClose (Ptr<Socket> socket)
+ClientApplication::StartApplication (void)
 {
-  NS_LOG_UNCOND ("Error Close ...");
+
+  m_model.SetDeviceType ("RaspberryPi");
+  m_model.SetDataSize (DoubleValue (m_bytesModel));
+  m_model.SetPacketSize (DoubleValue (m_packetSize));
+  m_model.SetApplication ("kNN", DoubleValue (m_packetSize));
+
+  // Callbacks for connection
+  m_socket->SetConnectCallback (MakeCallback (&ClientApplication::ConnectionSucceeded, this),
+                                MakeCallback (&ClientApplication::ConnectionFailed, this));
+  // Callbacks for close
+  m_socket->SetCloseCallbacks (MakeCallback (&ClientApplication::NormalClose, this),
+                               MakeCallback (&ClientApplication::ErrorClose, this));
+  // Connect to Server
+  m_socket->Bind ();
+  m_socket->Connect (m_peer);
+
+  m_timeBeginReceivingModelFromServer = Simulator::Now ();
+  NS_LOG_UNCOND ("Client Sent connection Request: " << Simulator::Now ().GetSeconds () << "s.");
+
+  m_socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
+}
+
+void
+ClientApplication::StopApplication (void)
+{
+
+  if (m_sendEvent.IsRunning ())
+    {
+      Simulator::Cancel (m_sendEvent);
+    }
+
+  if (m_socket)
+    {
+      m_socket->Close ();
+    }
+}
+
+void
+ClientApplication::ConnectionSucceeded (Ptr<Socket> socket)
+{
+
+  NS_LOG_UNCOND ("Client Connected: " << Simulator::Now ().GetSeconds () << "s");
+  socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
+
+  m_bytesModelToReceive = m_bytesModel;
+  m_bytesModelToSend = 0;
+
+  NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " " << m_bytesModelToReceive);
+}
+
+void
+ClientApplication::ConnectionFailed (Ptr<Socket> socket)
+{
+  NS_LOG_UNCOND ("Not Connected ..." << socket->GetNode ()->GetId () - 1);
+}
+
+void
+ClientApplication::HandleRead (Ptr<Socket> socket)
+{
+  Ptr<Packet> packet;
+  while ((packet = socket->Recv ()))
+    {
+      if (packet->GetSize () == 0)
+        { //EOF
+          break;
+        }
+
+      if (m_bytesModelReceived % m_bytesModel == 0 && m_bytesModelReceived != 0)
+        {
+          m_timeBeginReceivingModelFromServer = Simulator::Now ();
+        }
+
+      m_bytesModelReceived += packet->GetSize (); //Increment total bytes received
+      m_bytesModelToReceive -= packet->GetSize (); //Decrement bytes expected this round
+
+      if (m_bytesModelToReceive == 0) //All bytes received, start transmitting
+        {
+          m_timeEndReceivingModelFromServer = Simulator::Now ();
+          NS_LOG_UNCOND ("Received whole model :");
+
+          NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " "
+                                   << "recv full model");
+
+          // At this moment not using computational time calculations because of Lab setup complexity
+          // auto energy = FLEnergy ();
+          // energy.SetDeviceType (m_deviceType);
+          // energy.SetLearningModel (m_learningModel);
+          // energy.SetEpochs (1);
+          // Let some seconds in simulator just to showcase that there would have been a computation round
+          Simulator::Schedule (Seconds (20), &ClientApplication::StartWriting, this);
+          // NS_LOG_UNCOND ("Schedule Start Writing Client");
+        }
+    }
 }
 
 void
@@ -106,6 +210,15 @@ ClientApplication::HandleReadyToSend (Ptr<Socket> sock, uint32_t available)
 {
   m_socket->SetSendCallback (MakeNullCallback<void, Ptr<Socket>, uint32_t> ());
   Send (sock);
+}
+
+void
+ClientApplication::StartWriting ()
+{
+  m_bytesModelToSend = m_bytesModel;
+  NS_LOG_UNCOND ("Client Start Sending : " << Simulator::Now ().GetSeconds () << "s");
+
+  Send (m_socket);
 }
 
 void
@@ -157,8 +270,9 @@ ClientApplication::Send (Ptr<Socket> socket)
 }
 
 void
-ClientApplication::ConnectionSucceeded (Ptr<Socket> socket)
+ClientApplication::NormalClose (Ptr<Socket> socket)
 {
+<<<<<<< Updated upstream
 
   NS_LOG_UNCOND ("Client Connected");
   socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
@@ -167,11 +281,15 @@ ClientApplication::ConnectionSucceeded (Ptr<Socket> socket)
   m_bytesModelToSend = 0;
 
   NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " " << m_bytesModelToReceive);
+=======
+  NS_LOG_UNCOND (" Close ...");
+>>>>>>> Stashed changes
 }
 
 void
-ClientApplication::HandleRead (Ptr<Socket> socket)
+ClientApplication::ErrorClose (Ptr<Socket> socket)
 {
+<<<<<<< Updated upstream
 
   Ptr<Packet> packet;
 
@@ -282,6 +400,9 @@ ClientApplication::StopApplication (void)
     {
       //m_socket->Close ();
     }
+=======
+  NS_LOG_UNCOND ("Error Close ...");
+>>>>>>> Stashed changes
 }
 
 } // namespace ns3

@@ -1,12 +1,10 @@
 # third party
-import math
+# import math
 from flwr.server.client_proxy import ClientProxy
-from flwr.server.client_manager import ClientManager
 from flwr.server.strategy import FedAvg
 from flwr.common import (
     FitIns,
     FitRes,
-    EvaluateIns,
     Parameters,
     Metrics,
 )
@@ -17,6 +15,7 @@ from typing import (
     List,
     Tuple,
     Union,
+    Dict,
 )
 
 # local
@@ -28,7 +27,18 @@ from network.ns3_round import Ns3_Round
 
 
 class FedAvgWithGeometric(FedAvg):
-    """Custom FedAvg"""
+    """
+    @extends flwr.server.strategy.FedAvg
+    A custom strategy implementation to manage all the server side actions in each step of the federated learning.
+    In Flower the strategies consist the main tool to modify the functionality and the logic of server side management.
+    This custom implementation used a modified FedAvg logic to include FDA in the functionality. Not all aspects will
+    be preseneted here as further information can be found in the documentation of FedAvg. The methods following are the,
+    ones that where modified in this implementation.
+
+    Methods:
+        configure_fit(server_round, parameters, client_manager):
+        aggregate_fit(server_round, results, failures):
+    """
 
     def __init__(
         self,
@@ -48,16 +58,23 @@ class FedAvgWithGeometric(FedAvg):
             min_evaluate_clients=cfg_clients.for_eval,
             min_available_clients=cfg_clients.total,
         )
-        # TODO careful track time
-        self.t_start = 0.0
-        self.t_end = 0.0
+        # class variables
         self.network = ns3_network
         self.monitor = monitor
         self.metric_client = metric_client
 
-        # * Given From Ns3
+        # Given From Ns3
         self.ns3_res = {}
         self.dropouts = []
+
+    """
+    Class Destructor to clean up grpc channel.
+    """
+
+    def __del__(self):
+        # Clean up the gRPC client
+        if self.metric_client is not None:
+            self.metric_client.close()
 
     def configure_fit(
         self,
@@ -66,10 +83,25 @@ class FedAvgWithGeometric(FedAvg):
         client_manager: CustomClientManager,
     ) -> List[Tuple[ClientProxy, FitIns]]:
 
+        """
+        @override
+        Configures the next round of training.
+        Additional logic applied: The ns3_round simulation is run and in case of a client failing to communicate due to network related issued,
+        the client is dropped and is not participating in the next training round.
+        For more information refer to the flwr.server.strategy documentation.
+
+        Parameters:
+            server_round (int): The server round.
+            parameters(Parameters): model parameters.
+            client_manager (CustomClientManager): The client manager used in the application.
+        Returns:
+            List[Tuple[ClientProxy, FitIns]]: a list containing tuples of client proxies and their respective instructions.
+        """
         fit_clients = super().configure_fit(server_round, parameters, client_manager)
         # Ns3 results
-        self.ns3_res = self.ns3_simulation(fit_clients, server_round)
-        # * If client is a dropout. Dont participate in training
+        self.ns3_res = self._ns3_simulation(fit_clients, server_round)
+
+        #  If client is a dropout. Dont participate in training
         self.dropouts.clear()
         for i, (client_proxy, _) in enumerate(fit_clients):
             if self.ns3_res[self.monitor.get_index(client_proxy.cid)]["dropout"] == 1:
@@ -78,16 +110,23 @@ class FedAvgWithGeometric(FedAvg):
 
         num_fit_clients = len(fit_clients)
         self.monitor.set_fit_clients(num_fit_clients)
+        # self.monitor.set_eval_clients(0)
+
         self.monitor.set_round(server_round)
         return fit_clients
 
-    def configure_evaluate(
-        self, server_round: int, parameters: Parameters, client_manager: ClientManager
-    ) -> List[Tuple[ClientProxy, EvaluateIns]]:
-        ret = super().configure_evaluate(server_round, parameters, client_manager)
-        self.monitor.set_eval_clients(len(ret))
-        self.monitor.set_round(server_round)
-        return ret
+    """
+    @override
+    Aggregates fit results using weighted average.
+    Additional logic for passing in results the ns3 calculated statistics.
+    
+    Parameters:
+        server_round (int): The server round.
+        results (List[Tuple[ClientProxy, FitRes]]): a list containing the tuples of the client proxies along with their results.
+        failures (List[Union[Tuple[ClientProxy, FitRes], BaseException]]: a list containing the tuples of the client proxies along with their results, accompanied by the occured Exception type.
+    Returns:
+        List[Union[Tuple[ClientProxy, FitRes], BaseException]]: a list containing either the resilts or failures depending on the execution's return.
+    """
 
     def aggregate_fit(
         self,
@@ -117,19 +156,25 @@ class FedAvgWithGeometric(FedAvg):
 
         return super().aggregate_fit(server_round, results, failures)
 
-    def __del__(self):
-        # Clean up the gRPC client
-        if self.metric_client is not None:
-            self.metric_client.close()
+    """
+    @override
+    Utility function that prepares and call for an ns3 round simulation.
+    
+    Parameters:
+        fit_clients (List[Tuple[ClientProxy, FitIns]]): The clients used in training.
+        server_round (int): the round.
+        
+    Returns:
+        Dict[int, Dict[str, float]]: A dictionary mapping the client ids to the corresponding dictionary of round
+            resutls of each client.
+    """
 
-    def ns3_simulation(self, fit_clients, server_round):
+    def _ns3_simulation(
+        self, fit_clients: List[Tuple[ClientProxy, FitIns]], server_round: int
+    ) -> Dict[int, Dict[str, float]]:
+
         num_fit_clients = len(fit_clients)
-        # print(num_fit_clients)
-        # input()
-
-        # * clients: is an array of clients that participate in fit
-        # * in the format [0, 2, 3] which is the representation of
-        # * a cid to the format that is used in ns3 [1,0,1,1]
+        # Array of clients participating in training in format [0,4].
         clients = [
             self.monitor.get_index(fit_clients[i][0].cid)
             for i in range(num_fit_clients)
@@ -138,9 +183,9 @@ class FedAvgWithGeometric(FedAvg):
         # ns3 Simulation
         print("===================== NS3 Round Simulation =====================")
         ns3_round = Ns3_Round(self.network, clients, server_round)
-        # The order here is with increasing index.
-        ns3_res = ns3_round.round_exec(self.t_start)
+        ns3_res = ns3_round.round_exec()
         print("================================================================")
+<<<<<<< Updated upstream
 
         max_round_time = max(
             entry["downlinkTime"] + entry["uplinkTime"] + entry["computationTime"]
@@ -152,7 +197,13 @@ class FedAvgWithGeometric(FedAvg):
         ns3_round.update_aggregate_time()
         # Preparation for next round
         self.t_start = self.t_end
+=======
+>>>>>>> Stashed changes
         return ns3_res
+
+
+# ===================================================================================
+# * Custom Exception
 
 
 class DropoutException(Exception):
@@ -166,8 +217,19 @@ class DropoutException(Exception):
         return f"DropoutException: {self.message}"
 
 
-# Out of Class
+# ===================================================================================
+# * Utility Functions to configure the strategy
+
+
 def get_fit_config_fn(config: DictConfig):
+    """
+    Generates the function to get fit_config.
+
+    Parameters:
+        config(DictConfig): Configuration file.
+
+    Returns: The function to be use for fit_config."""
+
     def fit_config_fn(server_round: int):
         ## I could pass the round or change values in config depending on the round
         return {
@@ -180,6 +242,14 @@ def get_fit_config_fn(config: DictConfig):
 
 
 def get_eval_config_fn(config: DictConfig):
+    """
+    Generates the function to get eval_config.
+
+    Parameters:
+        config(DictConfig): Configuration file.
+
+    Returns: The function to be use for eval_config."""
+
     def eval_config_fn(server_round: int):
         ## I could pass the round or change values in config depending on the round
         return {
@@ -190,8 +260,21 @@ def get_eval_config_fn(config: DictConfig):
     return eval_config_fn
 
 
+<<<<<<< Updated upstream
 def metric_handlig(data):
     # data: Tuple (int: num_samples, dict: results from aggregate_fit)
+=======
+def metric_handlig(data: List[Tuple[int, Dict[str, Metrics]]]) -> Dict[str, Metrics]:
+    """
+    The rule on how to aggregate the results coming from the training of all clients in each round.
+
+    Parameters:
+        data (List[Tuple[int, FitRes]]): The tuple of each data entry contains first the number of samples and second a dict with all the metrics.
+
+    Returns:
+        Dict[str, Metrics]: the aggregated metrics.
+    """
+>>>>>>> Stashed changes
     # (1600, {'done_processing': False, 'l2_norm': 25.036333084106445, 'roundTime': 10.78390491, 'throughput': 1179.1668024261412, 'dropout': 0})
     count_data = len(data)
     # l2_norm

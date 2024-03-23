@@ -1,10 +1,24 @@
-from network.network import Network
-from typing import List
+# built-in
+from typing import (
+    Dict,
+    List,
+)
+
+# local
+from .network import Network
 
 
 class Ns3_Round:
-    def __init__(self, network: Network, clients: List[int], round: int) -> None:
-        # Statistics derived from ns3
+    """
+    Keep track of an Ns3 Round.
+
+    Methods:
+        round_exec(): Calls for an Ns3 round execution and returns the resutls.
+        getters: to retrieve various round statistics.
+    """
+
+    def __init__(self, network: Network, clients: List, round: int):
+        # Class variables
         self.round = round
         self.network = network
         self.throughputs = []
@@ -12,17 +26,21 @@ class Ns3_Round:
         self.dropouts = []
         self.clients = clients
         self.processed_clients = []
-        self.total_round_time = 0.0
         self.avg_throughput = 0.0
-        self.start_time = 0.0
-        self.aggregate_time = 0.0
 
-    def round_exec(self, t_start) -> float:
+    # ===============================================================================
 
-        # {0: {'roundTime', 'throughput', 'dropout'}, ...}
+    def round_exec(self) -> Dict[int, Dict[str, float]]:
+        """
+        Call for an Ns3 round execution and returns the resutls utilizing the socket
+        connection between ns3 and flower.
+
+        Returns:
+            A dictionary mapping the client ids to the corresponding dictionary of round
+            resutls of each client.
+        """
         ret_dict = {}
-        self.start_time = t_start
-        # parse: init format[0,2,3] -> parsed format[1,0,1,1]
+
         parsed_clients = self.network.parse_clients(self.clients)
         net_sim_data = self.network.sendRequest(requestType=1, array=parsed_clients)
 
@@ -38,6 +56,7 @@ class Ns3_Round:
                 self.dropouts.append(1)
                 print(f"Client {str(client)} Dropped out due to network")
                 continue
+
             # SUCCESS
             ret_dict[client]["dropout"] = 0
             self.dropouts.append(0)
@@ -54,25 +73,28 @@ class Ns3_Round:
                 self.throughputs
             )
 
+<<<<<<< Updated upstream
         print("================ Ns3 Stats ================")
         self.total_round_time = max(self.roundTimes)
         print(f"Total Round Time: {self.total_round_time}")
+=======
+        print("=================== Ns3 Stats ===================")
+        self.total_latency = max(self.latencies)
+        print(f"Total Time in Latencies: {self.total_latency}")
+>>>>>>> Stashed changes
         print(f"Average throughput: {self.avg_throughput}")
         print(f"Dropouts: {self.dropouts}")
-        print("===========================================\n")
+        print("=================================================\n")
 
         return ret_dict
 
-    # Getters and setters
-    # Getters
+    # ==========================================================================
+    # * Getters
     def get_throughputs(self):
         return self.throughputs
 
     def get_roundTimes(self):
         return self.roundTimes
-
-    def get_total_round_time(self):
-        return self.total_round_time
 
     def get_clients(self):
         return self.clients
@@ -89,16 +111,4 @@ class Ns3_Round:
     def get_round(self):
         return self.round
 
-    def get_start_time(self):
-        return self.start_time
-
-    def get_aggregate_time(self):
-        return self.aggregate_time
-
-    # Setters
-    def set_start_time(self, x):
-        self.start_time = x
-
-    def update_aggregate_time(self):
-        """A round must have been executed first"""
-        self.aggregate_time = self.total_round_time + self.start_time
+    # ===========================================================================

@@ -1,20 +1,17 @@
 # third party
-import io
-import math
-import os
 import tensorflow as tf
 import grpc
-import numpy as np
-import tempfile
-
+import pickle
 
 # built-in
+import io
+import numpy as np
+import sys
 import time
 
 # local
 from protos import metric_service_pb2_grpc
 from utils.l2_norm import L2_norm
-
 
 # Error Declaration
 class ModelNotInitializedError(Exception):
@@ -28,6 +25,37 @@ class ModelNotInitializedError(Exception):
 
 
 class CustomModel(tf.keras.Model):
+    """
+    A custom Keras model class tailored for specific datasets (MNIST, Fashion MNIST, CIFAR-10, CIFAR-100).
+
+    This class extends tf.keras.Model to provide dataset-specific model architectures and includes
+    methods for training, evaluation, and utilities for managing metrics and gRPC communication.
+
+    Attributes:
+        ds_name (str): The name of the dataset for which the model is built.
+        optimizer (tf.keras.optimizers.Optimizer): Optimizer for model training.
+        loss_fn (tf.keras.losses): Loss function for model training.
+        train_loss_tracker (tf.keras.metrics.Mean): Tracks mean loss during training.
+        train_accuracy (tf.keras.metrics.SparseCategoricalAccuracy): Tracks accuracy during training.
+        train_l2_norm (L2_norm): Custom metric to track the L2 norm of model weights changes.
+        val_loss_tracker (tf.keras.metrics.Mean): Tracks mean loss during validation.
+        val_accuracy (tf.keras.metrics.SparseCategoricalAccuracy): Tracks accuracy during validation.
+        stop_training (bool): Flag to stop training early.
+        channel (grpc.Channel): gRPC channel for communication.
+        stub (Stub): gRPC stub for making requests.
+
+    Methods:
+        build_model(ds_name): Dynamically builds the model based on the dataset name.
+        call(inputs, training=False): Forward pass logic for different datasets.
+        train_step(x, y): Performs a single step of training.
+        test_step(data): Performs a single step of evaluation.
+        fit(train_dataset, ...): Custom training loop.
+        get_pickle_size(): Returns the size of the serialized model.
+        get_size(): Calculates the size of the model weights for transmission.
+    """
+
+    # ===============================================================================================================
+    # * Initialization and Configuration
     def __init__(self, ds_name):
         super(CustomModel, self).__init__()
         self.ds_name = ds_name  # Store the dataset name
@@ -38,35 +66,64 @@ class CustomModel(tf.keras.Model):
         self.loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
 
         # Initialize common metrics
-        self.init_metrics()
+        self._init_metrics()
 
         # Monitoring
         self.stop_training = False
 
         # Additional setup steps
-        self.channel, self.stub = self.setup_conn()
+        self.channel, self.stub = self._setup_conn()
         # In configure maybe use the predict step to init the model
 
-        self.configure(self.ds_name)
+        self._configure(self.ds_name)
         self.summary()
         self.size = self.get_pickle_size()
 
-    # Build Functions for the models
     def build_model(self, ds_name):
-        """Select and build the model based on the dataset name."""
-        model_builders = {
-            "mnist": self.build_mnist_model,
-            "fashion_mnist": self.build_fashion_mnist_model,
-            "cifar10": self.build_cifar10_model,
-            "cifar100": self.build_cifar100_model,
-        }
+        """
+        Builds the model architecture dynamically based on the dataset name.
 
+        Args:
+            ds_name (str): Name of the dataset.
+
+        Raises:
+            ValueError: If ds_name is not supported.
+        """
+        model_builders = {
+            "mnist": self._build_mnist_model,
+            "fashion_mnist": self._build_fashion_mnist_model,
+            "cifar10": self._build_cifar10_model,
+            "cifar100": self._build_cifar100_model,
+        }
         if ds_name in model_builders:
             model_builders[ds_name]()  # Build the model
         else:
             raise ValueError(f"Unsupported dataset: {ds_name}")
 
-    def build_mnist_model(self):
+    def _configure(self, ds_name):
+        """
+        Performs additional configuration for the model based on the dataset.
+
+        Args:
+            ds_name (str): Name of the dataset for configuration adjustments.
+        """
+        if ds_name in ["mnist", "fashion_mnist"]:
+            self.build(input_shape=(None, 28, 28, 1))
+            dummy_data = np.random.random(
+                (1, 28, 28, 1)
+            )  # Create one sample of dummy data
+            _ = self.predict(dummy_data)
+        elif ds_name in ["cifar10", "cifar100"]:
+            self.build(input_shape=(None, 32, 32, 3))  # Adjust input shape for CIFAR-10
+            dummy_data = np.random.random(
+                (1, 32, 32, 3)
+            )  # Create one sample of dummy CIFAR-10 data
+            _ = self.predict(dummy_data)  # Use the dummy data to build the model
+
+    # ===============================================================================================================
+    # * Model Building by Dataset
+
+    def _build_mnist_model(self):
         """Build a simpler model suitable for MNIST."""
         self.conv1 = tf.keras.layers.Conv2D(
             32, (3, 3), activation="relu", input_shape=(28, 28, 1)
@@ -77,7 +134,7 @@ class CustomModel(tf.keras.Model):
         self.d2 = tf.keras.layers.Dense(10, activation="softmax")
         print("Model built for MNIST")
 
-    def build_fashion_mnist_model(self):
+    def _build_fashion_mnist_model(self):
         """Build a more complex model suitable for Fashion MNIST."""
         self.conv1 = tf.keras.layers.Conv2D(
             64, (3, 3), activation="relu", input_shape=(28, 28, 1)
@@ -90,7 +147,7 @@ class CustomModel(tf.keras.Model):
         self.d2 = tf.keras.layers.Dense(10, activation="softmax")
         print("Model built for Fashion MNIST")
 
-    def build_cifar10_model(self):
+    def _build_cifar10_model(self):
         """Build a model suitable for CIFAR-10."""
         self.conv1 = tf.keras.layers.Conv2D(
             32, (3, 3), padding="same", activation="relu", input_shape=(32, 32, 3)
@@ -112,7 +169,7 @@ class CustomModel(tf.keras.Model):
         self.d2 = tf.keras.layers.Dense(10, activation="softmax")
         print("Model built for CIFAR-10")
 
-    def build_cifar100_model(self):
+    def _build_cifar100_model(self):
         self.conv1 = tf.keras.layers.Conv2D(
             64, (3, 3), padding="same", activation="relu", input_shape=(32, 32, 3)
         )
@@ -139,30 +196,61 @@ class CustomModel(tf.keras.Model):
         )  # 100 classes in CIFAR-100
         print("Model built for CIFAR-100")
 
+    # ===============================================================================================================
+    # * Forward Pass Implementations
     def call(self, inputs, training=False):
-        """Forward pass logic, selected based on the dataset."""
+        """
+        Forward pass for the model, selecting the appropriate logic based on the dataset.
+
+        Args:
+            inputs: Input data.
+            training (bool): Whether the forward pass is for training or inference.
+
+        Returns:
+            The model's output predictions.
+
+        Raises:
+            ValueError: If an unsupported dataset name is provided.
+        """
+
         if self.ds_name == "mnist":
-            return self.forward_mnist(inputs)
+            return self._forward_mnist(inputs)
         elif self.ds_name == "fashion_mnist":
-            return self.forward_fashion_mnist(inputs)
+            return self._forward_fashion_mnist(inputs)
         elif self.ds_name == "cifar10":
-            return self.forward_cifar10(inputs)
+            return self._forward_cifar10(inputs)
         elif self.ds_name == "cifar100":
-            return self.forward_cifar100(inputs, training)
+            return self._forward_cifar100(inputs, training)
         else:
             raise ValueError(f"Unsupported dataset: {self.ds_name}")
 
-    # Forward functions for different datasets
-    def forward_mnist(self, inputs):
-        """Forward pass for the MNIST model."""
+    def _forward_mnist(self, inputs):
+        """
+        Forward pass logic for the MNIST dataset model.
+
+        Args:
+            inputs: Input data for the MNIST model.
+
+        Returns:
+            Output predictions for the MNIST model.
+        """
         x = self.conv1(inputs)
         x = self.maxpool1(x)
         x = self.flatten(x)
         x = self.d1(x)
         return self.d2(x)
 
-    def forward_fashion_mnist(self, inputs):
-        """Forward pass for the Fashion MNIST model."""
+    def _forward_fashion_mnist(self, inputs):
+        """
+        Forward pass logic for the Fashion MNIST dataset model.
+
+        Args:
+            inputs: Input data for the Fashion MNIST model.
+
+        Returns:
+            Output predictions for the Fashion MNIST model.
+        """
+
         x = self.conv1(inputs)
         x = self.maxpool1(x)
         x = self.conv2(x)
@@ -171,8 +259,18 @@ class CustomModel(tf.keras.Model):
         x = self.d1(x)
         return self.d2(x)
 
-    def forward_cifar10(self, inputs, training=False):
-        """Forward pass for the CIFAR-10 model."""
+    def _forward_cifar10(self, inputs, training=False):
+        """
+        Forward pass logic for the CIFAR-10 dataset model.
+
+        Args:
+            inputs: Input data for the CIFAR-10 model.
+            training (bool): Whether the forward pass is for training or inference.
+
+        Returns:
+            Output predictions for the CIFAR-10 model.
+        """
+
         x = self.conv1(inputs)
         x = self.conv2(x)
         x = self.maxpool1(x)
@@ -188,7 +286,17 @@ class CustomModel(tf.keras.Model):
         x = self.dropout3(x, training=training)
         return self.d2(x)
 
-    def forward_cifar100(self, inputs, training=False):
+    def _forward_cifar100(self, inputs, training=False):
+        """
+        Forward pass logic for the CIFAR-100 dataset model.
+
+        Args:
+            inputs: Input data for the CIFAR-100 model.
+            training (bool): Whether the forward pass is for training or inference.
+
+        Returns:
+            Output predictions for the CIFAR-100 model.
+        """
         x = self.conv1(inputs)
         x = self.conv2(x)
         x = self.maxpool1(x)
@@ -204,55 +312,20 @@ class CustomModel(tf.keras.Model):
         x = self.dropout3(x, training=training)
         return self.d2(x)
 
-    def init_metrics(self):
-        """Initialize common metrics."""
-        # Train Metrics
-        self.train_loss_tracker = tf.keras.metrics.Mean(name="mean_loss")
-        self.train_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(
-            name="accuracy"
-        )
-        self.train_l2_norm = L2_norm()
-        # Val Metrics
-        self.val_loss_tracker = tf.keras.metrics.Mean(name="mean_loss")
-        self.val_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy")
-
-    def configure(self, ds_name):
-        """Additional configuration (placeholder method)."""
-        if ds_name in ["mnist", "fashion_mnist"]:
-            self.build(input_shape=(None, 28, 28, 1))
-            self.summary()
-            dummy_data = np.random.random(
-                (1, 28, 28, 1)
-            )  # Create one sample of dummy data
-            _ = self.predict(dummy_data)
-        elif ds_name in ["cifar10", "cifar100"]:
-            self.build(input_shape=(None, 32, 32, 3))  # Adjust input shape for CIFAR-10
-            dummy_data = np.random.random(
-                (1, 32, 32, 3)
-            )  # Create one sample of dummy CIFAR-10 data
-            _ = self.predict(dummy_data)  # Use the dummy data to build the model
-
-    def setup_conn(self, address="127.0.0.1:8091"):
-        channel = grpc.insecure_channel(address)
-        stub = metric_service_pb2_grpc.MetricServiceStub(channel)
-        return channel, stub
-
-    @property
-    def metrics(self):
-        # We list our `Metric` objects here so that `reset_states()` can be
-        # called automatically at the start of each epoch
-        # or at the start of `evaluate()`.
-        # If you don't implement this property, you have to call
-        # `reset_states()` yourself at the time of your choosing.
-        return [
-            self.train_loss_tracker,
-            self.train_accuracy,
-            self.val_loss_tracker,
-            self.val_accuracy,
-        ]
-
+    # ===============================================================================================================
+    # * Training and Evaluation Methods
     @tf.function
     def train_step(self, x, y):
+        """
+        Performs a single training step.
+
+        Args:
+            x: Input data.
+            y: Target data.
+
+        Returns:
+            The scalar loss value resulting from the training step.
+        """
         with tf.GradientTape() as tape:
             logits = self(x, training=True)
             loss = self.loss_fn(y, logits)
@@ -269,6 +342,15 @@ class CustomModel(tf.keras.Model):
 
     @tf.function
     def test_step(self, data):
+        """
+        Performs a single evaluation step.
+
+        Args:
+            data: Tuple of (input data, target data).
+
+        Returns:
+            A dictionary with keys 'mean_loss' and 'accuracy' for the evaluation metrics.
+        """
         x, y = data
         y_pred = self(x, training=False)
         # Update Metrics
@@ -292,6 +374,26 @@ class CustomModel(tf.keras.Model):
         validation_data=None,
         callbacks=[],
     ):
+<<<<<<< Updated upstream:geom/client/model.py
+=======
+
+        """
+        Custom training loop for the model.
+
+        Args:
+            train_dataset (tf.data.Dataset): Dataset for training.
+            batch_pointer (int): Batch pointer to resume training from.
+            batch_size (int): Size of batches for training.
+            epochs (int): Number of epochs to train for.
+            verbose (int): Verbosity mode.
+            validation_data (tf.data.Dataset, optional): Dataset for validation.
+            callbacks (list): List of callbacks for training.
+
+        Returns:
+            A tuple of (batches_in_epoch, batch_pointer, l2_norm_val, computation_time) after training.
+        """
+        start_fit = time.time()
+>>>>>>> Stashed changes:geom/utils/model.py
         batches_in_epoch = 0
         # Convert data to a tf.data.Dataset
         train_dataset = train_dataset.batch(batch_size)
@@ -332,7 +434,7 @@ class CustomModel(tf.keras.Model):
                 if verbose == 1:
                     if step % 200 == 0:
                         elapsed_time = time.time() - epoch_start_time
-                        self.print_results(
+                        self._print_results(
                             batches_in_epoch, batch_pointer, loss_val, elapsed_time
                         )
 
@@ -340,7 +442,7 @@ class CustomModel(tf.keras.Model):
                     # Log every 10 batches.
                     if step % 10 == 0:
                         elapsed_time = time.time() - epoch_start_time
-                        self.print_results(
+                        self._print_results(
                             batches_in_epoch, batch_pointer, loss_val, elapsed_time
                         )
 
@@ -351,10 +453,11 @@ class CustomModel(tf.keras.Model):
                         )
 
             # Display metrics at the end of each epoch.
+            computation_time = time.time() - start_fit
             print("Epoch Results:")
-            self.print_results(batches_in_epoch, batch_pointer, loss_val, elapsed_time)
+            self._print_results(batches_in_epoch, batch_pointer, loss_val, elapsed_time)
             # Reset training metrics at the end of each epoch
-            self.reset_train_metrics()
+            self._reset_train_metrics()
 
             # Callback for end of Epoch
             for callback in callbacks:
@@ -368,33 +471,90 @@ class CustomModel(tf.keras.Model):
 
                 val_acc = self.val_accuracy.result()
                 val_loss = self.val_loss_tracker.result()
-                self.reset_val_metrics()
+                self._reset_val_metrics()
                 print(
                     f"Validation Avg Results\t Loss:{float(val_loss)}\t Accuracy: {float(val_acc):.4f}"
                 )
 
         return batches_in_epoch, batch_pointer, l2_norm_val
 
-    def reset_train_metrics(self):
+    # ===============================================================================================================
+    # * Metric and State Management
+    def _init_metrics(self):
+        """
+        Initializes common training and validation metrics.
+        """
+        # Train Metrics
+        self.train_loss_tracker = tf.keras.metrics.Mean(name="mean_loss")
+        self.train_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(
+            name="accuracy"
+        )
+        self.train_l2_norm = L2_norm()
+        # Val Metrics
+        self.val_loss_tracker = tf.keras.metrics.Mean(name="mean_loss")
+        self.val_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy")
+
+    def _reset_train_metrics(self):
+        """
+        Resets the training metrics to their initial state.
+        """
+
         self.train_loss_tracker.reset_states()
         self.train_accuracy.reset_states()
         self.train_l2_norm.reset_state()
 
-    def reset_val_metrics(self):
+    def _reset_val_metrics(self):
+        """
+        Resets the validation metrics to their initial state.
+        """
         self.val_loss_tracker.reset_states()
         self.val_accuracy.reset_states()
 
     def resume_train(self):
+        """
+        Allows the resumption of training by resetting the stop_training flag.
+        """
         self.stop_training = False
 
-    def print_results(self, batches_in_epoch, batch_pointer, loss_val, elapsed_time):
+    # ===============================================================================================================
+    # * Utility and Communication Methods
+
+    def _setup_conn(self, address="127.0.0.1:8091"):
+        """
+        Sets up a gRPC channel and stub for communication.
+
+        Args:
+            address (str): The address of the gRPC server.
+
+        Returns:
+            A tuple of (grpc.Channel, grpc Stub) for communication.
+        """
+        channel = grpc.insecure_channel(address)
+        stub = metric_service_pb2_grpc.MetricServiceStub(channel)
+        return channel, stub
+
+    def _print_results(self, batches_in_epoch, batch_pointer, loss_val, elapsed_time):
+        """
+        Utility method for printing training results during training.
+
+        Args:
+            batches_in_epoch (int): Number of batches processed in the current epoch.
+            batch_pointer (int): Global batch pointer across epochs.
+            loss_val (float): Instantaneous loss value.
+            elapsed_time (float): Time elapsed since the start of the epoch.
+        """
+
         print(
             f"(In epoch/Overall): ({batches_in_epoch}/{batch_pointer})| inst_loss: {float(loss_val):.4f} - Mean loss: {float(self.train_loss_tracker.result()):.4f} - acc: {float(self.train_accuracy.result()):.4f} - norm: {float(self.train_l2_norm.result()):.2f} - {elapsed_time:.2f}s"
         )
 
     def get_pickle_size(self):
-        import pickle
-        import sys
+        """
+        Calculates the size of the model when serialized with pickle.
+
+        Returns:
+            Size of the serialized model in kilobytes.
+        """
 
         # Assuming `model` is your model object
         serialized_model = pickle.dumps(self)
@@ -403,6 +563,12 @@ class CustomModel(tf.keras.Model):
         return size_kbs
 
     def get_size(self):
+        """
+        Determines the size of the model's weights for transmission over networks.
+
+        Returns:
+            The size of the serialized weights in kilobytes.
+        """
         weights = self.get_weights()
 
         # Serialize weights to a byte stream
@@ -414,15 +580,17 @@ class CustomModel(tf.keras.Model):
         transmission_size_kilobytes = transmission_size_bytes / 1024
         print(f"transmission_size_bytes {transmission_size_kilobytes}")
         return transmission_size_kilobytes
-        # with tempfile.TemporaryDirectory() as temp_dir:
-        #     # Save the model to the temporary directory
-        #     tf.saved_model.save(self, temp_dir)
 
-        #     # Calculate the size of the saved model
-        #     total_size = 0
-        #     for dirpath, dirnames, filenames in os.walk(temp_dir):
-        #         for f in filenames:
-        #             fp = os.path.join(dirpath, f)
-        #             total_size += os.path.getsize(fp)
-        #     print(f"Size of saved model: {total_size/1024}")
-        #     return total_size / 1024  # Size in kilobytes
+    @property
+    def metrics(self):
+        # We list our `Metric` objects here so that `reset_states()` can be
+        # called automatically at the start of each epoch
+        # or at the start of `evaluate()`.
+        # If you don't implement this property, you have to call
+        # `reset_states()` yourself at the time of your choosing.
+        return [
+            self.train_loss_tracker,
+            self.train_accuracy,
+            self.val_loss_tracker,
+            self.val_accuracy,
+        ]

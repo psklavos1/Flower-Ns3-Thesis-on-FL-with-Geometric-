@@ -6,73 +6,158 @@ import math
 import random
 import numpy as np
 
-# In this function we want to partition our data in the number of clients we have
-# the function returns dataloaders so we need to return specific batch size.
-# The val ratio is the ration of samples to be put aside for validation check
-# we get one dataloader for each client to use either for train or validation
-def prepare_dataset(
-    num_partitions: int, has_trainval_support=False, val_ratio: float = 0.1
-):
-    """Download and partitions the MNIST dataset."""
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+# ==============================================================================================
+# * Main Functions for dataset loading to be used publicaly
 
-    # Normalize both training and test datasets
-    x_train, x_test = x_train / 255.0, x_test / 255.0
 
-    partitions = []
-    # We keep all partitions equal-sized in this example
-    partition_size = math.floor(len(x_train) / num_partitions)
-    for cid in range(num_partitions):
-        # Split dataset into non-overlapping NUM_CLIENT partitions
-        idx_from, idx_to = cid * partition_size, (cid + 1) * partition_size
-        partitions.append((x_train[idx_from:idx_to], y_train[idx_from:idx_to]))
-        # Now that data are split we create dataloaders with train val support to return to clients
+def generate_class_percentages(ds_name, bias_template, seed=None):
+    """
+    This function creates a distribution of class percentages for a given dataset,
+    allowing for the simulation of different bias levels in the data distribution.
+    It supports generating random, low, medium, and high bias distributions.
 
-    if has_trainval_support:
-        trainsets, validationsets = trainval_support(partitions, val_ratio)
+    Parameters:
+        ds_name (str): The name of the dataset. Currently supports 'cifar100', 'MNIST',
+            'Fashion MNIST', and 'cifar10'.
+        bias_template (int): Specifies the bias level in the class distribution.
+            - 0: Random bias
+            - 1: Low bias
+            - 2: Medium bias
+            - 3: High bias
+            Raises ValueError for invalid bias_template values.
+        seed (int, optional): The seed for random number generation to ensure
+            reproducibility. Defaults to None.
+
+    Returns:
+        list: A list of percentages representing the class distribution in the dataset.
+            The list length corresponds to the number of classes in the dataset.
+
+    Raises:
+        ValueError: If an invalid `bias_template` value is passed.
+    """
+    if ds_name == "cifar100":
+        num_classes = 100
+    else:  # Default to 10 for MNIST and Fashion MNIST and cifar10
+        num_classes = 10
+
+    percentages = None
+    if bias_template == 0:
+        percentages = _generate_random_class_percentages(num_classes, seed=seed)
+    elif bias_template == 1:
+        percentages = _generate_low_bias_class_percentages(num_classes, seed=seed)
+    elif bias_template == 2:
+        percentages = _generate_medium_bias_class_percentages(num_classes, seed=seed)
+    elif bias_template == 3:
+        percentages = _generate_high_bias_class_percentages(num_classes, seed=seed)
     else:
-        trainsets = partitions
-        validationsets = []
+        raise ValueError("Invalid bias_template value")
 
-    testset = (x_test, y_test)
-
-    return trainsets, validationsets, testset
+    _print_class_percentages(percentages)
+    return percentages
 
 
-def trainval_support(partitions, val_ratio):
-    trainsets = []
-    validationsets = []
+def get_dataset(
+    num_partitions,
+    partition_index,
+    ds_name="mnist",
+    non_iid=False,
+    class_percentages=None,
+    validation=False,
+    validation_split=0.1,
+):
+    """
+    Load, preprocess, and partition a dataset for federated learning scenarios.
 
-    for partition in partitions:
-        x_partition, y_partition = partition
+    This function handles the loading and preprocessing of a specified dataset
+    (e.g., MNIST, Fashion MNIST, cifar10, cifar100). It supports partitioning the data into
+    multiple parts for simulation of distributed data sources in federated learning.
+    It also provides the option to create partitions with non-IID data distributions
+    based on provided class percentages, and can optionally create a validation set.
 
-        # Calculate the number of samples for train and validation
-        num_samples = len(x_partition)
-        num_train_samples = int(num_samples * (1 - val_ratio))
+    Parameters:
+        num_partitions (int): The number of partitions to split the dataset into.
+        partition_index (int): The index of the partition to return. This is used
+            to simulate distributing different parts of the dataset to different clients.
+        ds_name (str, optional): The name of the dataset to load. Defaults to 'mnist'.
+        non_iid (bool, optional): Whether to partition the data in a non-IID manner,
+            based on class percentages. Defaults to False.
+        class_percentages (list, optional): The percentages for each class to be included
+            in each partition, used only when non_iid is True. Defaults to None.
+        validation (bool, optional): Whether to split off a portion of the training data
+            into a validation set. Defaults to False.
+        validation_split (float, optional): The fraction of the training data to be used
+            as validation data, if validation is True. Defaults to 0.1.
 
-        # Shuffle the indices to randomly select train and validation samples
-        indices = list(range(num_samples))
-        random.shuffle(indices)
+    Returns:
+        tuple: A tuple containing the training, testing, and (optionally) validation
+            tf.data.Dataset objects. If validation is False, the validation dataset
+            in the tuple will be None.
 
-        train_indices = indices[:num_train_samples]
-        validation_indices = indices[num_train_samples:]
+    Raises:
+        AssertionError: If non_iid is True but class_percentages is None.
+    """
+    (x_train, y_train), (x_test, y_test) = _load_dataset(ds_name)
+    x_train, x_test = _preprocess_data(x_train, x_test, ds_name)
 
-        # Create train and validation data based on the shuffled indices
-        x_train_partition = x_partition[train_indices]
-        y_train_partition = y_partition[train_indices]
-        x_validation_partition = x_partition[validation_indices]
-        y_validation_partition = y_partition[validation_indices]
+    # If validation support is required, split the training data
+    if validation:
+        x_train, y_train, x_val, y_val = _validation_support(
+            x_train, y_train, validation_split
+        )
 
-        # Append the train and validation data to their respective lists
-        trainsets.append((x_train_partition, y_train_partition))
-        validationsets.append((x_validation_partition, y_validation_partition))
+    if non_iid:
+        assert class_percentages is not None
+        # Split the data by class and distribute according to the specified percentages
+        class_data = _split_data_by_class(x_train, y_train)
+        x_train_partition, y_train_partition = _partition_data_with_bias(
+            class_data,
+            class_percentages,
+            num_partitions,
+            partition_index,
+        )
+    else:
+        # needed to create a ranodom dataset.
+        x_train_shuffled, y_train_shuffled = _shuffle_data(x_train, y_train)
+        x_train_partition, y_train_partition = _partition_data(
+            x_train_shuffled, y_train_shuffled, num_partitions, partition_index
+        )
 
-    return trainsets, validationsets
+    # Convert to tf.data.Dataset for training
+    train_dataset = tf.data.Dataset.from_tensor_slices(
+        (x_train_partition, y_train_partition)
+    )
+    train_dataset = (
+        train_dataset.cache().shuffle(buffer_size=len(x_train_partition)).repeat()
+    )
+
+    test_dataset = (x_test, y_test)
+
+    # If validation is enabled, also prepare the validation dataset
+    if validation:
+        validation_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
+    else:
+        validation_dataset = None
+
+    return train_dataset, test_dataset, validation_dataset
 
 
-# Functions to get a client dataset
+# ==============================================================================================
+# * Utility Functions
+
+
 def _load_dataset(ds_name):
-    """Load dataset based on the given name."""
+    """
+    Load a dataset by name from available TensorFlow datasets.
+
+    Args:
+        ds_name (str): Name of the dataset to load ('mnist', 'fashion_mnist', 'cifar10', 'cifar100').
+
+    Returns:
+        Tuple containing training and test data.
+
+    Raises:
+        ValueError: If `ds_name` is not a recognized dataset name.
+    """
     datasets = {
         "mnist": tf.keras.datasets.mnist.load_data,
         "fashion_mnist": tf.keras.datasets.fashion_mnist.load_data,
@@ -86,7 +171,17 @@ def _load_dataset(ds_name):
 
 
 def _preprocess_data(x_train, x_test, ds_name):
-    """Preprocess data based on the dataset type."""
+    """
+    Preprocess training and test data depending on the dataset.
+
+    Args:
+        x_train (ndarray): Training data.
+        x_test (ndarray): Test data.
+        ds_name (str): Name of the dataset for specific preprocessing.
+
+    Returns:
+        Tuple of preprocessed training and test data.
+    """
     if ds_name in ["mnist", "fashion_mnist"]:
         x_train = x_train.reshape(-1, 28, 28, 1).astype("float32") / 255.0
         x_test = x_test.reshape(-1, 28, 28, 1).astype("float32") / 255.0
@@ -97,14 +192,35 @@ def _preprocess_data(x_train, x_test, ds_name):
 
 
 def _shuffle_data(x_train, y_train, seed=20):
-    """Shuffle the training data with a fixed seed."""
+    """
+    Shuffle training data using a fixed seed.
+
+    Args:
+        x_train (ndarray): Training features.
+        y_train (ndarray): Training labels.
+        seed (int): Seed for reproducibility.
+
+    Returns:
+        Tuple of shuffled training features and labels.
+    """
     indices = tf.range(start=0, limit=tf.shape(x_train)[0], dtype=tf.int32)
     shuffled_indices = tf.random.shuffle(indices, seed=seed)
     return tf.gather(x_train, shuffled_indices), tf.gather(y_train, shuffled_indices)
 
 
 def _partition_data(x_train, y_train, num_partitions, partition_index):
-    """Partition the training data."""
+    """
+    Evenly partition training data for federated learning simulation.
+
+    Args:
+        x_train (ndarray): Training features.
+        y_train (ndarray): Training labels.
+        num_partitions (int): Number of partitions.
+        partition_index (int): Index of the current partition.
+
+    Returns:
+        Tuple of features and labels for the specified partition.
+    """
     partition_size = len(x_train) // num_partitions
     start_idx = partition_index * partition_size
     end_idx = (
@@ -115,8 +231,18 @@ def _partition_data(x_train, y_train, num_partitions, partition_index):
     return x_train[start_idx:end_idx], y_train[start_idx:end_idx]
 
 
-# Non-IID data Support
+# * For non-iid Support
 def _split_data_by_class(x, y):
+    """
+    Split dataset by class.
+
+    Args:
+        x (ndarray): Features.
+        y (ndarray): Labels.
+
+    Returns:
+        Dictionary mapping each class to its corresponding features and labels.
+    """
     class_data = {}
     for unique_class in np.unique(y):
         class_indices = np.where(y == unique_class)[0]
@@ -124,12 +250,21 @@ def _split_data_by_class(x, y):
     return class_data
 
 
-import numpy as np
-
-
 def _partition_data_with_bias(
     class_data, class_percentages, num_partitions, partition_index
 ):
+    """
+    Partition data with specified class bias.
+
+    Args:
+        class_data (dict): Data split by class.
+        class_percentages (dict): Target percentages for each class.
+        num_partitions (int): Number of partitions.
+        partition_index (int): Index of the current partition.
+
+    Returns:
+        Tuple of partitioned features and labels with the specified bias.
+    """
     x_partition = []
     y_partition = []
 
@@ -184,6 +319,16 @@ def _partition_data_with_bias(
 
 
 def _generate_random_class_percentages(num_classes, seed=None):
+    """
+    Generate random class percentages for non-IID data simulation.
+
+    Args:
+        num_classes (int): Number of classes.
+        seed (int, optional): Seed for reproducibility.
+
+    Returns:
+        Dictionary with class indices as keys and percentages as values.
+    """
     if seed is not None:
         np.random.seed(seed)
     percentages = np.random.dirichlet(np.ones(num_classes), size=1)[0]
@@ -191,6 +336,16 @@ def _generate_random_class_percentages(num_classes, seed=None):
 
 
 def _generate_low_bias_class_percentages(num_classes, seed=None):
+    """
+    Generate low bias class percentages for non-IID data simulation.
+
+    Args:
+        num_classes (int): Number of classes.
+        seed (int, optional): Seed for reproducibility.
+
+    Returns:
+        Dictionary with class indices as keys and percentages as values.
+    """
     if seed is not None:
         np.random.seed(seed)
     base = np.ones(num_classes) / num_classes
@@ -201,6 +356,16 @@ def _generate_low_bias_class_percentages(num_classes, seed=None):
 
 
 def _generate_medium_bias_class_percentages(num_classes, seed=None):
+    """
+    Generate medium bias class percentages for non-IID data simulation.
+
+    Args:
+        num_classes (int): Number of classes.
+        seed (int, optional): Seed for reproducibility.
+
+    Returns:
+        Dictionary with class indices as keys and percentages as values.
+    """
     if seed is not None:
         np.random.seed(seed)
     percentages = np.random.dirichlet(np.ones(num_classes) * 2, size=1)[
@@ -210,6 +375,16 @@ def _generate_medium_bias_class_percentages(num_classes, seed=None):
 
 
 def _generate_high_bias_class_percentages(num_classes, seed=None):
+    """
+    Generate high bias class percentages for non-IID data simulation.
+
+    Args:
+        num_classes (int): Number of classes.
+        seed (int, optional): Seed for reproducibility.
+
+    Returns:
+        Dictionary with class indices as keys and percentages as values.
+    """
     if seed is not None:
         np.random.seed(seed)
     focus_classes_count = np.random.choice([1, 2, 3], 1)[0]
@@ -234,37 +409,19 @@ def _generate_high_bias_class_percentages(num_classes, seed=None):
     return {cls: percentage for cls, percentage in enumerate(percentages)}
 
 
-def _print_class_percentages(percentages):
-    # print("Bias Percentages:")
-    # print(f"{percentages}")
-    for cls, percentage in percentages.items():
-        print(f"  Class {cls}: {percentage*100:.2f}%")
-
-
-def generate_class_percentages(ds_name, bias_template, seed=None):
-    if ds_name == "cifar100":
-        num_classes = 100
-    else:  # Default to 10 for MNIST and Fashion MNIST and cifar10
-        num_classes = 10
-
-    percentages = None
-    if bias_template == 0:
-        percentages = _generate_random_class_percentages(num_classes, seed=seed)
-    elif bias_template == 1:
-        percentages = _generate_low_bias_class_percentages(num_classes, seed=seed)
-    elif bias_template == 2:
-        percentages = _generate_medium_bias_class_percentages(num_classes, seed=seed)
-    elif bias_template == 3:
-        percentages = _generate_high_bias_class_percentages(num_classes, seed=seed)
-    else:
-        raise ValueError("Invalid bias_template value")
-
-    _print_class_percentages(percentages)
-    return percentages
-
-
+# * Validation Support
 def _validation_support(x_train, y_train, validation_split=0.1):
-    """Partition training data into training and validation sets."""
+    """
+    Split training data into training and validation sets.
+
+    Args:
+        x_train (ndarray): Original training features.
+        y_train (ndarray): Original training labels.
+        validation_split (float): Proportion of the data to use for validation.
+
+    Returns:
+        Tuples of new training features, new training labels, validation features, and validation labels.
+    """
     # Shuffle the training data
     shuffled_indices = np.random.permutation(len(x_train))
     x_train_shuffled = x_train[shuffled_indices]
@@ -282,82 +439,100 @@ def _validation_support(x_train, y_train, validation_split=0.1):
     return x_train_new, y_train_new, x_val, y_val
 
 
-def get_dataset(
-    num_partitions,
-    partition_index,
-    ds_name="mnist",
-    non_iid=False,
-    class_percentages=None,
-    validation=False,
-    validation_split=0.1,
+# * Printing
+def _print_class_percentages(percentages):
+    """
+    Print class percentages to the console.
+
+    Args:
+        percentages (dict): Dictionary with class indices as keys and percentages as values.
+    """
+    # print("Bias Percentages:")
+    # print(f"{percentages}")
+    for cls, percentage in percentages.items():
+        print(f"  Class {cls}: {percentage*100:.2f}%")
+
+
+# ==============================================================================================
+# * Deprecated functions best used with run_simulation()
+def prepare_dataset(
+    num_partitions: int, has_trainval_support=False, val_ratio: float = 0.1
 ):
-    """Load and preprocess dataset based on ds_name, then partition it."""
-    (x_train, y_train), (x_test, y_test) = _load_dataset(ds_name)
-    x_train, x_test = _preprocess_data(x_train, x_test, ds_name)
+    """
+    Prepare and partition the MNIST dataset.
 
-    # If validation support is required, split the training data
-    if validation:
-        x_train, y_train, x_val, y_val = _validation_support(
-            x_train, y_train, validation_split
-        )
+    Partitions the MNIST dataset into a specified number of partitions. Optionally provides support for
+    splitting each partition into training and validation sets.
 
-    if non_iid:
-        assert class_percentages is not None
-        # Split the data by class and distribute according to the specified percentages
-        class_data = _split_data_by_class(x_train, y_train)
-        x_train_partition, y_train_partition = _partition_data_with_bias(
-            class_data,
-            class_percentages,
-            num_partitions,
-            partition_index,
-        )
+    Args:
+        num_partitions (int): The number of partitions to split the dataset into.
+        has_trainval_support (bool): If True, split each partition into training and validation sets.
+        val_ratio (float): Ratio of the validation set to the total dataset size if validation is enabled.
+
+    Returns:
+        tuple: A tuple containing lists of training sets, validation sets (empty if validation is not enabled), and the test set.
+    """
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+    # Normalize both training and test datasets
+    x_train, x_test = x_train / 255.0, x_test / 255.0
+
+    partitions = []
+    # We keep all partitions equal-sized in this example
+    partition_size = math.floor(len(x_train) / num_partitions)
+    for cid in range(num_partitions):
+        # Split dataset into non-overlapping NUM_CLIENT partitions
+        idx_from, idx_to = cid * partition_size, (cid + 1) * partition_size
+        partitions.append((x_train[idx_from:idx_to], y_train[idx_from:idx_to]))
+        # Now that data are split we create dataloaders with train val support to return to clients
+
+    if has_trainval_support:
+        trainsets, validationsets = trainval_support(partitions, val_ratio)
     else:
-        # needed to create a ranodom dataset.
-        x_train_shuffled, y_train_shuffled = _shuffle_data(x_train, y_train)
-        x_train_partition, y_train_partition = _partition_data(
-            x_train_shuffled, y_train_shuffled, num_partitions, partition_index
-        )
+        trainsets = partitions
+        validationsets = []
 
-    # Convert to tf.data.Dataset for training
-    train_dataset = tf.data.Dataset.from_tensor_slices(
-        (x_train_partition, y_train_partition)
-    )
-    train_dataset = (
-        train_dataset.cache().shuffle(buffer_size=len(x_train_partition)).repeat()
-    )
+    testset = (x_test, y_test)
 
-    test_dataset = (x_test, y_test)
-
-    # If validation is enabled, also prepare the validation dataset
-    if validation:
-        validation_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
-    else:
-        validation_dataset = None
-
-    return train_dataset, test_dataset, validation_dataset
+    return trainsets, validationsets, testset
 
 
-def is_dataset_batched(dataset: tf.data.Dataset):
-    try:
-        # Attempt to take one element from the dataset
-        for element in dataset.take(1):
-            # Check if the element is a tuple (input, target)
-            if isinstance(element, tuple):
-                # Assuming the input is the first element of the tuple
-                input_element = element[0]
-                # Check if the input element has a batch dimension
-                if isinstance(input_element, tf.Tensor):
-                    # If the first dimension (batch size) is None or an integer, it's likely batched
-                    if input_element.shape[0] is None or isinstance(
-                        input_element.shape[0], int
-                    ):
-                        return True
-            elif isinstance(element, tf.Tensor):
-                # If the dataset directly yields tensors, check their shape
-                if element.shape[0] is None or isinstance(element.shape[0], int):
-                    return True
-    except ValueError:
-        # Handle cases where elements cannot be iterated
-        return False
-    # If none of the above conditions are met, assume the dataset is not batched
-    return False
+def trainval_support(partitions, val_ratio):
+    """
+    Split each dataset partition into training and validation sets based on the specified ratio.
+
+    Args:
+        partitions (list): List of dataset partitions, where each partition is a tuple (x_partition, y_partition).
+        val_ratio (float): Ratio of the validation set to the total dataset size.
+
+    Returns:
+        tuple: Two lists of tuples, the first for training sets and the second for validation sets.
+    """
+    trainsets = []
+    validationsets = []
+
+    for partition in partitions:
+        x_partition, y_partition = partition
+
+        # Calculate the number of samples for train and validation
+        num_samples = len(x_partition)
+        num_train_samples = int(num_samples * (1 - val_ratio))
+
+        # Shuffle the indices to randomly select train and validation samples
+        indices = list(range(num_samples))
+        random.shuffle(indices)
+
+        train_indices = indices[:num_train_samples]
+        validation_indices = indices[num_train_samples:]
+
+        # Create train and validation data based on the shuffled indices
+        x_train_partition = x_partition[train_indices]
+        y_train_partition = y_partition[train_indices]
+        x_validation_partition = x_partition[validation_indices]
+        y_validation_partition = y_partition[validation_indices]
+
+        # Append the train and validation data to their respective lists
+        trainsets.append((x_train_partition, y_train_partition))
+        validationsets.append((x_validation_partition, y_validation_partition))
+
+    return trainsets, validationsets

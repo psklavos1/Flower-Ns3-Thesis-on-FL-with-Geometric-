@@ -36,6 +36,11 @@
 #include "ns3/packet-socket-address.h"
 #include "flwr-interface.h"
 #include "fl-client-session.h"
+<<<<<<< Updated upstream
+=======
+#include "ns3/netanim-module.h"
+#include "fl-server.h"
+>>>>>>> Stashed changes
 
 #include <memory>
 #include <string>
@@ -51,18 +56,18 @@ namespace ns3 {
     public:
         /**
         * \brief Constructs Experiment
-        * \param numClients      Number of clients in experiment
-        * \param networkType     Network type (wifi or ethernet)
-        * \param maxPacketSize   Max packet size for network
-        * \param txGain          TX gain for wifi network
-        * \param modelType         Name of modelType trained
-        * \param deviceType      Type of client Device
-        * \param modelSize       Model size
-        * \param dataRate        Datarate for server
-        * \param bAsync          If running async experiment, true
-        * \param pFlwrProvider  pointer to an flwr-interface (used to communicate with flower)
-        * \param server_coordinates    coordinates of server used in NetAnim
-
+        * \param numClients             Number of clients in experiment
+        * \param networkType            Network type (wifi or ethernet)
+        * \param maxPacketSize          Max packet size for network
+        * \param txGain                 TX gain for wifi network
+        * \param modelType              Name of modelType trained
+        * \param modelSize              Model size
+        * \param dataRate               Datarate for server
+        * \param deviceType             Type of client Device
+        * \param bAsync                 If running async experiment, true
+        * \param pFlwrProvider          pointer to an flwr-interface (used to communicate with flower)
+        * \param server_coordinates     coordinates of server used in NetAnim
+        * \param round                  The number of the simulated round 
         */
         Experiment(int numClients, std::string &networkType, int maxPacketSize, double txGain, std::string &modelType, double modelSize,
                    std::string &dataRate,std::string &deviceType, bool bAsync, FlwrProvider *pFlwrProvider, FILE *fp,  std::vector<double> server_coordinates,
@@ -103,15 +108,22 @@ namespace ns3 {
         Vector GetPosition(Ptr <Node> node);
 
         /**
-        * \brief Sets up wifi network
+        * \brief Sets up Wifi network
+        * \param c         Container of nodes used in network
+        * \param clients   Mapping from ids to client sessions 
+        * \return          The Net Device container of all the Wifi devices
         */
         NetDeviceContainer Wifi(ns3::NodeContainer &c, std::map<int, std::shared_ptr<ClientSession> > &clients);
 
         /**
-        * \brief Sets up ethernet network
+        * \brief Sets up Etherner network
+        * \param c         Container of nodes used in network
+        * \param clients   Mapping from ids to client sessions 
+        * \return          The Net Device container of all the Ethernet devices
         */
         NetDeviceContainer Ethernet(NodeContainer &c, std::map<int, std::shared_ptr<ClientSession> > &clients);
 
+<<<<<<< Updated upstream
         int m_numClients;                 //!< Number of clients in experiment
         std::string m_networkType;        //!< Network type
         int m_maxPacketSize;              //!< Max packet size
@@ -126,6 +138,96 @@ namespace ns3 {
         FILE *m_fp;                       //!< pointer to logfile
         std::vector<double> m_server_coordinates; //!< coordinates of server used in NetAnim
         int m_round;                      //!< experiment round
+=======
+        /**
+        * \brief Sets up the network devices
+        * \param c         Container of nodes used in network
+        * \param clients   Mapping from ids to client sessions 
+        * \return          The Net Device container of all the Network devices
+        */
+        NetDeviceContainer SetupDevices(NodeContainer& c, std::map<int, std::shared_ptr<ClientSession>>& clients);
+        
+        /**
+        * \brief Sets up the Internet stack
+        * \param c         Container of nodes used in network
+        * \param devices   The network devices setup for the network 
+        * \return          A container of Interfaces assigned to netDevices
+        */
+        Ipv4InterfaceContainer SetupInternetStack(NodeContainer& c, NetDeviceContainer& devices);
+    
+        /**
+        * \brief Setup the server for simulation with given attributes 
+        * \param server     The server Node
+        * \param interfaces The Ipv4 interfaces container
+        * \param timeOffset Parameter for async setup
+        * \param start_time The start time in simulation for server
+        * \param stop_time  The stop time in simulation for server
+        * \return           The Server application
+        */
+        Ptr<Server> SetupServer (Ptr<Node> server, Ipv4InterfaceContainer &interfaces, ns3::Time &timeOffset, 
+            double start_time, double stop_time);
+        
+        /**
+        * \brief Setup the clients for simulation with given attributes 
+        * \param c          Container of nodes used in network
+        * \param clients    Mapping from ids to client sessions 
+        * \param interfaces The Ipv4 interfaces container
+        * \param m_addrMap  Mapping from Ip address to id
+        * \param timeOffset parameter for async setup
+        * \param start_time The start time in simulation for the clients
+        * \param stop_time  The stop time in simulation for the clients
+        * \return           An application container of client apps
+        */
+        ApplicationContainer SetupClients (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients,
+                          Ipv4InterfaceContainer &interfaces, std::map<Ipv4Address, int> &m_addrMap,
+                          ns3::Time &timeOffset, double start_time, double stop_time);
+        
+        /**
+        * \brief Setup the Netanim Module for optical representation
+        * \param c          Container of nodes used in network
+        * \param start_time The start time of packet monitoring
+        * \return           The instance of the Animation Interface
+        */
+        AnimationInterface ConfigureAnimation(NodeContainer &c,double start_time);
+        
+        /**
+        * \brief Extract the downlink phase results of the simulation
+        * \param clients    Mapping from ids to client sessions 
+        * \param interfaces The Ipv4 interfaces container
+        * \param stats      An empty mapping from client address to simulation results 
+        */
+        void ExtractDownlinkResults(std::map<int, std::shared_ptr<ClientSession>> &clients, Ipv4InterfaceContainer &interfaces, std::map<Ipv4Address, FlwrProvider::Message> &stats);
+        
+        /**
+        * \brief Extract the uplink phase results of the simulation
+        * \param server    The Server Application 
+        * \param stats     Mapping from client address to simulation results 
+        */
+        void ExtractUplinkResults(Ptr<Server> server, std::map<Ipv4Address, FlwrProvider::Message> &stats);
+        
+        /**
+        * \brief Process the results acquired from downlink and uplink fot final result 
+        * \param m_addrMap  Mapping from Ip address to id
+        * \param stats      Mapping from client address to simulation results 
+        * \return           Mapping from client id to simulation results 
+        */
+        std::map<int, FlwrProvider::Message> ProcessResults(std::map<Ipv4Address, int> m_addrMap,std::map<Ipv4Address, FlwrProvider::Message> &stats);
+
+
+        int m_numClients;                           //!< Number of clients in experiment
+        std::string m_networkType;                  //!< Network type
+        int m_maxPacketSize;                        //!< Max packet size
+        double m_txGain;                            //!< TX gain (for wifi network)
+        std::string m_modelType;                    //!< modelType used for training 
+        std::string m_deviceType;                   //!< Device type used for training 
+        double m_modelSize;                         //!< Size of model
+        std::string m_dataRate;                     //!< Datarate for server
+        bool m_bAsync;                              //!< Indicator bool for whether experiement is async
+        FlwrProvider *m_flwrProvider;               //!< pointer to an flwr-interface (used to communicate with flower)
+        FILE *m_fp;                                 //!< pointer to logfile
+        std::vector<double> m_server_coordinates;   //!< coordinates of server used in NetAnim
+        int m_round;                                //!< experiment round
+>>>>>>> Stashed changes
 
     };
 }

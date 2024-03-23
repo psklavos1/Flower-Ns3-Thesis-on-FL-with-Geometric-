@@ -40,6 +40,7 @@ def main(cfg: DictConfig):
     maxX = cfg.maxX
     minY = cfg.minY
     maxY = cfg.maxY
+    # The paths given are relative to the execution path. So run from cmd not vsCode
     output_filepath = cfg.output_path
 
     generate_coordinates(output_filepath, minX, maxX, minY, maxY, num_nodes)

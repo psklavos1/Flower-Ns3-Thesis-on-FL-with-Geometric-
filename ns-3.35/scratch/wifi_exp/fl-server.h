@@ -34,8 +34,6 @@
 #include "flwr-interface.h"
 #include "fl-energy.h"
 
-
-
 namespace ns3 {
 
     class Address;
@@ -55,21 +53,17 @@ namespace ns3 {
         class ClientSessionData {
         public:
             ClientSessionData() : m_bytesReceived(0), m_bytesSent(0), m_bytesModelToSend(0), m_bytesModelToReceive(0) {
-
             }
-
-            ns3::Time m_timeBeginReceivingModelFromClient;    //!<Set time when connected
-            ns3::Time m_timeEndReceivingModelFromClient;      //!<Set time when last message received by server
-            ns3::Time m_timeBeginSendingModelToClient;      //!<Set time when connected
-            ns3::Time m_timeEndSendingModelToClient;        //!<Set time when last message is sent to client
+            ns3::Time m_timeBeginReceivingModelFromClient;    //!<Set time when start receiving from client
+            ns3::Time m_timeEndReceivingModelFromClient;      //!<Set time when last message received from client
+            ns3::Time m_timeBeginSendingModelToClient;        //!<Set time when connected start sending to client
+            ns3::Time m_timeEndSendingModelToClient;          //!<Set time when last message is sent to client
             uint32_t m_bytesReceived;                         //!<Total number of bytes received
             uint32_t m_bytesSent;                             //!<Total number of bytes sent
             uint32_t m_bytesModelToSend;                      //!<Remaining number of bytes to send
             uint32_t m_bytesModelToReceive;                   //!<Remaining number of bytes to receive
             ns3::Address m_address;                           //!<Address of the connected client
-
         };
-
 
         /**
          * \brief Get the type ID.
@@ -89,9 +83,10 @@ namespace ns3 {
         /**
          * \brief Sets the session manager and flower provider
          * \param pSessionManager Session Manager for this experiment
-         * \param flwr_provider Flower provider for this experiment
+         * \param flwr_provider   Flower provider for this experiment
+         * \param fp              Pointer to loging file
+         * \param round           Round of Simulation
          */
-         //TODO: move to cc file
         void SetClientSessionManager(ClientSessionManager *pSessionManager, FlwrProvider *flwr_provider, FILE *fp, int round) {
             m_clientSessionManager = pSessionManager;
             m_flwrProvider = flwr_provider;
@@ -102,29 +97,11 @@ namespace ns3 {
     protected:
         virtual void DoDispose(void);
 
-
     private:
+
         // inherited from Application base class.
         virtual void StartApplication(void);    // Called at time specified by Start
         virtual void StopApplication(void);     // Called at time specified by Stop
-
-        /**
-         * \brief Handle a packet received by the application
-         * \param socket the receiving socket
-         */
-        void ReceivedDataCallback(Ptr <Socket> socket);
-
-        /**
-         * \brief Sends a packet from server to client, continues
-         *        to send packets until there are no remaining bytes to be sent.
-         * \param socket Connected client socket in which to send bytes.
-         */
-        void SendModel(Ptr <Socket> socket);
-
-        /**
-         * \brief Begins the process of sending the model to the client
-         */
-        void StartSendingModel(Ptr <Socket> socket);
 
         /**
          * \brief
@@ -132,7 +109,6 @@ namespace ns3 {
          * \param from
          * \return
          */
-         //TODO: Make a null callback and delete this
         bool ConnectionRequestCallback(Ptr <Socket> s, const Address &from);
 
         /**
@@ -143,13 +119,30 @@ namespace ns3 {
         void NewConnectionCreatedCallback(Ptr <Socket> socket, const Address &from);
 
         /**
+         * \brief Handle a packet received by the application
+         * \param socket the receiving socket
+         */
+        void ReceivedDataCallback(Ptr <Socket> socket);
+
+        /**
          * \brief Callback used to schedule a send when TxAvailable becomes
          *        positive
          * \param sock       Socket that is ready to send
          * \param available  TxAvailable
          */
-         //TODO:rename to handlereadytosend like in client file
-        void ServerHandleSend(Ptr <Socket> sock, uint32_t available);
+        void HandleReadytoSend(Ptr <Socket> sock, uint32_t available);
+
+        /**
+         * \brief Begins the process of sending the model to the client
+         */
+        void StartSendingModel(Ptr <Socket> socket);
+        
+        /**
+         * \brief Sends a packet from server to client, continues
+         *        to send packets until there are no remaining bytes to be sent.
+         * \param socket Connected client socket in which to send bytes.
+         */
+        void SendModel(Ptr <Socket> socket);
 
         /**
          * \brief Handle an connection close
@@ -174,7 +167,6 @@ namespace ns3 {
          */
         void PacketReceived(const Ptr <Packet> &p, const Address &from, const Address &localAddress);
 
-
         Ptr <Socket> m_socket;                                                    //!< Listening socket
         std::map <Ptr<Socket>, std::shared_ptr<ClientSessionData>> m_socketList;  //!< the accepted sockets
         ClientSessionManager *m_clientSessionManager;                             //!< Container that holds all client sessions
@@ -182,18 +174,16 @@ namespace ns3 {
         uint64_t m_totalRx;                                                       //!< Total bytes received
         TypeId m_tid;                                                             //!< Protocol TypeId
         uint32_t m_packetSize;                                                    //!< Max packet size for server to client communication
-        ns3::EventId m_sendEvent; //!< Send event handle used to cancel a pending event
-        uint32_t m_bytesModel;    //!< Size of model that will be sent between the client and server
-        ns3::DataRate m_dataRate; //!< Rate which data is transmitted from server to client
-        std::string m_modelType;    //!< The modelType that is used for training
-        std::string m_deviceType; //!< The device used for training as client
-
-        bool m_bAsync;            //!< Flag that is used to configure server as sync or async
-        FlwrProvider *m_flwrProvider; //!< Communications interface with python simulator
-        ns3::Time m_timeOffset;   //!< For async, offset between rounds
-        FILE *m_fp;               //!< File pointer for logging.
-        int m_round;              //!< Round
-
+        ns3::EventId m_sendEvent;                                                 //!< Send event handle used to cancel a pending event
+        uint32_t m_bytesModel;                                                    //!< Size of model that will be sent between the client and server
+        ns3::DataRate m_dataRate;                                                 //!< Rate which data is transmitted from server to client
+        std::string m_modelType;                                                  //!< The modelType that is used for training
+        std::string m_deviceType;                                                 //!< The device used for training as client
+        bool m_bAsync;                                                            //!< Flag that is used to configure server as sync or async
+        FlwrProvider *m_flwrProvider;                                             //!< Communications interface with python simulator
+        ns3::Time m_timeOffset;                                                   //!< For async, offset between rounds
+        FILE *m_fp;                                                               //!< File pointer for logging.
+        int m_round;                                                              //!< Round
     };
 
 } // namespace ns3

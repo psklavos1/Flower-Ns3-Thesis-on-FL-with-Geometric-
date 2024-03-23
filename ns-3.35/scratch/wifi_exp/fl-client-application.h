@@ -57,42 +57,29 @@ namespace ns3
     * \param dataRate       Rate which data is transmitted from client to server
     * \param deviceType     Device type
     * \param learningModel  The learning model
-
     */
     void Setup (Ptr <Socket> socket, Address address, uint32_t packetSize, uint32_t nBytesModel,
                 DataRate dataRate,std::string deviceType, std::string learningModel );
 
    private:
-    std::string m_deviceType;
-    std::string m_learningModel;
-
     // inherited from Application base class.
     virtual void StartApplication (void);  //Called when application starts
     virtual void StopApplication (void);   //Called at the end of simulation
 
+<<<<<<< Updated upstream
     /**
      * \brief Begins the process of sending the model to the server
      */
     void StartWriting ();
 
+=======
+>>>>>>> Stashed changes
     /**
      * \brief Callback function for when a connection to remote host succeeds,
      * used to trigger receiving for model from server
      * \param socket The connected socket
      */
     void ConnectionSucceeded (Ptr <Socket> socket);
-
-    /**
-     * \brief Callback function to log that socket closed normally
-     * \param socket The closed socket
-     */
-    void NormalClose (Ptr <Socket> socket);
-
-    /**
-     * \brief Callback function to log that socket closed with an error
-     * \param socket The closed socket
-     */
-    void ErrorClose (Ptr <Socket> socket);
 
     /**
      * \brief Callback function for when connection to remote host failed
@@ -108,6 +95,19 @@ namespace ns3
     void HandleRead (Ptr <Socket> socket);
 
     /**
+     * \brief Callback used to schedule a send when TxAvailable becomes
+     *        positive
+     * \param sock       Socket that is ready to send
+     * \param available  TxAvailable
+     */
+    void HandleReadyToSend (Ptr <Socket> sock, uint32_t available);
+    
+    /**
+     * \brief Begins the process of sending the model to the server
+     */
+    void StartWriting ();
+
+    /**
      * \brief Sends a packet from client to server (remote host), continues
      *        to send packets until there are no remaining bytes to be sent.
      * \param socket Connected socket in which to send bytes.
@@ -115,28 +115,30 @@ namespace ns3
     void Send (Ptr <Socket> socket);
 
     /**
-     * \brief Callback used to schedule a send when TxAvailable becomes
-     *        positive
-     * \param sock       Socket that is ready to send
-     * \param available  TxAvailable
+     * \brief Callback function to log that socket closed normally
+     * \param socket The closed socket
      */
-    void HandleReadyToSend (Ptr <Socket> sock, uint32_t available);
+    void NormalClose (Ptr <Socket> socket);
 
-    //Set by Setup
+    /**
+     * \brief Callback function to log that socket closed with an error
+     * \param socket The closed socket
+     */
+    void ErrorClose (Ptr <Socket> socket);
+
     Ptr <Socket> m_socket;                    //!< Socket to associate with client
     Address m_peer;                           //!< Server to connect to
     uint32_t m_packetSize;                    //!< Max packet size for communication from client to server
     uint32_t m_bytesModel;                    //!< Size of model that will be sent between the client and server
     DataRate m_dataRate;                      //!< Rate which data is transmitted from client to server
-
     uint32_t m_bytesModelReceived;            //!< Number of bytes of model received
     uint32_t m_bytesModelToReceive;           //!< Number of bytes of model left to receive
     Time m_timeBeginReceivingModelFromServer; //!< Set time when receiving model from server
     Time m_timeEndReceivingModelFromServer;   //!< Set time when last message received by server
-
     uint32_t m_bytesModelToSend;              //!< Number of bytes left to send to server
     uint32_t m_bytesSent;                     //!< Number of bytes sent to server
-
+    std::string m_deviceType;                 //!< device of client: kind of Raspberry Pi
+    std::string m_learningModel;              //!< Sync or Async learning model
     EventId m_sendEvent;                      //!< Send event handle used to cancel a pending event
     PerformanceSimpleModel m_model;           //!< Performance model used to calculate computational delay.
   };

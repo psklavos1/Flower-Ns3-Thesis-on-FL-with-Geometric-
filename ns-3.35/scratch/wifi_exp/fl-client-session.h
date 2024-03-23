@@ -58,7 +58,7 @@ namespace ns3 {
         * \param dataRate_    The dataRate supported by the client
 
         */
-        ClientSession(int clientID_, double x_, double y_, char* dataRate_) ;
+        ClientSession(int clientID_, double x_, double y_, std::string dataRate_) ;
 
         /**
         * \brief Gets the socket of client
@@ -123,15 +123,14 @@ namespace ns3 {
         * \brief Get data rate of client
         * \return dataRate
         */
-        char* GetDataRate();
-
+        std::string GetDataRate();
 
 
     private:
         ns3::Ptr<ns3::Socket> m_client;     //!< Socket of client
-        double m_x;                    //!< Radius location of client
-        double m_y;                     //!< Angular location of client
-        char* m_dataRate;                  //!< Data rate
+        double m_x;                         //!< x cartesian location of client
+        double m_y;                         //!< y cartesian location of client
+        std::string m_dataRate;             //!< Data rate capability of client
         int m_clientID;                     //!< Client id
         int m_cycle;                        //!< Client cycle for async round
         bool m_inRound;                     //!< Indicates whether client should participate in round
@@ -201,6 +200,5 @@ namespace ns3 {
         int m_nInRoundFirstCycleDone;                                             //!< number of clients with first cycle done
 
     };
-
 }
 #endif

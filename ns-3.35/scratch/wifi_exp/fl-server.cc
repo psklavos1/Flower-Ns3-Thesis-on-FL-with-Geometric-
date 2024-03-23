@@ -164,6 +164,39 @@ Server::StopApplication () // Called at time specified by Stop
     }
 }
 
+bool
+Server::ConnectionRequestCallback (Ptr<Socket> socket, const Address &address)
+{
+  // NS_LOG_UNCOND ("Connection Request Received " << Simulator::Now ().GetSeconds () << "s");
+  return true;
+}
+
+void
+Server::NewConnectionCreatedCallback (Ptr<Socket> socket, const Address &from)
+{
+  // NS_LOG_UNCOND ("Connection Accepted " << Simulator::Now ().GetSeconds ());
+
+  NS_LOG_FUNCTION (this << socket << from);
+  auto clientSession = std::make_shared<ClientSessionData> ();
+
+  auto nsess = m_socketList.insert (std::make_pair (socket, clientSession));
+  nsess.first->second->m_address = from;
+  socket->SetRecvCallback (MakeCallback (&Server::ReceivedDataCallback, this));
+
+  StartSendingModel (socket);
+
+  NS_LOG_UNCOND ("Accept:" << m_clientSessionManager->ResolveToIdFromServer (socket));
+
+  Ptr<Packet> packet;
+  while ((packet = socket->Recv ()))
+    {
+      if (packet->GetSize () == 0)
+        {
+          break; // EOF
+        }
+    }
+}
+
 void
 Server::ReceivedDataCallback (Ptr<Socket> socket)
 {
@@ -244,15 +277,15 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
                   socket->GetPeerName (addr);
                   auto temp = ns3::InetSocketAddress::ConvertFrom (addr).GetIpv4 ();
 
-                  NS_LOG_UNCOND (
-                      "[SERVER]  "
-                      << temp << " -> 10.1.1.1" << std::endl
-                      << "  Round " << m_clientSessionManager->GetRound (socket) << std::endl
-                      << "  Begin downlink=" << beginDownlink << std::endl
-                      << "  Begin uplink=" << beginUplink << std::endl
-                      << "  End uplink=" << endUplink << std::endl
-                      << "  Round time=" << (endUplink - beginDownlink) << std::endl
-                      << "  UplinkDifference=" << (endUplink - beginUplink) << std::endl);
+                  NS_LOG_UNCOND ("[SERVER]  "
+                                 << temp << " -> 10.1.1.1" << std::endl
+                                 << "  Round " << m_clientSessionManager->GetRound (socket)
+                                 << std::endl
+                                 << "  Begin downlink=" << beginDownlink << std::endl
+                                 << "  Begin uplink=" << beginUplink << std::endl
+                                 << "  End uplink=" << endUplink << std::endl
+                                 << "  Round time=" << (endUplink - beginDownlink) << std::endl
+                                 << "  UplinkDuration=" << (endUplink - beginUplink) << std::endl);
                 }
 
               m_clientSessionManager->IncrementCycleCountFromServer (socket);
@@ -285,6 +318,7 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 }
 
 void
+<<<<<<< Updated upstream
 Server::HandlePeerClose (Ptr<Socket> socket)
 {
   NS_LOG_FUNCTION (this << socket);
@@ -328,6 +362,9 @@ Server::NewConnectionCreatedCallback (Ptr<Socket> socket, const Address &from)
 
 void
 Server::ServerHandleSend (Ptr<Socket> socket, uint32_t available)
+=======
+Server::HandleReadytoSend (Ptr<Socket> socket, uint32_t available)
+>>>>>>> Stashed changes
 {
   m_socket->SetSendCallback (MakeNullCallback<void, Ptr<Socket>, uint32_t> ());
 
@@ -361,7 +398,7 @@ Server::SendModel (Ptr<Socket> socket)
   auto available = socket->GetTxAvailable ();
   if (available == 0)
     {
-      socket->SetSendCallback (MakeCallback (&Server::ServerHandleSend, this));
+      socket->SetSendCallback (MakeCallback (&Server::HandleReadytoSend, this));
       return;
     }
 
@@ -394,10 +431,25 @@ Server::SendModel (Ptr<Socket> socket)
     }
   else
     {
-      NS_LOG_UNCOND ("Server Sent Whole Model: " << Simulator::Now ().GetSeconds () << "s");
-
+      // NS_LOG_UNCOND ("Server Sent Whole Model: " << Simulator::Now ().GetSeconds () << "s");
       itr->second->m_timeEndSendingModelToClient = Simulator::Now ();
     }
+}
+
+void
+Server::HandlePeerClose (Ptr<Socket> socket)
+{
+  NS_LOG_UNCOND ("Peer Close " << Simulator::Now ().GetSeconds ());
+
+  NS_LOG_FUNCTION (this << socket);
+}
+
+void
+Server::HandlePeerError (Ptr<Socket> socket)
+{
+  NS_LOG_UNCOND ("Peer Error " << Simulator::Now ().GetSeconds ());
+
+  NS_LOG_FUNCTION (this << socket);
 }
 
 } // Namespace ns3

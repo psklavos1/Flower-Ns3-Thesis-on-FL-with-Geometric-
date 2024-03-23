@@ -62,6 +62,62 @@ Experiment::Experiment (int numClients, std::string &networkType, int maxPacketS
 {
 }
 
+<<<<<<< Updated upstream
+=======
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Experiment Round Run >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+std::map<int, FlwrProvider::Message>
+Experiment::Run_Round (std::map<int, std::shared_ptr<ClientSession>> &clients,
+                       ns3::Time &timeOffset)
+{
+  NS_LOG_UNCOND ("Experiment Round Setup");
+  double server_start_time = 3.0;
+  double stop_time = 1000000.0;
+  double client_start_time = 5.0;
+
+  // 1.Devices Setup
+  NodeContainer c;
+  c.Create (clients.size () + 1);
+  NetDeviceContainer devices = SetupDevices (c, clients);
+
+  // 2.Internet Stack Setup
+  Ipv4InterfaceContainer interfaces = SetupInternetStack (c, devices);
+
+  // 3.Server Setup
+  Ptr<Server> serverApp =
+      SetupServer (c.Get (0), interfaces, timeOffset, server_start_time, stop_time);
+
+  // 4.Clients Setup
+  std::map<Ipv4Address, int> m_addrMap;
+  ApplicationContainer clientApps =
+      SetupClients (c, clients, interfaces, m_addrMap, timeOffset, client_start_time, stop_time);
+
+  // 5.Client Session Manager Setup
+  ClientSessionManager client_session_manager (clients);
+  serverApp->GetObject<ns3::Server> ()->SetClientSessionManager (&client_session_manager,
+                                                                 m_flwrProvider, m_fp, m_round);
+  // 6. Netanim Interface Setup
+  AnimationInterface anim = ConfigureAnimation (c, client_start_time);
+  NS_LOG_UNCOND ("Round Setup Complete");
+
+  // 7.Run Simulation
+  Simulator::Stop (Seconds (stop_time));
+  NS_LOG_UNCOND ("================= Starting Ns3 Round Simulation ===================");
+  Simulator::Run ();
+
+  // 8.Extract Simulation Results
+  std::map<Ipv4Address, FlwrProvider::Message> stats;
+  ExtractDownlinkResults (clients, interfaces, stats);
+  ExtractUplinkResults (serverApp, stats);
+
+  std::map<int, FlwrProvider::Message> roundStats = ProcessResults (m_addrMap, stats);
+
+  Simulator::Destroy ();
+  return roundStats;
+}
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> \Experiment Round Run >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Positioning Helpers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>> Stashed changes
 void
 Experiment::SetPositionPolar (Ptr<Node> node, double radius, double theta)
 {
@@ -87,6 +143,7 @@ Experiment::GetPosition (Ptr<Node> node)
   return mobility->GetPosition ();
 }
 
+<<<<<<< Updated upstream
 NetDeviceContainer
 Experiment::Ethernet (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients)
 {
@@ -99,6 +156,9 @@ Experiment::Ethernet (NodeContainer &c, std::map<int, std::shared_ptr<ClientSess
 
   return csmaDevices;
 }
+=======
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Network Setup Helpers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>> Stashed changes
 
 NetDeviceContainer
 Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients)
@@ -110,14 +170,20 @@ Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>
   WifiMacHelper wifiMac;
 
   wifiChannel.AddPropagationLoss ("ns3::LogDistancePropagationLossModel", "Exponent",
-                                  DoubleValue (3.0), "ReferenceLoss", DoubleValue (40.0));
+                                  DoubleValue (3.0), "ReferenceLoss", DoubleValue (42.0));
   wifiChannel.AddPropagationLoss ("ns3::NakagamiPropagationLossModel");
   wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
 
   wifiPhy.SetErrorRateModel ("ns3::YansErrorRateModel");
+  // wifiPhy.Set ("TxPowerStart", DoubleValue (18.0)); // in dBm min
+  // wifiPhy.Set ("TxPowerEnd", DoubleValue (20.0)); // max
+
   wifiPhy.SetChannel (wifiChannel.Create ());
+  wifiPhy.Set ("TxGain", DoubleValue (m_txGain));
+
   wifiPhy.Set ("RxGain", DoubleValue (0));
-  std::string phyMode ("HtMcs7");
+
+  std::string phyMode ("HtMcs4");
   Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (phyMode));
 
   wifi.SetStandard (WIFI_STANDARD_80211n_5GHZ);
@@ -151,6 +217,23 @@ Experiment::Wifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>
 
   return devices;
 }
+<<<<<<< Updated upstream
+=======
+
+NetDeviceContainer
+Experiment::Ethernet (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients)
+{
+  CsmaHelper csma;
+  csma.SetChannelAttribute ("DataRate", StringValue ("100Mbps"));
+  csma.SetChannelAttribute ("Delay", TimeValue (NanoSeconds (6560)));
+
+  NetDeviceContainer csmaDevices;
+  csmaDevices = csma.Install (c);
+
+  return csmaDevices;
+}
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> \Network Setup Helpers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>> Stashed changes
 
 std::map<int, FlwrProvider::Message>
 Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
@@ -235,9 +318,15 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
           source->SetAttribute ("DataRetries", UintegerValue (100));
 
           Ptr<ClientApplication> app = CreateObject<ClientApplication> ();
+<<<<<<< Updated upstream
           char *client_datarate = clients[j - 1]->GetDataRate ();
           app->Setup (source, sinkAddress, m_maxPacketSize, m_modelSize,
                       std::string (client_datarate), m_deviceType, m_modelType);
+=======
+          std::string client_datarate = clients[j - 1]->GetDataRate ();
+          app->Setup (source, InetSocketAddress (interfaces.GetAddress (0), 80), m_maxPacketSize,
+                      m_modelSize, std::string (client_datarate), m_deviceType, m_modelType);
+>>>>>>> Stashed changes
           c.Get (j)->AddApplication (app);
           // Let sometime for Server to be ready. Especially when using OLSR at least 3 s.
           app->SetStartTime (Seconds (5.));
@@ -287,6 +376,7 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
     }
   // ========================= \NetAnim Section =========================
 
+<<<<<<< Updated upstream
   Simulator::Stop (Seconds (1000000.0));
   NS_LOG_UNCOND ("================= Starting Ns3 Round Simulation ===================");
   Simulator::Run ();
@@ -397,6 +487,99 @@ Experiment::WeakNetwork (std::map<int, std::shared_ptr<ClientSession>> &clients,
   return roundStats;
 }
 
+=======
+void
+Experiment::ExtractDownlinkResults (std::map<int, std::shared_ptr<ClientSession>> &clients,
+                                    Ipv4InterfaceContainer &interfaces,
+                                    std::map<Ipv4Address, FlwrProvider::Message> &stats)
+{
+  int numClients = clients.size ();
+  for (int j = 1; j <= numClients; j++)
+    {
+      if (clients[j - 1]->GetInRound ())
+        {
+          auto app = clients[j - 1]->GetClient ()->GetNode ()->GetApplication (0);
+          UintegerValue sent;
+          UintegerValue rec;
+          TimeValue beginDownLink;
+          TimeValue endDownLink;
+          Ipv4Address clientAddress;
+          app->GetAttribute ("BytesSent", sent);
+          app->GetAttribute ("BytesReceived", rec);
+          app->GetAttribute ("BeginDownlink", beginDownLink);
+          app->GetAttribute ("EndDownlink", endDownLink);
+
+          clientAddress =
+              InetSocketAddress::ConvertFrom (InetSocketAddress (interfaces.GetAddress (j, 0), 80))
+                  .GetIpv4 ();
+
+          stats[clientAddress].downlinkTime =
+              (endDownLink.Get () - beginDownLink.Get ()).GetDouble () / 1000000000.0;
+
+          NS_LOG_UNCOND ("[CLIENT]  "
+                         << "10.1.1.1 -> " << clientAddress << std::endl
+                         << "  Recv=" << rec.Get () << " bytes" << std::endl
+                         << "  Sent=" << sent.Get () << " bytes" << std::endl
+                         << "  Begin downlink=" << beginDownLink.Get ().As (Time::S) << std::endl
+                         << "  End downlink=" << endDownLink.Get ().As (Time::S) << std::endl
+                         << "  Downlink duration=" << stats[clientAddress].downlinkTime
+                         << std::endl);
+        }
+    }
+}
+void
+Experiment::ExtractUplinkResults (Ptr<Server> server,
+                                  std::map<Ipv4Address, FlwrProvider::Message> &stats)
+{
+  auto sk = server->GetAcceptedSockets ();
+  for (auto itr = sk.begin (); itr != sk.end (); itr++)
+    {
+      auto beginUplink = itr->second->m_timeBeginReceivingModelFromClient;
+      auto endUplink = itr->second->m_timeEndReceivingModelFromClient;
+      auto clientAddress = InetSocketAddress::ConvertFrom (itr->second->m_address).GetIpv4 ();
+
+      NS_LOG_UNCOND (
+          "[SERVER]  " << clientAddress << " -> 10.1.1.1" << std::endl
+                       << "  Sent=     " << itr->second->m_bytesSent << " bytes" << std::endl
+                       << "  Recv=     " << itr->second->m_bytesReceived << " bytes" << std::endl
+                       << "  Begin uplink=" << beginUplink.As (Time::S) << std::endl
+                       << "  End uplink=" << endUplink.As (Time::S) << std::endl
+                       << "  Uplink duration=" << (endUplink - beginUplink).As (Time::S));
+
+      stats[clientAddress].uplinkTime = (endUplink - beginUplink).GetDouble () / 1000000000.0;
+      stats[clientAddress].throughput =
+          itr->second->m_bytesReceived * 8.0 / 1000.0 /
+          ((endUplink.GetDouble () - beginUplink.GetDouble ()) / 1000000000.0);
+    }
+}
+
+// Method to combine and process the extracted results
+std::map<int, FlwrProvider::Message>
+Experiment::ProcessResults (std::map<Ipv4Address, int> m_addrMap,
+                            std::map<Ipv4Address, FlwrProvider::Message> &stats)
+{
+  std::map<int, FlwrProvider::Message> roundStats;
+  for (auto itr : stats)
+    {
+
+      int id = m_addrMap[itr.first];
+      NS_LOG_UNCOND ("ID " << id << "  ,ADDRESS: " << itr.first << "| DownlinkTime= " << std::fixed
+                           << std::setprecision (2) << itr.second.downlinkTime << "s"
+                           << "| UplinkTime= " << std::fixed << std::setprecision (2)
+                           << itr.second.uplinkTime << "s"
+                           << "| Round Throughput= " << std::fixed << std::setprecision (2)
+                           << itr.second.throughput << "kbps");
+
+      roundStats[id].throughput = itr.second.throughput;
+      roundStats[id].downlinkTime = itr.second.downlinkTime;
+      roundStats[id].uplinkTime = itr.second.uplinkTime;
+    }
+  return roundStats;
+}
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \Experiment Helpers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>> Stashed changes
 } // namespace ns3
 
 // NetDeviceContainer

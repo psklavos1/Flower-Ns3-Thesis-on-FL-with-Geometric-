@@ -2,10 +2,18 @@ defaults:
   - common
   - network
 
+# Configuration to be passed to flower server side
 flower_server_cfg:
   flower_server_address: ${server_address}
   metric_server_address: ${metric_server_address}
   num_rounds: 20
+
+  wait_ns3_establishment: 4 # Time in sleep to setup ns3 before attempting to connect
+
+  clients: 
+    total: ${num_clients}
+    for_fit: 3
+    for_eval: 2
 
   fit_cfg: 
     epochs: 1
@@ -16,6 +24,7 @@ flower_server_cfg:
     verbose: 1
     batch_size: 64
 
+# Configuration to be passed metric tracking server side
 metric_server_cfg:
   threshold: 25
   thres_discount_factor: 0.9

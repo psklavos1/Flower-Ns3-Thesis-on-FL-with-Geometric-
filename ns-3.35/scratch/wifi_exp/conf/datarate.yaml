@@ -7,9 +7,12 @@ hydra:
     root:
       handlers: null  # This will disable logging to files
 
-min: 1000
-max: 2500
+minForServer: 60   # Mbps
+maxForServer: 100  # Mbps
+minForClients: 1000 # kbps
+maxForClients: 2500 # kbps
+
 input_filepath: "./node_coordinates.txt"
-output_filepath: "./client_datarates.txt"  # The output file name
+output_filepath: "./datarates.txt"  # The output file name
 
 

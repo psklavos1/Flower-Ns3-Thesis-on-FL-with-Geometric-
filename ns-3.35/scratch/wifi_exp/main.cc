@@ -17,19 +17,16 @@
  *
  * Author: Emily Ekaireb <eekaireb@ucsd.edu>
  */
-
 #include <random>
 #include <chrono>
 #include <vector>
 #include <iostream> // Include the I/O library
 #include <unistd.h> // For UNIX/Linux systems
 #include <fstream>
-
 #include "fl-experiment.h"
 #include "matrix-topology.h"
 
 using sysclock_t = std::chrono::system_clock;
-
 using namespace ns3;
 using namespace std;
 
@@ -41,17 +38,13 @@ NS_LOG_COMPONENT_DEFINE ("Wifi-Adhoc");
 int
 main (int argc, char *argv[])
 {
-  // std::ofstream logFile ("./scratch/wifi_exp/log_file.txt");
-  // Save the old buffers of std::cout and std::cerr
-  // so they can be restored later.
+  // Logic to direct error stream to a file for debug
+  // relative to the call directory
+  // ofstream logFile ("./scratch/wifi_exp/error_log.txt");
   // auto oldCerrBuf = std::cerr.rdbuf ();
-
-  // Redirect std::cout and std::cerr to logFile (log_file.txt).
-  // std::cout.rdbuf (logFile.rdbuf ());
   // std::cerr.rdbuf (logFile.rdbuf ());
 
   FlwrProvider *FlwrProvider = &g_FlwrProvider;
-
   ns3::CommandLine cmd;
 
   // Default Values
@@ -60,7 +53,6 @@ main (int argc, char *argv[])
   int maxPacketSize = 1024; //bytes
   double TxGain = 0.0; //dB + 30 = dBm
   double modelSize = 1.500 * 10; // kb
-  std::string dataRate = "1000kbps"; /* Application layer datarate. */
   std::string learningModel = "sync";
   std::string modelType = "MNIST";
   std::string deviceType = "400";
@@ -70,14 +62,12 @@ main (int argc, char *argv[])
   cmd.AddValue ("maxPacketSize", "Maximum size packet that can be sent", maxPacketSize);
   cmd.AddValue ("txGain", "Power transmitted from clients and server", TxGain);
   cmd.AddValue ("modelSize", "Size of model", modelSize);
-  cmd.AddValue ("dataRate", "Application data rate", dataRate);
   cmd.AddValue ("learningModel", "Async or Sync federated learning", learningModel);
   cmd.AddValue (
       "modelType",
       "modelType on which the training is happening(For better computational time calculation)",
       modelType);
   cmd.AddValue ("deviceType", "Type of Devices used as clients", deviceType);
-
   modelSize = 1.500 * 10; // kb
 
   cmd.Parse (argc, argv);
@@ -85,7 +75,6 @@ main (int argc, char *argv[])
     {
       modelType = "MNIST";
     }
-
   else if (modelType.compare ("fashion_mnist") == 0)
     modelType = "FashionMNIST";
   else if (modelType.compare ("cifar10") == 0)
@@ -96,8 +85,6 @@ main (int argc, char *argv[])
     {
       bAsync = true;
     }
-
-  // NS_LOG_UNCOND ("modelSize: " << modelSize);
 
   NS_LOG_UNCOND ("{NumClients:" << numClients
                                 << ","
@@ -116,20 +103,16 @@ main (int argc, char *argv[])
                                    "modelSize:"
                                 << modelSize
                                 << ","
-                                   "dataRate:"
-                                << dataRate
-                                << ","
                                    "learningModel:"
                                 << learningModel << "}");
-  //Experiment experiment(numClients,networkType,maxPacketSize,TxGain);
   modelSize = modelSize * 1000; // conversion to bytes
 
-  std::time_t now = sysclock_t::to_time_t (sysclock_t::now ());
-
+  // Generetate file to keep ns3 data
+  time_t now = sysclock_t::to_time_t (sysclock_t::now ());
   char buf[80] = {0};
   std::strftime (buf, sizeof (buf), "%Y-%m-%d_%H-%H-%S.csv", std::localtime (&now));
-
   char strbuff[100];
+<<<<<<< Updated upstream
   snprintf (strbuff, 99, "%s_%s_%.2f_%s", learningModel.c_str (), networkType.c_str (), TxGain,
             buf);
 
@@ -157,8 +140,30 @@ main (int argc, char *argv[])
       y = coord_array[j + 1][1];
       // NS_LOG_UNCOND ("INIT: ID = " << j << " Distance from server = "
       //                              << getDistance (coord_array[j + 1], coord_array[server]));
+=======
+  snprintf (strbuff, 99, "%s_%s_%d_%s", networkType.c_str (), modelType.c_str (), numClients, buf);
+  FILE *fp = fopen (strbuff, "w");
+
+  // Get Coordinates
+  string node_coordinates_file_name = "./scratch/wifi_exp/node_coordinates.txt";
+  vector<vector<double>> coord_array = readCoordinates (node_coordinates_file_name, numClients + 1);
+  printCoordinates (coord_array);
+  //  Get DataRates
+  std::string dataRates_file_name = "./scratch/wifi_exp/datarates.txt";
+  std::vector<std::string> dataRates = readDataRates (dataRates_file_name, numClients + 1);
+  printDataRates (dataRates);
+
+  // Assign Clients with characteristics
+  int server = 0;
+  for (int j = 0; j < numClients; j++)
+    {
+      std::string client_dataRate = dataRates[j + 1];
+      int x = coord_array[j + 1][0];
+      int y = coord_array[j + 1][1];
+>>>>>>> Stashed changes
       g_clients[j] = std::shared_ptr<ClientSession> (new ClientSession (j, x, y, client_dataRate));
     }
+
   ns3::Time timeOffset (0);
 
   if (FlwrProvider)
@@ -184,6 +189,7 @@ main (int argc, char *argv[])
             }
         }
 
+<<<<<<< Updated upstream
       auto experiment =
           Experiment (numClients, networkType, maxPacketSize, TxGain, modelType, modelSize,
                       dataRate, deviceType, bAsync, FlwrProvider, fp, coord_array[server], round
@@ -193,6 +199,11 @@ main (int argc, char *argv[])
                                                            << "\n"
                                                               ">>>>>>>>>>>>>>>>>>>>>>>>>");
       auto roundStats = experiment.WeakNetwork (g_clients, timeOffset);
+=======
+      auto experiment = Experiment (numClients, networkType, maxPacketSize, TxGain, modelType,
+                                    modelSize, dataRates[server], deviceType, bAsync, FlwrProvider,
+                                    fp, coord_array[server], round);
+>>>>>>> Stashed changes
 
       NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nTIME_OFFSET:" << timeOffset
                                                                << "\n"
@@ -211,7 +222,6 @@ main (int argc, char *argv[])
     }
 
   fclose (fp);
-  clean_dataRates (client_dataRates, numClients);
   NS_LOG_UNCOND ("Exiting c++");
 
   // Restore the original buffers

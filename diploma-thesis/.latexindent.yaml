@@ -1,0 +1,5 @@
+# To put into a .latexindent.yaml file in your project directory
+lineBreaks:
+  max: 2 # set the maximum line length
+  textWrapOptions:
+    columns: 2 # this should match the 'max' value above

@@ -1,0 +1,562 @@
+\begin{thebibliography}{10}
+
+\bibitem{zhou_ml_big_data_challenges_2017}
+{{\latintext Lina{ }Zhou, Shimei{ }Pan, Jianwu{ }Wang \textgreek{kai}
+  Athanasios V.{ }Vasilakos}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Machine Learning on Big
+  Data: {{Opportunities}} and Challenges}}}}.
+\newblock {{\latintext {\em Neurocomputing}}}, 237:350--361,   2017.
+
+\bibitem{sahaComprehensiveGuideConvolutional2022}
+{{\latintext Sumit{ }Saha}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em A {{Comprehensive
+  Guide}} to {{Convolutional Neural Networks}} --- the {{ELI5}} Way}}}}.
+\newblock {{\latintext
+  https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53}},
+    2022.
+
+\bibitem{petrakosemmanouelReconfigurableLogicFPGA2023}
+{ }{Petrakos Emmanouel}.
+\newblock {\color{\colouredtextcolor} {\em Reconfigurable {{Logic}}
+  ({{FPGA}})-Based {{System Architecture}} for the {{Acceleration}} of
+  {{Federated}} {{Learning}} in {{Neural Networks}}}}.
+\newblock   2023.
+
+\bibitem{hajiCOMPARISONOPTIMIZATIONTECHNIQUES2021}
+{{\latintext Saad Hikmat{ }Haji \textgreek{kai} Adnan Mohsin{ }Abdulazeez}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em {{COMPARISON OF
+  OPTIMIZATION TECHNIQUES BASED ON GRADIENT DESCENT ALGORITHM}}: {{A
+  REVIEW}}}}}}.
+\newblock {{\latintext {\em PalArch's Journal of Archaeology of Egypt /
+  Egyptology}}}, 18(4):2715--2743,   2021.
+
+\bibitem{atulanandGRADIENTDESCENT2022}
+{{\latintext { }Atulanand}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em {{GRADIENT
+  DESCENT}}}}}},   2022.
+
+\bibitem{lecunEfficientBackProp1998}
+{{\latintext Yann{ }LeCun, Leon{ }Bottou, Genevieve B.{ }Orr \textgreek{kai}
+  Klaus Robert{ }M{\"u}ller}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Efficient
+  {{BackProp}}}}}}.
+\newblock {{\latintext  {\em Neural {{Networks}}: {{Tricks}} of the
+  {{Trade}}}Genevieve B.{ }Orr \textgreek{kai} Klaus Robert{ }M{\"u}ller,
+  \textgreek{epimelht'es}}}, \textgreek{sel'ides} 9--50. {{\latintext
+  Springer}}, {{\latintext Berlin, Heidelberg}}, 1998.
+
+\bibitem{caruccioSurveyingFederatedLearning2024}
+{{\latintext Loredana{ }Caruccio, Gaetano{ }Cimino, Vincenzo{ }Deufemia,
+  Gianpaolo{ }Iuliano \textgreek{kai} Roberto{ }Stanzione}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Surveying Federated
+  Learning Approaches through a Multi-Criteria Categorization}}}}.
+\newblock {{\latintext {\em Multimedia Tools and Applications}}},
+  83(12):36921--36951,   2024.
+
+\bibitem{almanifiCommunicationComputationEfficiency2023}
+{{\latintext Omair Rashed Abdulwareth{ }Almanifi, Chee Onn{ }Chow, Mau Luen{
+  }Tham, Joon Huang{ }Chuah \textgreek{kai} Jeevan{ }Kanesan}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Communication and
+  Computation Efficiency in {{Federated Learning}}: {{A}} Survey}}}}.
+\newblock {{\latintext {\em Internet of Things}}}, 22:100742,   2023.
+
+\bibitem{sharfmanGeometricApproachMonitoring2010}
+{{\latintext Izchak{ }Sharfman, Assaf{ }Schuster \textgreek{kai} Daniel{
+  }Keren}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em A {{Geometric
+  Approach}} to {{Monitoring Threshold Functions}} over {{Distributed Data
+  Streams}}}}}}.
+\newblock {{\latintext  {\em Ubiquitous {{Knowledge Discovery}}:
+  {{Challenges}}, {{Techniques}}, {{Applications}}}Michael{ }May
+  \textgreek{kai} Lorenza{ }Saitta, \textgreek{epimelht'es}}},
+  \textgreek{sel'ides} 163--186. {{\latintext Springer}}, {{\latintext Berlin,
+  Heidelberg}}, 2010.
+
+\bibitem{sharmaACTIVATIONFUNCTIONSNEURAL2020}
+{{\latintext Siddharth{ }Sharma, Simone{ }Sharma \textgreek{kai} Anidhya{
+  }Athaiya}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em {{ACTIVATION FUNCTIONS
+  IN NEURAL NETWORKS}}}}}}.
+\newblock {{\latintext {\em International Journal of Engineering Applied
+  Sciences and Technology}}}, 04(12):310--316,   2020.
+
+\bibitem{ai_and_ml_2020}
+{{\latintext Niklas{ }K{\"u}hl, Marc{ }Goutier, Robin{ }Hirt \textgreek{kai}
+  Gerhard{ }Satzger}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Machine {{Learning}} in
+  {{Artificial Intelligence}}: {{Towards}} a {{Common Understanding}}}}}},
+  2020.
+
+\bibitem{russell_norvig_book}
+{{\latintext {\color{\colouredtextcolor} {\em Artificial Intelligence : A
+  Modern Approach}}}}.
+\newblock {{\latintext https://thuvienso.hoasen.edu.vn/handle/123456789/8967}}.
+
+\bibitem{edge_computing_ml_2023}
+{{\latintext Haochen{ }Hua, Yutong{ }Li, Tonghe{ }Wang, Nanqing{ }Dong, Wei{
+  }Li \textgreek{kai} Junwei{ }Cao}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Edge {{Computing}} with
+  {{Artificial Intelligence}}: {{A Machine Learning Perspective}}}}}}.
+\newblock {{\latintext {\em ACM Computing Surveys}}}, 55(9):184:1--184:35,
+  2023.
+
+\bibitem{ml_big_data_2019}
+{{\latintext Amit Kumar{ }Tyagi \textgreek{kai} Rekha{ }G}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Machine {{Learning}}
+  with {{Big Data}}}}}},   2019.
+
+\bibitem{survey_ml_big_data_2016}
+{{\latintext Junfei{ }Qiu, Qihui{ }Wu, Guoru{ }Ding, Yuhua{ }Xu \textgreek{kai}
+  Shuo{ }Feng}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em A Survey of Machine
+  Learning for Big Data Processing}}}}.
+\newblock {{\latintext {\em EURASIP Journal on Advances in Signal
+  Processing}}}, 2016(1):67,   2016.
+
+\bibitem{sarker_ml_algorithms_2021}
+{{\latintext Iqbal H.{ }Sarker}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Machine {{Learning}}:
+  {{Algorithms}}, {{Real-World Applications}} and {{Research Directions}}}}}}.
+\newblock {{\latintext {\em SN Computer Science}}}, 2(3):160,   2021.
+
+\bibitem{hastie_statistical_learning_2017}
+{{\latintext { }{Trevor Hastie}, { }{Jerome Friedman} \textgreek{kai} {
+  }{Robert Tibshirani}}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em The {{Elements}} of
+  {{Statistical Learning}}}}}}, \textgreek{t'omos}\nobreakspace{}9.
+\newblock {{\latintext Springer Science \& Business Media}}, 2017.
+
+\bibitem{spyropoulos_lectures_2023}
+{{\latintext { }{Thrasyvoulos Spyropoulos}}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Reinforcement
+  {{Learning}}}}}}.
+\newblock {{\latintext  {\em Class at the {{Department}} of {{Electrical}} and
+  {{Computer Engineering}} , {{Technical University}} of {{Crete}}}}}, 2023.
+
+\bibitem{bengio_representational_learing_2013}
+{{\latintext Yoshua{ }Bengio, Aaron{ }Courville \textgreek{kai} Pascal{
+  }Vincent}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Representation
+  {{Learning}}: {{A Review}} and {{New Perspectives}}}}}}.
+\newblock {{\latintext {\em IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}}}, 35(8):1798--1828,   2013.
+
+\bibitem{nastesaki_supervised_ml_2017}
+{{\latintext Vladimir{ }Nasteski}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em An Overview of the
+  Supervised Machine Learning Methods}}}}.
+\newblock {{\latintext {\em HORIZONS.B}}}, 4:51--62,   2017.
+
+\bibitem{ghahramani_unsupervised_ml_2004}
+{{\latintext Zoubin{ }Ghahramani}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Unsupervised
+  {{Learning}}}}}}.
+\newblock {{\latintext  {\em Advanced {{Lectures}} on {{Machine Learning}}:
+  {{ML Summer Schools}} 2003, {{Canberra}}, {{Australia}}, {{February}} 2 - 14,
+  2003, {{T{\"u}bingen}}, {{Germany}}, {{August}} 4 - 16, 2003, {{Revised
+  Lectures}}}Olivier{ }Bousquet, Ulrike{ }{von Luxburg} \textgreek{kai} Gunnar{
+  }R{\"a}tsch, \textgreek{epimelht'es}}}, \textgreek{sel'ides} 72--112.
+  {{\latintext Springer}}, {{\latintext Berlin, Heidelberg}}, 2004.
+
+\bibitem{bisongBatchVsOnline2019}
+{{\latintext Ekaba{ }Bisong}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Batch vs. {{Online
+  Learning}}}}}}.
+\newblock {{\latintext  {\em Building {{Machine Learning}} and {{Deep Learning
+  Models}} on {{Google Cloud Platform}}: {{A Comprehensive Guide}} for
+  {{Beginners}}}Ekaba{ }Bisong, \textgreek{epimelht'hs}}}, \textgreek{sel'ides}
+  199--201. {{\latintext Apress}}, {{\latintext Berkeley, CA}}, 2019.
+
+\bibitem{dekel_online_to_batch_2008}
+{{\latintext Ofer{ }Dekel}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em From {{Online}} to
+  {{Batch Learning}} with {{Cutoff-Averaging}}}}}}.
+\newblock {{\latintext  {\em Advances in {{Neural Information Processing
+  Systems}}}}}, \textgreek{t'omos}\nobreakspace{}21. {{\latintext Curran
+  Associates, Inc.}}, 2008.
+
+\bibitem{perez_model_performance_2022}
+{{\latintext Diego{ }Perez}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em What Is {{Model
+  Performance}} Measurement in Machine Learning?}}}},   2022.
+
+\bibitem{zhang_overfitting_2019}
+{{\latintext Haotian{ }Zhang, Lin{ }Zhang \textgreek{kai} Yuan{ }Jiang}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Overfitting and
+  {{Underfitting Analysis}} for {{Deep Learning Based End-to-end Communication
+  Systems}}}}}}.
+\newblock {{\latintext  {\em 2019 11th {{International Conference}} on
+  {{Wireless Communications}} and {{Signal Processing}} ({{WCSP}})}}},
+  \textgreek{sel'ides} 1--6,   2019.
+
+\bibitem{perezModelComplexityMachine2022}
+{{\latintext Diego{ }Perez}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Model {{Complexity}} in
+  {{Machine Learning}}}}}},   2022.
+
+\bibitem{sullivanUnderstandingMachineLearning2022}
+{{\latintext Emily{ }Sullivan}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Understanding from
+  {{Machine Learning Models}}}}}}.
+\newblock {{\latintext {\em The British Journal for the Philosophy of
+  Science}}}, 73(1):109--133,   2022.
+
+\bibitem{medium_ml_overfitting_2023}
+{{\latintext Machine Learning in Plain{ }English}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Lesson 15 --- {{Machine
+  Learning}}: {{Overfitting}}, {{Underfitting}}, and {{Model Complexity
+  Intuition}}}}}},   2023.
+
+\bibitem{dongare_intro_ANN_2012}
+{{\latintext A D{ }Dongare, R R{ }Kharde \textgreek{kai} Amit D{ }Kachare}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Introduction to
+  {{Artificial Neural Network}}}}}}.
+\newblock 2(1), 2012.
+
+\bibitem{wu_feng_ANN_development_2018}
+{{\latintext Yu chen{ }Wu \textgreek{kai} Jun wen{ }Feng}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Development and
+  {{Application}} of {{Artificial Neural Network}}}}}}.
+\newblock {{\latintext {\em Wireless Personal Communications}}},
+  102(2):1645--1656,   2018.
+
+\bibitem{rosenblattPerceptronProbabilisticModel1958}
+{{\latintext F.{ }Rosenblatt}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em The Perceptron: {{A}}
+  Probabilistic Model for Information Storage and Organization in the
+  Brain}}}}.
+\newblock {{\latintext {\em Psychological Review}}}, 65(6):386--408, 1958.
+
+\bibitem{zhangArtificialNeuralNetwork2018}
+{{\latintext Zhihua{ }Zhang}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Artificial {{Neural
+  Network}}}}}}.
+\newblock {{\latintext  {\em Multivariate {{Time Series Analysis}} in
+  {{Climate}} and {{Environmental Research}}}Zhihua{ }Zhang,
+  \textgreek{epimelht'hs}}}, \textgreek{sel'ides} 1--35. {{\latintext Springer
+  International Publishing}}, {{\latintext Cham}}, 2018.
+
+\bibitem{popescuMultilayerPerceptronNeural2009}
+{{\latintext Marius Constantin{ }Popescu, Valentina E{ }Balas, Liliana{
+  }{Perescu-Popescu} \textgreek{kai} Nikos{ }Mastorakis}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Multilayer
+  {{Perceptron}} and {{Neural Networks}}}}}}.
+\newblock 8(7), 2009.
+
+\bibitem{minskyPerceptronsReissue19882017}
+{{\latintext Marvin{ }Minsky \textgreek{kai} Seymour A.{ }Papert}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Perceptrons,
+  {{Reissue}} of the 1988 {{Expanded Edition}} with a New Foreword by
+  {{L{\'e}on Bottou}}: {{An Introduction}} to {{Computational Geometry}}}}}}.
+\newblock {{\latintext MIT Press}},   2017.
+
+\bibitem{VanishingGradientProblem}
+{{\latintext {\color{\colouredtextcolor} {\em The {{Vanishing Gradient Problem
+  During Learning Recurrent Neural Nets}} and {{Problem Solutions}} {\textbar}
+  {{International Journal}} of {{Uncertainty}}, {{Fuzziness}} and
+  {{Knowledge-Based Systems}}}}}}.
+\newblock {{\latintext
+  https://www.worldscientific.com/doi/abs/10.1142/s0218488598000094}}.
+
+\bibitem{dubeyActivationFunctionsDeep2022}
+{{\latintext Shiv Ram{ }Dubey, Satish Kumar{ }Singh \textgreek{kai} Bidyut
+  Baran{ }Chaudhuri}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Activation Functions in
+  Deep Learning: {{A}} Comprehensive Survey and Benchmark}}}}.
+\newblock {{\latintext {\em Neurocomputing}}}, 503:92--108,   2022.
+
+\bibitem{ransisiNeuralNetworkTypes2021}
+{{\latintext Yasara{ }Ransisi}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Neural {{Network
+  Types}}.}}}},   2021.
+
+\bibitem{osheaIntroductionConvolutionalNeural2015}
+{{\latintext Keiron{ }O'Shea \textgreek{kai} Ryan{ }Nash}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em An {{Introduction}} to
+  {{Convolutional Neural Networks}}}}}},   2015.
+
+\bibitem{communityUnderstandingMechanismTypes2020}
+{{\latintext {\relax ODSC}{ }Community}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Understanding the
+  {{Mechanism}} and {{Types}} of {{Recurrent Neural Networks}}}}}},   2020.
+
+\bibitem{leshnoMultilayerFeedforwardNetworks1993}
+{{\latintext Moshe{ }Leshno, Vladimir Ya.{ }Lin, Allan{ }Pinkus \textgreek{kai}
+  Shimon{ }Schocken}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Multilayer Feedforward
+  Networks with a Nonpolynomial Activation Function Can Approximate Any
+  Function}}}}.
+\newblock {{\latintext {\em Neural Networks}}}, 6(6):861--867,   1993.
+
+\bibitem{ghiassiDynamicArtificialNeural2005}
+{{\latintext M.{ }Ghiassi, H.{ }Saidane \textgreek{kai} D. K.{ }Zimbra}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em A Dynamic Artificial
+  Neural Network Model for Forecasting Time Series Events}}}}.
+\newblock {{\latintext {\em International Journal of Forecasting}}},
+  21(2):341--362,   2005.
+
+\bibitem{guRecentAdvancesConvolutional2018}
+{{\latintext Jiuxiang{ }Gu, Zhenhua{ }Wang, Jason{ }Kuen, Lianyang{ }Ma, Amir{
+  }Shahroudy, Bing{ }Shuai, Ting{ }Liu, Xingxing{ }Wang, Gang{ }Wang, Jianfei{
+  }Cai \textgreek{kai} Tsuhan{ }Chen}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Recent Advances in
+  Convolutional Neural Networks}}}}.
+\newblock {{\latintext {\em Pattern Recognition}}}, 77:354--377,   2018.
+
+\bibitem{martyNeuralNetworksLearning2023}
+{{\latintext Cyber{ }Marty}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Neural Networks
+  Learning Process Explained}}}},   2023.
+
+\bibitem{goodfellowDeepLearning2016}
+{{\latintext Ian{ }Goodfellow, Yoshua{ }Bengio \textgreek{kai} Aaron{
+  }Courville}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Deep {{Learning}}}}}}.
+\newblock {{\latintext MIT Press}},   2016.
+
+\bibitem{narkhedeReviewWeightInitialization2022}
+{{\latintext Meenal V.{ }Narkhede, Prashant P.{ }Bartakke \textgreek{kai} Mukul
+  S.{ }Sutaone}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em A Review on Weight
+  Initialization Strategies for Neural Networks}}}}.
+\newblock {{\latintext {\em Artificial Intelligence Review}}}, 55(1):291--322,
+   2022.
+
+\bibitem{nielsenNeuralNetworksDeep}
+{{\latintext Michael{ }Nielsen}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Neural {{Networks}} and
+  {{Deep Learning}}}}}}.
+
+\bibitem{cilimkovicNeuralNetworksBack}
+{{\latintext Mirza{ }Cilimkovic}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Neural {{Networks}} and
+  {{Back Propagation Algorithm}}}}}}.
+
+\bibitem{ruderOverviewGradientDescent2017}
+{{\latintext Sebastian{ }Ruder}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em An Overview of Gradient
+  Descent Optimization Algorithms}}}},   2017.
+
+\bibitem{MomentumLearningRate}
+{{\latintext {\color{\colouredtextcolor} {\em Momentum and {{Learning Rate
+  Adaptation}}}}}}.
+\newblock {{\latintext
+  https://willamette.edu/{\textasciitilde}gorr/classes/cs449/momrate.html}}.
+
+\bibitem{kingmaAdamMethodStochastic2017}
+{{\latintext Diederik P.{ }Kingma \textgreek{kai} Jimmy{ }Ba}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Adam: {{A Method}} for
+  {{Stochastic Optimization}}}}}},   2017.
+
+\bibitem{duchiAdaptiveSubgradientMethods}
+{{\latintext John{ }Duchi, Elad{ }Hazan \textgreek{kai} Yoram{ }Singer}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Adaptive {{Subgradient
+  Methods}} for {{Online Learning}} and {{Stochastic Optimization}}}}}}.
+
+\bibitem{LectureRmspropDivide}
+{{\latintext {\color{\colouredtextcolor} {\em Lecture 6.5-rmsprop: {{Divide}}
+  the {{Gradient}} by a {{Running Average}} of {{Its Recent Magnitude}}
+  {\textbar} {{CiNii Research}}}}}}.
+\newblock {{\latintext https://cir.nii.ac.jp/crid/1370017282431050757}}.
+
+\bibitem{joostverbraekenSurveyDistributedMachine}
+{{\latintext { }{Joost Verbraeken}, { }{Matthijs Wolting}, { }{Jonathan Katzy},
+  { }{Jeroen Kloppenburg} \textgreek{kai} { }{Tim Verbelen}}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em A {{Survey}} on
+  {{Distributed Machine Learning}} {\textbar} {{ACM Computing Surveys}}}}}}.
+\newblock {{\latintext https://dl.acm.org/doi/abs/10.1145/3377454}}.
+
+\bibitem{liuTopologiesDistributedMachine2024}
+{{\latintext Ling{ }Liu, Pan{ }Zhou, Gang{ }Sun, Xi{ }Chen, Tao{ }Wu, Hongfang{
+  }Yu \textgreek{kai} Mohsen{ }Guizani}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Topologies in
+  Distributed Machine Learning: {{Comprehensive}} Survey, Recommendations and
+  Future Directions}}}}.
+\newblock {{\latintext {\em Neurocomputing}}}, 567:127009,   2024.
+
+\bibitem{sergeevHorovodFastEasy2018}
+{{\latintext Alexander{ }Sergeev \textgreek{kai} Mike{ }Del~Balso}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Horovod: Fast and Easy
+  Distributed Deep Learning in {{TensorFlow}}}}}},   2018.
+
+\bibitem{ReillyNetworkDistributed}
+{{\latintext {\color{\colouredtextcolor} {\em O'{{Reilly Network}}:
+  {{Distributed Systems Topologies}}: {{Part}} 2}}}}.
+
+\bibitem{teerapittayanonDistributedDeepNeural2017}
+{{\latintext Surat{ }Teerapittayanon, Bradley{ }McDanel \textgreek{kai} H.T.{
+  }Kung}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Distributed {{Deep
+  Neural Networks Over}} the {{Cloud}}, the {{Edge}} and {{End Devices}}}}}}.
+\newblock {{\latintext  {\em 2017 {{IEEE}} 37th {{International Conference}} on
+  {{Distributed Computing Systems}} ({{ICDCS}})}}}, \textgreek{sel'ides}
+  328--339, {{\latintext Atlanta, GA, USA}},   2017. {{\latintext IEEE}}.
+
+\bibitem{chenRevisitingDistributedSynchronous2017}
+{{\latintext Jianmin{ }Chen, Xinghao{ }Pan, Rajat{ }Monga, Samy{ }Bengio
+  \textgreek{kai} Rafal{ }Jozefowicz}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Revisiting
+  {{Distributed Synchronous SGD}}}}}},   2017.
+
+\bibitem{AsynchronousDecentralizedParallel}
+{{\latintext {\color{\colouredtextcolor} {\em Asynchronous {{Decentralized
+  Parallel Stochastic Gradient Descent}}}}}}.
+\newblock {{\latintext https://proceedings.mlr.press/v80/lian18a.html}}.
+
+\bibitem{xuFederatedLearningGboard2023}
+{{\latintext Zheng{ }Xu, Yanxiang{ }Zhang, Galen{ }Andrew, Christopher A.{
+  }{Choquette-Choo}, Peter{ }Kairouz, H. Brendan{ }McMahan, Jesse{ }Rosenstock
+  \textgreek{kai} Yuanbo{ }Zhang}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Federated {{Learning}}
+  of {{Gboard Language Models}} with {{Differential Privacy}}}}}},   2023.
+
+\bibitem{hacksFederatedLearningParadigm2024}
+{{\latintext Cloud{ }Hacks}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Federated {{Learning}}:
+  {{A Paradigm Shift}} in {{Data Privacy}} and {{Model Training}}}}}},   2024.
+
+\bibitem{GeneralDataProtection}
+{{\latintext {\color{\colouredtextcolor} {\em The General Data Protection
+  Regulation}}}}.
+\newblock {{\latintext
+  https://www.consilium.europa.eu/en/policies/data-protection/data-protection-regulation/}}.
+
+\bibitem{CaliforniaConsumerPrivacy}
+{{\latintext {\color{\colouredtextcolor} {\em California {{Consumer Privacy
+  Act}} ({{CCPA}}) {\textbar} {{State}} of {{California}} - {{Department}} of
+  {{Justice}} - {{Office}} of the {{Attorney General}}}}}}.
+\newblock {{\latintext https://oag.ca.gov/privacy/ccpa}}.
+
+\bibitem{mcmahanCommunicationEfficientLearningDeep2023}
+{{\latintext H. Brendan{ }McMahan, Eider{ }Moore, Daniel{ }Ramage, Seth{
+  }Hampson \textgreek{kai} Blaise Ag{\"u}eray{ }Arcas}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em
+  Communication-{{Efficient Learning}} of {{Deep Networks}} from
+  {{Decentralized Data}}}}}},   2023.
+
+\bibitem{chenDistributedLearningWireless2021}
+{{\latintext Mingzhe{ }Chen, Deniz{ }G{\"u}nd{\"u}z, Kaibin{ }Huang, Walid{
+  }Saad, Mehdi{ }Bennis, Aneta Vulgarakis{ }Feljan \textgreek{kai} H. Vincent{
+  }Poor}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Distributed
+  {{Learning}} in {{Wireless Networks}}: {{Recent Progress}} and {{Future
+  Challenges}}}}}}.
+\newblock {{\latintext {\em IEEE Journal on Selected Areas in
+  Communications}}}, 39(12):3579--3605,   2021.
+
+\bibitem{yangFederatedMachineLearning2019}
+{{\latintext Qiang{ }Yang, Yang{ }Liu, Tianjian{ }Chen \textgreek{kai} Yongxin{
+  }Tong}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Federated {{Machine
+  Learning}}: {{Concept}} and {{Applications}}}}}},   2019.
+
+\bibitem{zhaoFederatedLearningNonIID2018}
+{{\latintext Yue{ }Zhao, Meng{ }Li, Liangzhen{ }Lai, Naveen{ }Suda, Damon{
+  }Civin \textgreek{kai} Vikas{ }Chandra}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Federated {{Learning}}
+  with {{Non-IID Data}}}}}}.
+\newblock 2018.
+
+\bibitem{konecnyFederatedOptimizationDistributed2016}
+{{\latintext Jakub{ }Kone{\v c}n{\'y}, H. Brendan{ }McMahan, Daniel{ }Ramage
+  \textgreek{kai} Peter{ }Richt{\'a}rik}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Federated
+  {{Optimization}}: {{Distributed Machine Learning}} for {{On-Device
+  Intelligence}}}}}},   2016.
+
+\bibitem{bhoseDifferentiatingDistributedLearning2023}
+{{\latintext Rajarshi{ }Bhose}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Differentiating between
+  {{Distributed Learning}} and {{Federated Learning}}}}}},   2023.
+
+\bibitem{deanLargeScaleDistributed2012}
+{{\latintext Jeffrey{ }Dean, Greg{ }Corrado, Rajat{ }Monga, Kai{ }Chen,
+  Matthieu{ }Devin, Mark{ }Mao, Marc'aurelio{ }Ranzato, Andrew{ }Senior, Paul{
+  }Tucker, Ke{ }Yang, Quoc{ }Le \textgreek{kai} Andrew{ }Ng}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Large {{Scale
+  Distributed Deep Networks}}}}}}.
+\newblock {{\latintext  {\em Advances in {{Neural Information Processing
+  Systems}}}}}, \textgreek{t'omos}\nobreakspace{}25. {{\latintext Curran
+  Associates, Inc.}}, 2012.
+
+\bibitem{pakReviewDeepLearning}
+{{\latintext Myeongsuk{ }Pak \textgreek{kai} Sanghoon{ }Kim}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em A {{Review}} of {{Deep
+  Learning}} in {{Image Recognition}}}}}}.
+
+\bibitem{lecunGradientbasedLearningApplied1998}
+{{\latintext Y.{ }Lecun, L.{ }Bottou, Y.{ }Bengio \textgreek{kai} P.{
+  }Haffner}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Gradient-Based Learning
+  Applied to Document Recognition}}}}.
+\newblock {{\latintext {\em Proceedings of the IEEE}}}, 86(11):2278--2324,
+  1998.
+
+\bibitem{simonyanVeryDeepConvolutional2015}
+{{\latintext Karen{ }Simonyan \textgreek{kai} Andrew{ }Zisserman}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Very {{Deep
+  Convolutional Networks}} for {{Large-Scale Image Recognition}}}}}},   2015.
+
+\bibitem{heDeepResidualLearning2015}
+{{\latintext Kaiming{ }He, Xiangyu{ }Zhang, Shaoqing{ }Ren \textgreek{kai}
+  Jian{ }Sun}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Deep {{Residual
+  Learning}} for {{Image Recognition}}}}}},   2015.
+
+\bibitem{liFederatedLearningChallenges2020}
+{{\latintext Tian{ }Li, Anit Kumar{ }Sahu, Ameet{ }Talwalkar \textgreek{kai}
+  Virginia{ }Smith}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Federated {{Learning}}:
+  {{Challenges}}, {{Methods}}, and {{Future Directions}}}}}}.
+\newblock {{\latintext {\em IEEE Signal Processing Magazine}}}, 37(3):50--60,
+  2020.
+
+\bibitem{garofalakisSketchbasedGeometricMonitoring2013}
+{{\latintext Minos{ }Garofalakis, Daniel{ }Keren \textgreek{kai} Vasilis{
+  }Samoladas}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em Sketch-Based Geometric
+  Monitoring of Distributed Stream Queries}}}}.
+\newblock {{\latintext {\em Proceedings of the VLDB Endowment}}},
+  6(10):937--948,   2013.
+
+\bibitem{samoladasFunctionalGeometricMonitoring2019}
+{{\latintext Vasileios{ }Samoladas \textgreek{kai} Minos{ }Garofalakis}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Functional {{Geometric
+  Monitoring}} for {{Distributed Streams}}}}}}.
+\newblock {{\latintext OpenProceedings.org}}, 2019.
+
+\bibitem{alonnogaSpaceComplexityApproximating1996}
+{{\latintext { }{Alon Noga}, { }{Matias Yossi} \textgreek{kai} { }{Szegedy
+  Mario}}}.
+\newblock {{\latintext {\color{\colouredtextcolor} {\em The Space Complexity of
+  Approximating the Frequency Moments}}}}.
+\newblock 1996.
+
+\bibitem{konidarisvissarionExtremeScaleOnlineMachine2022}
+{ }{Konidaris Vissarion}.
+\newblock {\color{\colouredtextcolor} {\em Extreme-{{Scale Online Machine
+  Learning}} {{OnStream Processing Platforms}}}}.
+\newblock   2022.
+
+\bibitem{theologitismichaelAlgorithmsOnlineFederated2023}
+{ }{Theologitis Michael}.
+\newblock {\color{\colouredtextcolor} {\em Algorithms for {{Online Federated}}
+  {{Machine Learning}}}}.
+\newblock   2023.
+
+\bibitem{frangiasgeorgiosFederatedLearningTensorFlow2023}
+{ }{Frangias Georgios}.
+\newblock {\color{\colouredtextcolor} {\em Federated {{Learning}} at
+  {{TensorFlow Using}} the {{Geometric Approach}}}}.
+\newblock   2023.
+
+\bibitem{ekairebNs3flSimulatingFederated2022}
+{{\latintext Emily{ }Ekaireb, Xiaofan{ }Yu, Kazim{ }Ergun, Quanling{ }Zhao,
+  Kai{ }Lee, Muhammad{ }Huzaifa \textgreek{kai} Tajana{ }Rosing}}.
+\newblock {\color{\colouredtextcolor} {{\latintext {\em Ns3-Fl: {{Simulating
+  Federated Learning}} with Ns-3}}}}.
+\newblock {{\latintext  {\em Proceedings of the 2022 {{Workshop}} on Ns-3}}},
+  \textgreek{sel'ides} 97--104, {{\latintext Virtual Event USA}},   2022.
+  {{\latintext ACM}}.
+
+\end{thebibliography}

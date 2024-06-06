@@ -1,0 +1,182 @@
+\section{Networking in Federated Systems}
+\subsection{Network Topologies}
+\label{sec:fl_topologies}
+The underlying network infrastructure plays a crucial role in the performance and scalability of Federated Learning FL and
+Distributed Machine Learning systemsm, in general. Three of the most prevalent topologies employed in DML Systems where described
+earlier in \cref{sec:dml_topologies}. Likewise, it can be stated that, by being a subset of DML systems Federated Systems are
+constructed using the same fundamental topologies. That said, FL Systems are indeed typically arranged in star, hierarchical
+tree, ring or peer-to-peer topologies.
+
+Recapitulating briefly in regards with FL, \emph{star topologies}, are a simplification of parameter server setups, where $N$ clients are directly
+connected with one central server (parameter server) who coordinates the learning procedure. The star topology is advantageous for its
+simplicity and ease of implementation. However, it can become a bottleneck and a single point of failure, limiting the system's scalability and
+robustness.
+
+\emph{Hierarchical tree topologies}, differ from star topologies due to the fact that clients do not always communicate directly with the server.
+Instead they might be organized in smaller clusters of $M$ clients where $M < N$, that transmit their model updates to intermediate stations
+responsible for aggregating local model updates, communicating the intermediate aggregation results to the server.
+This hierarchical approach can improve scalability by distributing the aggregation workload and reducing the communication burden on the central
+server. Additionally, it can enhance fault tolerance by localizing the impact of network failures.
+
+\emph{Ring setups} indicate that each node communicates directly with its two neighbors. This way, communication is conducted in a circular manner,
+presenting a peer-to-peer approximation approach where the coordination responsibility is distributed to the workers. This topology can provide
+robustness and fault tolerance, as the failure of a single node does not disrupt the entire network. However, it may suffer from higher latency
+as the number of nodes increases due to the sequential nature of communication.
+
+Finally, In a \emph{fully peer-to-peer} setup, clients communicate directly with each other broadcasting their model udpates without a central coordinting authority.
+Protocols such as gossip algorithms are used to propagate updates throughout the network. This approach can enhance privacy and decentralization but may
+require more complex coordination mechanisms.
+
+Overall, it becomes obvious that the selection of each of these topologies for the design of a FL system entails certain merits and challeges
+in regards with the communication effiecincy.
+This fact can be observed directly through network related metrics such as latency, throughput
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Communication in Federated Systems}
+\subsubsection{Communication Protocols}
+The communication protocol defines the rules and methods for data exchange between client devices and the
+central server. Efficient communication protocols are essential to maximize perfomance during model exchange procedures.
+There is a plethora of contempory technologies with diverse characteristics being utilized in Federated communication, with
+most primary examples being gRPC, Protocol Buffers (Protobuf), WebSockets, and HTTP/2 and TCP Sockets.
+
+\begin{itemize}
+    \item \emph{gRPC} is a high-performance, open-source Remote Procedure Call (RPC) framework that can run in any environment.
+          It uses HTTP/2 for transport, Protocol Buffers (protobuf) as the interface description language, and prSovides features such as
+          authentication, load balancing, and more. The efficient serialization and transport mechanisms of gRPC make it well-suited for
+          federated learning scenarios where low latency and high throughput are crucial.
+
+    \item \emph{HTTP/2} is a major revision of the HTTP network protocol, focusing on performance improvements. It introduces features
+          like multiplexing, header compression, and server push. This protocol has become a industry standard due to its unmatched efficiency.
+
+    \item \emph{Protobufs (Protocol Buffers)} are a language-neutral, platform-neutral, extensible mechanism for serializing structured data.
+          Protobuf is used to define the structure of the messages-namely model parameters, training configurations, and results exchanged
+          between the server and clients. This ensures efficient and compact communication.
+
+    \item \emph{WebSockets} provide a full-duplex communication channel over a single, long-lived TCP connection. They are useful
+          for real-time applications requiring continuous data exchange. Thet makes WebSokcets the first choice when maintaining a persistent
+          connection between the server and clients is beneficial. This can be particularly useful in real-time monitoring and control of the
+          FL process.
+
+    \item \emph{TCP Sockets} offer a reliable, connection-oriented communication protocol that ensures data integrity and delivery.
+          TCP handles packet loss, data corruption, and data reordering, making it suitable for scenarios where reliability is paramount.
+          In federated learning, TCP sockets can be used to establish robust connections between the server and clients, ensuring that
+          critical updates are transmitted accurately and efficiently.
+
+\end{itemize}
+
+\subsubsection{Communication Enhancement}
+\label{sec:con_settings}
+
+The performance of federated learning systems is significantly influenced by the type of connectivity used. Different network types offer
+distinct advantages and are preferred in various scenarios:
+- \emph{Ethernet}: Provides high reliability and consistent bandwidth, making it ideal for environments requiring stable, high-speed
+communication, such as data centers and research facilities where large-scale model training occurs.
+- \emph{Wi-Fi}: Offers flexibility and mobility, suitable for residential or office settings where devices are not fixed and may move
+around. It is preferred in scenarios like smart homes or collaborative workspaces where user devices frequently change locations.
+- \emph{Point-to-Point Connections}: Provide direct and reliable communication paths, preferred in specialized settings such as direct
+communication between servers in a data center or between two devices in close proximity that require secure and fast data exchange without
+intermediate routers.
+- \emph{Cellular Networks (4G/5G)}: Useful for mobile and remote applications where devices are dispersed over large geographical areas.
+This is ideal for applications like connected vehicles or remote health monitoring systems, where data needs to be collected from widely
+distributed sources.
+
+Regardless of the selected communication protocol, and connectivity setting, communication overheads can always be reduced by minimizing
+the size of transmitted data. Techniques such as quantization, compression  and efficient encoding can significantly decrease the amount
+of data exchanged between clients and the server, thus reducing latency and improving overall system efficiency.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Communication Performance Metrics}
+
+In FL systems, evaluating communication performance is paramount to understanding the efficiency and effectiveness of
+distributed learning processes. Several critical metrics are used to assess communication performance, each contributing
+to a comprehensive analysis of the system's capabilities and limitations.
+
+\textbf{Latency (\(L\))} is a fundamental metric, representing the time interval required for a message to travel
+from the source node to the destination node. It is indicative of the system's responsiveness. Mathematically, latency is defined as:
+\[
+    L = t_r - t_s
+\]
+where \( t_s \) is the time a message is sent, and \( t_r \) is the time it is received.
+
+
+\textbf{Bandwidth (\(B\))} measures the maximum rate at which data can be transmitted over a network connection within a specific
+time frame, reflecting the network's capacity to handle data transfers. It is given by:
+\[
+    B = \frac{D}{T}
+\]
+where \( D \) is the total amount of data that can be transferred, and \( T \) is the theoretical time taken for the transfer.
+
+\textbf{Throughput (\(T\))} is closely related to bandwidth but focuses on the actual rate of successful data transfer over the network,
+considering factors such as network congestion and protocol overhead. In other words, the first one calculates the maximum  theoretically achieved
+speed of tranfer of the channel, while the second represents the actual calculated value accomplished in an experiment.
+It is defined as:
+\[
+    T = \frac{D_r}{T_r}
+\]
+
+where \( D_r \) is the actual amount of data transferred, and \( T \) is the actual time taken for the transfer. T
+\textbf{Packet Loss Rate (PLR)} is the percentage of packets lost during transmission, which can significantly impact the performance of FL systems.
+It is calculated as:
+\[
+    PLR = \frac{P_{sent} - P_{received}}{P_{sent}} \times 100\%
+\]
+where \( P_{sent} \) is the number of packets sent, and \( P_{received} \) is the number of packets received successfully.
+
+% \textbf{Jitter (\(J\))} refers to the variation in time between packets arriving, caused by network congestion, timing drift, or route changes.
+% It is crucial for understanding the stability of the communication link, and to measure the straggler effect in DML systems. Jitter is defined as:
+% \[
+%     J = \frac{1}{N-1} \sum_{i=1}^{N-1} |t_i - t_{avg}|
+% \]
+% where \( t_i \) is the time interval between the \(i^{th}\) packet and the \((i-1)^{th}\) packet, and \( t_{avg} \) is the average time interval.
+
+Dropout Rate (\(DR\)) is a significant metric in federated learning, indicating the percentage of clients that fail to complete the training
+process due to various reasons such as connectivity issues or resource constraints. It is defined as:
+\[
+    DR = \frac{N_{dropout}}{N_{total}} \times 100\%
+\]
+where \( N_{dropout} \) is the number of clients that dropped out, and \( N_{total} \) is the total number of clients.
+
+The Computation-Communication Ratio (\(CCR\)) assesses the balance between computational load and communication overhead in federated systems.
+It is crucial for optimizing performance and resource allocation. \( CCR \) is defined as:
+\[
+    CCR = \frac{C}{C + C_{comm}}
+\]
+where \( C \) is the time spent on computation, and \( C_{comm} \) is the time spent on communication.
+
+Network characteristics such as latency, bandwidth, reliability, and connection type significantly influence the performance of FL systems.
+High latency can delay the synchronization of model updates, while limited bandwidth can restrict the amount of data that can be transmitted
+n each communication round. Network reliability ensures that updates from clients are consistently received by the server, while the chosen
+topology affects the overall communication overhead. For instance, using TCP sockets ensures reliable data transfer with error checking, and
+gRPC facilitates efficient remote procedure calls, both of which are critical for maintaining the integrity of the FL process. Model compression
+techniques are also employed to reduce the size of the transmitted updates, thereby mitigating the impact of limited bandwidth and high latency.
+
+\subsection{Simulating Real-World Networks}
+Network simulators play a pivotal role in federated learning (FL) research by enabling researchers to test and evaluate the performance of FL systems under various network conditions. This capability is significant because setting up FL environments with numerous devices in a controlled laboratory setting is challenging. Simulators such as \textit{NS-3}, \textit{OMNeT++}, and \textit{Mininet} can emulate real-world network environments, offering valuable insights into how different network characteristics influence the training process.
+
+\subsubsection{Mimicking Real-World Network Conditions}
+
+Simulators can accurately replicate several aspects of real-world networks, including:
+
+\begin{itemize}
+    \item \emph{Network Congestion:} By simulating varying levels of network traffic, researchers can observe how congestion impacts data transmission and model updates in FL systems.
+    \item \emph{Latency Variability:} Simulators can introduce different latency values to examine how delays in communication affect the synchronization and convergence of models.
+    \item \emph{Bandwidth Fluctuations:} Emulating changes in available bandwidth helps in understanding the effect on the speed and efficiency of data exchanges between clients and the central server.
+    \item \emph{Error Rates:} Introducing different error rates across multiple clients can mimic real-life scenarios where devices have varying communication capabilities and reliability.
+    \item \emph{Network Topologies:} Simulators can model different network topologies, such as star, ring, and hierarchical structures, to study their impact on the performance of FL systems.
+\end{itemize}
+
+\subsubsection{Measuring Contributions from Simulations}
+
+Through the use of network simulators, researchers can measure several key performance metrics that provide insights into the effectiveness and robustness of FL systems:
+
+\begin{itemize}
+    \item \emph{Impact on Model Convergence:} By analyzing how network conditions such as latency and bandwidth influence the speed and accuracy of model convergence, researchers can identify bottlenecks and optimize communication strategies.
+    \item \emph{System Robustness:} Simulating scenarios with multiple clients experiencing varying error rates allows for the assessment of the system's robustness and its ability to handle client dropouts or unreliable connections.
+    \item \emph{Scalability Analysis:} Researchers can observe how the FL system scales with the number of clients, particularly when clients have different communication capabilities. This helps in understanding the limits and potential optimizations for large-scale deployments.
+    \item \emph{Topology Influence:} Evaluating the effect of different network topologies on system performance provides insights into the most efficient structures for specific FL applications.
+\end{itemize}
+
+In summary, network simulators are indispensable tools in FL research, enabling the detailed study of various network conditions and their impact on the training process. They help in identifying potential issues and optimizing FL systems to ensure efficient, scalable, and robust performance in real-world deployments.
+
+
+

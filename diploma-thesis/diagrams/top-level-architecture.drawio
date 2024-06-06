@@ -1,0 +1,93 @@
+<mxfile host="app.diagrams.net" modified="2024-06-03T12:56:57.511Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="_GSe9AiC0JWbSiho_PHp" version="24.4.13" type="device">
+  <diagram name="Page-1" id="rTWcP0K4MUu2MEUl4YRG">
+    <mxGraphModel dx="1434" dy="738" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-72" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="c3BEakUX_5oP5Oq103JJ-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="129" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-1" value="&lt;h2&gt;Flower Framework for Federated Learning Management&lt;/h2&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="24" y="160" width="210" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-25" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;List of Participating Clients&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="324" y="190" width="186" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="c3BEakUX_5oP5Oq103JJ-27" target="c3BEakUX_5oP5Oq103JJ-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="329" y="318" />
+              <mxPoint x="282" y="318" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-27" value="&lt;ol&gt;&lt;li&gt;&lt;b&gt;Downlink Time&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;Uplink Time&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;Throuhput&lt;/b&gt;&lt;/li&gt;&lt;/ol&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;shadow=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="324" y="290" width="186" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.286;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="c3BEakUX_5oP5Oq103JJ-25" target="c3BEakUX_5oP5Oq103JJ-42">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="584" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0;exitY=0.762;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="c3BEakUX_5oP5Oq103JJ-42" target="c3BEakUX_5oP5Oq103JJ-27">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="584" y="320" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-42" value="&lt;h2&gt;NS3 Network Simulator for Modeling Network Characteristics&lt;/h2&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="590" y="160" width="210" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="c3BEakUX_5oP5Oq103JJ-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="318" y="219.5" as="sourcePoint" />
+            <mxPoint x="234" y="219.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="274" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-64" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;rotation=-90;size=0.5;" vertex="1" parent="1">
+          <mxGeometry x="404" y="-20" width="20" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-66" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;TCP Socket IPC&lt;/font&gt;&lt;/b&gt;" style="whiteSpace=wrap;html=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="289" y="90" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-67" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Request network round simulation&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="272" y="150" width="290" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-68" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;Respond network round simulation results&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="272" y="360" width="290" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-70" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="134" y="160" as="sourcePoint" />
+            <mxPoint x="134" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-73" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Start Flower and NS3 processes running in parallel&amp;nbsp;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="54" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-74" value="&lt;span style=&quot;font-size: 15px;&quot;&gt;Reach terminal condition in Flower and terminate Ns3 process&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="49" y="465" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-75" value="Legend" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#dae8fc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="570" y="410" width="250" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-76" value="&lt;b&gt;IPC: &lt;/b&gt;Inter Process Communication" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c3BEakUX_5oP5Oq103JJ-75">
+          <mxGeometry y="26" width="250" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-77" value="&lt;b&gt;Downlink Time:&lt;/b&gt; Time for client to download model" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c3BEakUX_5oP5Oq103JJ-75">
+          <mxGeometry y="52" width="250" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-78" value="&lt;b&gt;Uplink Time: &lt;/b&gt;Time for a client to upload model update to server" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c3BEakUX_5oP5Oq103JJ-75">
+          <mxGeometry y="90" width="250" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c3BEakUX_5oP5Oq103JJ-80" value="&lt;b&gt;Throughput: &lt;/b&gt;Transmission speed&amp;nbsp;achieved sending a model update from a client" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c3BEakUX_5oP5Oq103JJ-75">
+          <mxGeometry y="130" width="250" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

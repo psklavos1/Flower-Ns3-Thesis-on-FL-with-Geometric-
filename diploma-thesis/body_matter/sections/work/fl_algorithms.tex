@@ -1,0 +1,217 @@
+\section{Federated Learning Algorithms}
+In this section, we delve into the foundational algorithmic implementation that has shaped Federated Learning
+research, by introducing a structural background for subsequent efforts. This, algorithm is none other than
+\emph{FedAvg}, which introduced several key innovations, that contributed as the basis for more sophisticated
+optimized approaches that are currently employed in the domain. Nonetheless, Before exploring the novelties of
+FedAvg, we will first discuss FedSGD, as the simplest Federated Learning Algorithm that set the stage for
+the FedAvg deployement. Concluding the analysis of the two pricncipal algorrithms, the shortcomings of contemporary
+FL implementations are highligthed.
+
+Before focusing on the algorithmic implementations a common notation ground is laid with the \cref{tab:fl_notation}:
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|p{10cm}|}
+        \hline
+        \rowcolor{lightgray}
+        \textbf{Notation} & \textbf{Definition}                                                                \\
+        \hline
+        $w_t$             & Model weights on communication round \# $t$                                        \\
+        % \hline
+        $w_t^k$           & Model weights on communication round \# $t$ on client $k$                          \\
+        % \hline
+        $K$               & Number of all clients                                                              \\
+
+        $C$               & Fraction of clients performing computations in each round                          \\
+        % \hline
+        $E$               & Number of training passes each client makes over its local dataset on each round   \\
+        % \hline
+        $B$               & The local minibatch size used for the client updates                               \\
+        % \hline
+        $\eta$            & The learning rate                                                                  \\
+        % \hline
+        $\mathcal{P}_k$   & Set of data points on client $k$                                                   \\
+        % \hline
+        $n_k$             & Number of data points on client $k$                                                \\
+        % \hline
+        $f_i(w)$          & Loss $l(x_i, y_i; w)$ i.e., loss on example $(x_i, y_i)$ with model parameters $w$ \\
+        \hline
+    \end{tabular}
+    \caption{Notation used in Federated Learning algorithms}
+    \label{tab:fl_notation}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Federated Stochastic Gradient Descent (FedSGD)}
+Stochastic Gradient Descent (SGD), has shown great results in deep learning, making it a foundational algorithm for many
+optimization problems. Given its effectiveness, researchers decided to base the Federated Learning training algorithm on
+SGD as a baseline. In traditional Stochastic Gradient Descent,
+% Mini-Batch Gradient Descent, or for simplicity SGD,
+% \footnote{As stated ealier Mini-Batch Gradient Descent and Stochastic Gradient Descent are commonly used interchangeably},
+gradients are computed on a random subset of the total dataset and then used to
+update the model parameters. This process is repeated iteratively, making it computationally efficient for centralized learning.
+
+However, applying SGD naively to the federated optimization problem involves a single batch gradient calculation on a randomly
+selected client per round of communication. This way each selected client participates in training using the local data points.
+While this approach is computationally efficient, it requires a large number of
+communication rounds to achieve good model performance. This is due to the fact that each client only contributes a small fraction
+of the data in each round.
+
+Federated Stochastic Gradient Descent is a direct adaptation of the traditional SGD algorithm
+\footnote{Or if we want to be precise, it is a direct adaptation of Mini-Batch Gradient Descent}
+to the federated setting. In the FedSGD process, the server starts by initializing the global model weights \( w_t \). For each
+communication round \( t \), a fraction \( C \) of clients is randomly selected to participate. Each selected client \( k \) uses its
+local dataset \( \mathcal{P}_k \) to compute the gradient of the loss function \( f_i(w) \) over all its data points \( n_k \). These
+gradients \( G_k \) are then sent to the central server, where they are aggregated. The server updates the global model weights \( w_t \)
+by taking a weighted average of the received gradients, with weights proportional to the number of data points \( n_k \) on each client.
+The updated global model \( w_{t+1} \) is then distributed back to all clients, and the process repeats until the stopping criterion is met.
+
+\begin{algorithm}[H]
+    \caption{Federated Stochastic Gradient Descent (FedSGD)}
+    \label{alg:fedsgd}
+    \begin{algorithmic}[1]
+        \State \textbf{Server Execution:}
+        \State Initialize global model weights $w_0$, and learning rate $\eta$
+        \For{each round $t=1, 2, \ldots$}
+        \State $m \gets \max(C \cdot K, 1)$, number of participating clients
+        \State $S_t \gets$ random set of $m$ clients
+        \State Send global model $w_t$ to $S_t$ clients
+        \For{each client $k \in S_t$ \textbf{in parallel}}
+        \State $g_k \gets$ \textsc{GradientStep}$(k, w_t)$
+        \EndFor
+        \State $w_{t+1} \gets w_t - \eta \sum_{k \in S_t} \frac{n_k}{n} g_k$
+        \State Send the model $w_{t+1}$ to all participants
+        \EndFor
+
+        \vspace{1em}
+        \State \textbf{Client Execution:}
+        \Procedure{GradientStep}{$k, w_t$}
+        \State $g \gets \nabla f_i(w_t)$ over $\mathcal{P}_k$
+        \State \textbf{return} $g$ to server
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Federated Averaging (FedAvg)}
+While FedSGD provides a straightforward extension of SGD to the federated setting, it requires frequent communication between clients
+and the server, which can be a significant bottleneck in environments with limited bandwidth. To address this issue, the Federated
+Averaging (FedAvg) algorithm was proposed, introducing several key innovations to reduce communication overhead while maintaining
+model performance.
+
+FedAvg is a generalization of the FedSGD approach by allowing clients to perform multiple local updates using their own data before communicating
+with the server. Essentially, this means that each client performs a local gradient descent step upon the his model using local data.
+After a number of local gradient updates then clients communicate their model updates instead of the single gradient that is, subsequently
+aggregated by the server. Therefore, not only the frequency of communication rounds is reduced, but also local computations are leveraged
+more effectively, especially if we take into account the forever increasing performance of contemporary IoT devices utilized as clients.
+
+\begin{algorithm}[H]
+    \caption{FederatedAveraging}
+    \label{alg:fedavg}
+    \begin{algorithmic}[1]
+        \State \textbf{Server executes:}
+        \State Initialize global model weights $w_0$, and learning rate $\eta$
+        \For{each round $t = 1, 2, \ldots$ \textbf{do}}
+        \State $m \gets \max(C \cdot K, 1)$
+        \State $S_t \gets$ random set of $m$ clients
+        \State Send global model $w_t$ to $S_t$ clients
+        \For{each client $k \in S_t$ \textbf{in parallel} \textbf{do}}
+        \State $w_t^k \gets$ \textsc{ClientUpdate}($k, w_t$)
+        \EndFor
+        \State $w_{t+1} \gets \sum_{k=1}^K \frac{n_k}{n} w_t^k$
+        \EndFor
+
+        \vspace{1em}
+        \State \textbf{ClientUpdate}($k, w_t$):
+        \State $B \gets$ split $\mathcal{P}_k$ into batches of size $B$
+        \For{each local epoch $i$ from 1 to $E$ \textbf{do}}
+        \For{batch $b \in B$ \textbf{do}}
+        \State $w \gets w - \eta \nabla \ell(w; b)$
+        \EndFor
+        \EndFor
+        \State \textbf{return} $w$ to server
+    \end{algorithmic}
+\end{algorithm}
+
+All in all, the amount of computation can be adjusted using three key learning parameters: \emph{$C$}, the fraction of clients participating
+in each round; \emph{$E$}, the number of local epochs or training passes each client performs over its local dataset per round; and \emph{$B$},
+the local minibatch size used for client updates. In the extreme case where $B \rightarrow \infty$ and $E = 1$, FedAvg naturally simplifies to
+FedSGD, thereby concealing the unique novelties of FedAvg.
+% \begin{enumerate}
+% \item \emph{$C$:} The fraction of clients participating in that round.
+% \item \emph{$E$:} The number of local epochs-training passes each client makes over its local dataset each round.
+% \item \emph{$B$:} The local minibatch size used for client updates
+% \end{enumerate
+
+
+The novelties introduced by FedAvg, briefly outlined above, made the algorithm a more practical and efficient approach to federated learning,
+addressing some of the key limitations of FedSGD.\ To sum up, these innovations include reduced communication frequency, local computation
+utilization, and improved scalability. By performing multiple local updates before sending the model to the server, FedAvg significantly
+reduces the number of communication rounds required. Concurrently, clients leverage their local computational resources more effectively,
+due to the increasing processing power of modern edge devices. Finally, by taking load out of the server with the local updates, this
+provides the foundations for enhanced scalability as the processing load is distributed.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Contempory Challenges of Federated Learning}
+Federated Learning (FL) faces several contemporary challenges that need to be addressed to enhance its implementation and efficiency.
+The objective of this research was, among else, to provide a pathway on how to overcome some of these issues, yet the entirety of them
+would be impossible to be addressed solely with one thesis dissertation. In this spirit,
+to be able to illustrate succintly the various shortcomings of Federated Learning, whilst highlighting their relevance to this
+research study, an outline of the principal challenges, along with insights into potential solutions that are
+presented in our implementation will be presented. The following analysis is based on the journal article introduced by
+Li et al.\cite{liFederatedLearningChallenges2020} (2020):
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Complex infarastracture and Management:} Federated Learning demands a robust and complex infrastructure for coordinating numerous
+distributed devices with diverse hardware, software, and network conditions, making setup and maintenance challenging. Ensuring seamless synchronization,
+managing device failures, and handling system heterogeneity require sophisticated solutions. Additionally, secure data transmission and efficient
+resource allocation are essential. Despite advances in machine learning infrastructure and research, the complexity of FL infrastructure reveals a need
+for simplified deployment and management interfaces. This gap highlights the necessity for easy federation of machine learning processes, making FL more
+accessible and manageable.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Expensive Communication:} Communicaion Overhead is a critical bottleneck in Federated Networks, that necessitate against
+transmitting locally generated data. The reality in Federated Learning Setups differs significantly from the almost perfect communication
+setups of traditional Centralized Learnig Data centers, where stable and incredibly fast connections are assumed with restricted faillures.
+In contrast, Federated Learning is conducted on a direct opposite manner, meaning that learning is based on utilizing a vast number of
+devices, like smartphones, resulting in substantially reduced communication capabilities with several limiting factors including bandwidth
+energy and transmission power. Therefore, in edge FL, where the datasets are small and the connections are weak and unreliable the communication
+to computation ration skyrockets.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{System Heterogenity:} Devices in federated networks exhibit significant variability in storage, computational power, and communication
+capabilities due to differences in hardware (CPU, memory), network connectivity (3G, 4G, 5G, Wi-Fi), and power levels (battery). Typically, only
+a small fraction of devices are active at any given time, and devices may drop out due to connectivity or energy constraints. These system-level
+disparities aggravate challenges such as managing stragglers, who delay updates, and ensuring fault tolerance within the network. Robust methods
+are needed to handle low participation and heterogeneous environments effectively.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Statistical Data Heterogeneity:} The need for independent and identically distributed (i.i.d.) datasets is crucial for efficiency in Distributed
+Systems. In Federated Systems, while non-i.i.d.\ data can be used, it significantly impacts the speed and difficulty of convergence. Each client trains
+on its local dataset, adding complexity and likely resulting in skewed updates based on user preferences. The server, due to privacy concerns, cannot
+know the dataset distribution, necessitating sophisticated approaches to maintain accuracy while learning from highly biased datasets. These methods
+must effectively address the challenges posed by data heterogeneity to ensure efficient federated learning.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Privacy and Security:} The main objective of Federated Learning is to ensure client privacy. However, shared parameters can be exploited by
+malicious participants or third parties to extract sensitive information, undermining this goal. It is commonly assumed that all clients act in good faith,
+but some may be malicious, attempting to compromise the model's integrity. They can perform model poisoning or data poisoning attacks, using corrupted data
+to degrade model accuracy or introduce backdoors. Therefore, robust security measures are crucial to maintain the integrity and privacy of the FL process.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Countermeasures Introduced in Thesis}
+This thesis addresses several key challenges in Federated Learning, some as primary objectives and others as secondary considerations.
+The following discussion is organized by relevance to the thesis contents, starting with the main objectives: mitigating communication overhead and providing a
+user-friendly interface for FL experimentation.
+
+To reduce communication overhead in FL, this work employs strategies such as minimizing the size of transmitted messages, reducing
+the number of communication rounds, and limiting communication frequency. Specifically, the thesis implements the Functional Dynamic
+Averaging (FDA) synchronization technique (\cref{sec:synch_techniques}) to enhance convergence speed, effectively balancing the trade-offs
+between communication and computation. Additionally, the Flower Framework (\cref{sec:flower}) is utilized to facilitate a seamless transition
+from traditional ML frameworks to FL setups, offering an accessible and efficient infrastructure.
+
+While the issue of system heterogeneity is not directly addressed, the thesis integrates a Federated Learning monitoring framework with the Ns3
+network simulator (\cref{sec:ns3}). This integration allows for experimentation with various communication setups and testing different device
+models with diverse characteristics (e.g., power consumption, computational capabilities). Monitoring data heterogeneity is also part of the
+framework to assess system performance under different conditions.
+
+Privacy and security concerns, although not directly tackled in this study, are acknowledged as critical areas for future research. The experiments
+are conducted in a controlled environment, which minimizes the immediate need for additional privacy measures. However, addressing these concerns
+remains essential for the advancement of Federated Learning.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

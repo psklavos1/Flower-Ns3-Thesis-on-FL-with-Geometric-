@@ -1,0 +1,93 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+The style file: ntua.bst
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: front_matter/abstract.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
+A level-1 auxiliary file: front_matter/preface.aux
+Reallocating 'name_of_file' (item size: 1) to 34 items.
+A level-1 auxiliary file: front_matter/acknowledgements.aux
+Reallocating 'name_of_file' (item size: 1) to 28 items.
+A level-1 auxiliary file: body_matter/chap1_intro.aux
+Reallocating 'name_of_file' (item size: 1) to 45 items.
+A level-1 auxiliary file: body_matter/chap2_theoretical_background.aux
+Reallocating 'name_of_file' (item size: 1) to 35 items.
+A level-1 auxiliary file: body_matter/chap3_related_work.aux
+Reallocating 'name_of_file' (item size: 1) to 34 items.
+A level-1 auxiliary file: body_matter/chap4_environment.aux
+Reallocating 'name_of_file' (item size: 1) to 34 items.
+A level-1 auxiliary file: body_matter/chap5_methodology.aux
+Reallocating 'name_of_file' (item size: 1) to 37 items.
+A level-1 auxiliary file: body_matter/chap5_implementation.aux
+Reallocating 'name_of_file' (item size: 1) to 30 items.
+A level-1 auxiliary file: body_matter/chap6_results.aux
+Reallocating 'name_of_file' (item size: 1) to 34 items.
+A level-1 auxiliary file: body_matter/chap7_conclusions.aux
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: references.bib
+Warning--I didn't find a database entry for "mcmahanCommunicationEfficientLearningDeep2023b"
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Warning--empty note in petrakosemmanouelReconfigurableLogicFPGA2023
+Warning--empty journal in dongare_intro_ANN_2012
+Warning--empty journal in popescuMultilayerPerceptronNeural2009
+Warning--empty journal in nielsenNeuralNetworksDeep
+Warning--empty year in nielsenNeuralNetworksDeep
+Warning--empty journal in cilimkovicNeuralNetworksBack
+Warning--empty year in cilimkovicNeuralNetworksBack
+Warning--empty journal in duchiAdaptiveSubgradientMethods
+Warning--empty year in duchiAdaptiveSubgradientMethods
+Warning--empty author in ReillyNetworkDistributed
+Warning--empty journal in ReillyNetworkDistributed
+Warning--empty year in ReillyNetworkDistributed
+Warning--empty journal in zhaoFederatedLearningNonIID2018
+Warning--empty journal in pakReviewDeepLearning
+Warning--empty year in pakReviewDeepLearning
+Warning--empty booktitle in samoladasFunctionalGeometricMonitoring2019
+Warning--empty publisher in alonnogaSpaceComplexityApproximating1996
+Warning--empty note in konidarisvissarionExtremeScaleOnlineMachine2022
+Warning--empty note in theologitismichaelAlgorithmsOnlineFederated2023
+Warning--empty note in frangiasgeorgiosFederatedLearningTensorFlow2023
+You've used 82 entries,
+            3122 wiz_defined-function locations,
+            1054 strings with 22817 characters,
+and the built_in function-call counts, 18771 in all, are:
+= -- 1317
+> -- 780
+< -- 11
++ -- 313
+- -- 231
+* -- 1786
+:= -- 2538
+add.period$ -- 220
+call.type$ -- 82
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 102
+duplicate$ -- 1131
+empty$ -- 2189
+format.name$ -- 231
+if$ -- 4095
+int.to.chr$ -- 0
+int.to.str$ -- 82
+missing$ -- 59
+newline$ -- 378
+num.names$ -- 84
+pop$ -- 474
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 348
+stack$ -- 0
+substring$ -- 772
+swap$ -- 504
+text.length$ -- 11
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 20
+while$ -- 145
+width$ -- 84
+write$ -- 783
+(There were 21 warnings)

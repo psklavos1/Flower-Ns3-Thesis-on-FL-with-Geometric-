@@ -1,0 +1,426 @@
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\foreignlanguage {english}{Abstract}}{\EnsureStandardFontEncoding {vi}}{chapter*.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\color {gray!50!brown!70!black}
+\contentsline {chapter}{\foreignlanguage {english}{Preface}}{\EnsureStandardFontEncoding {vii}}{chapter*.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\foreignlanguage {english}{Acknowledgements}}{\EnsureStandardFontEncoding {ix}}{chapter*.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xv}}{chapter*.7}%
+\color {gray!50!brown!70!black}
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background \bbl@greek@ampersand \ Motivation}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problem Statement}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectives \bbl@greek@ampersand \ Methodology}{1}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Thesis Outline}{1}{section.1.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\addvspace {1em}
+\contentsline {part}{\EnsureStandardFontEncoding {I}\hspace {1em}Literature Review}{2}{section*.8}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {2}Theoretical Background}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Fundamentals of Machine Learning}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Bridging Machine Learning and Artificial Intelligence}{3}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}The Taxonomy Machine Learning Techniques}{3}{subsection.2.1.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.1.3}Model Complexity \bbl@greek@ampersand \ Challenges}{6}{subsection.2.1.3}%
+\contentsline {subsubsection}{Model Complexity}{6}{equation.2.1.1}%
+\contentsline {subsubsection}{Balancing Challenges: Overfitting and Underfitting}{6}{equation.2.1.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Techniques to Achieve Generalizability}{7}{equation.2.1.1}%
+\contentsline {section}{\numberline {2.2}Artificial Neural Networks}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Perceptron and Activation Functions}{7}{subsection.2.2.1}%
+\contentsline {subsubsection}{Rosenblatt and Multi-Layer Perceptrons}{7}{subsection.2.2.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Evolution of Activation Functions}{9}{figure.caption.12}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.2.2}Network Architectures}{10}{subsection.2.2.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Convolutional Neural Networks (CNNs)}{11}{figure.caption.14}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.2.3}Learning in Neural Networks}{13}{subsection.2.2.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {2.3}Optimization Techniques}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Gradient Descent And Its Variants}{14}{subsection.2.3.1}%
+\contentsline {subsubsection}{Principle of Gradient Descent}{14}{subsection.2.3.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Batch Gradient Descent}{15}{figure.caption.18}%
+\contentsline {subsubsection}{Stochastic Gradient Descent}{15}{equation.2.3.4}%
+\contentsline {subsubsection}{Mini-Batch Gradient Descent}{15}{equation.2.3.5}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.3.2}Towards ADAM Optimizer}{16}{subsection.2.3.2}%
+\contentsline {subsubsection}{Learning Rate Selection}{16}{subsection.2.3.2}%
+\contentsline {subsubsection}{Momentum}{16}{figure.caption.19}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{ADAM Optimizer}{17}{equation.2.3.7}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {2.4}Distributed Machine Learning}{18}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}The Need for Distribution}{18}{subsection.2.4.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.4.2}Distributed Learning Systems Architecture}{19}{subsection.2.4.2}%
+\contentsline {subsubsection}{Parallelism in Distributed Learning Systems}{19}{subsection.2.4.2}%
+\contentsline {subsubsection}{Distributed Systems Communication Topologies}{19}{figure.caption.22}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Distributed Learning Algorithms}{21}{figure.caption.23}%
+\contentsline {paragraph}{Synchronous SGD (SSGD)}{21}{Item.12}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {paragraph}{Asynchronous SGD (ASGD)}{22}{equation.2.4.8}%
+\contentsline {subsection}{\numberline {2.4.3}Challenges in Distributed Machine Learning}{22}{subsection.2.4.3}%
+\contentsline {paragraph}{Transition to Federated Learning}{22}{table.caption.24}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {2.5}Federated Learning}{23}{section.2.5}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.5.1}Principles of Federated Learning}{24}{subsection.2.5.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.5.2}Federated Learning Categorizations}{25}{subsection.2.5.2}%
+\contentsline {paragraph}{Nature of the Participants:}{25}{subsection.2.5.2}%
+\contentsline {paragraph}{Alignment of the Distributed Data:}{25}{subsection.2.5.2}%
+\contentsline {paragraph}{Cross-Device Federated Learning}{25}{figure.caption.26}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {paragraph}{Cross-Silo Federated Learning}{26}{figure.caption.26}%
+\contentsline {subsubsection}{Horizontal and Vertical Federated Learning}{26}{figure.caption.26}%
+\contentsline {paragraph}{Horizontal Federated Learning (HFL)}{26}{figure.caption.26}%
+\contentsline {paragraph}{Vertical Federated Learning (VFL)}{26}{figure.caption.26}%
+\contentsline {subsection}{\numberline {2.5.3}Federated Learning Methodology}{26}{subsection.2.5.3}%
+\contentsline {subsubsection}{Architecture}{26}{subsection.2.5.3}%
+\contentsline {paragraph}{Client Devices:}{26}{subsection.2.5.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {paragraph}{Central Server:}{27}{subsection.2.5.3}%
+\contentsline {paragraph}{Communication Protocols:}{27}{subsection.2.5.3}%
+\contentsline {paragraph}{Security Mechanisms:}{27}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}Problem Formulation in Federated Learning}{27}{subsection.2.5.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Federated Learning Process}{28}{equation.2.5.12}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {2.6}Networking in Federated Systems}{30}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Network Topologies}{30}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Communication in Federated Systems}{30}{subsection.2.6.2}%
+\contentsline {subsubsection}{Communication Protocols}{30}{subsection.2.6.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Communication Enhancement}{31}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Communication Performance Metrics}{31}{subsection.2.6.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {2.6.4}Simulating Real-World Networks}{33}{subsection.2.6.4}%
+\contentsline {subsubsection}{Mimicking Real-World Network Conditions}{33}{subsection.2.6.4}%
+\contentsline {subsubsection}{Measuring Contributions from Simulations}{33}{subsection.2.6.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {2.7}Summary \bbl@greek@ampersand \ Transition to Related Work}{34}{section.2.7}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {3}Related Work}{35}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Datasets in Federated Learning Research}{35}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Benchmark Datasets}{35}{subsection.3.1.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.1.2}Real-world Datasets}{36}{subsection.3.1.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.1.3}IID VS.\ non-IID Data Distributions}{37}{subsection.3.1.3}%
+\contentsline {paragraph}{Independent and Identically Distributed (IID)}{37}{subsection.3.1.3}%
+\contentsline {paragraph}{Non-IID}{37}{subsection.3.1.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {3.2}ANN Architectures}{38}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}LeNet-5}{38}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}VGG16}{38}{subsection.3.2.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.2.3}ResNet}{39}{subsection.3.2.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {3.3}Federated Learning Algorithms}{40}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Federated Stochastic Gradient Descent (FedSGD)}{40}{subsection.3.3.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.3.2}Federated Averaging (FedAvg)}{41}{subsection.3.3.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.3.3}Contempory Challenges of Federated Learning}{42}{subsection.3.3.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {paragraph}{Complex infarastracture and Management:}{43}{subsection.3.3.3}%
+\contentsline {paragraph}{Expensive Communication:}{43}{subsection.3.3.3}%
+\contentsline {paragraph}{System Heterogenity:}{43}{subsection.3.3.3}%
+\contentsline {paragraph}{Statistical Data Heterogeneity:}{43}{subsection.3.3.3}%
+\contentsline {paragraph}{Privacy and Security:}{43}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Countermeasures Introduced in Thesis}{43}{subsection.3.3.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {3.4}Synchronization Techniques}{44}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Geometric Method}{44}{subsection.3.4.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Overview of Implementation:}{45}{subsection.3.4.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Decentralized Setting:}{46}{equation.3.4.2}%
+\contentsline {subsubsection}{Coordinator-based Setting:}{46}{ALG@line.13}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Geometric Property:}{47}{equation.3.4.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.4.2}Functional Dynamic Averaging}{48}{subsection.3.4.2}%
+\contentsline {subsubsection}{The Groundwork:}{48}{subsection.3.4.2}%
+\contentsline {subsubsection}{Methodology:}{48}{subsection.3.4.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{RTC Monitoring:}{50}{equation.3.4.9}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Practical Considerations}{51}{equation.3.4.14}%
+\contentsline {subsubsection}{Naive Approximation}{51}{ALG@line.20}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.4.3}Linear Approximation}{52}{subsection.3.4.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.4.4}Sketch FDA}{53}{subsection.3.4.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.4.5}Multiprogramming \bbl@greek@ampersand Synchronization Primitives in DML}{54}{subsection.3.4.5}%
+\contentsline {paragraph}{Locks}{54}{subsection.3.4.5}%
+\contentsline {paragraph}{Mutexes (mutual exclusions)}{54}{subsection.3.4.5}%
+\contentsline {paragraph}{Semaphores}{54}{subsection.3.4.5}%
+\contentsline {paragraph}{Condition Variables}{54}{subsection.3.4.5}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {paragraph}{Read-Write Locks:}{55}{subsection.3.4.5}%
+\contentsline {subsubsection}{Ensuring Model Consistency:}{55}{subsection.3.4.5}%
+\contentsline {section}{\numberline {3.5}NS3-FL:\ Bridging Data \bbl@greek@ampersand \ Network Management}{55}{section.3.5}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.5.1}Framework Overview}{56}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Learning, Network, and Power Models}{56}{subsection.3.5.2}%
+\contentsline {subsubsection}{Learning Model}{56}{subsection.3.5.2}%
+\contentsline {subsubsection}{Network Model}{56}{subsection.3.5.2}%
+\contentsline {subsubsection}{Power Model}{56}{subsection.3.5.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.5.3}Implementation}{57}{subsection.3.5.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {3.5.4}Simulation Results}{58}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}Conclusion}{58}{subsection.3.5.5}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {part}{\EnsureStandardFontEncoding {II}\hspace {1em}Technical Implementation}{59}{section*.41}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {4}Environment Replication}{60}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Tensorflow \bbl@greek@ampersand \ Keras Deep Learning Platforms}{60}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}TensorFlow Framework}{60}{subsection.4.1.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {4.1.2}Keras Library}{61}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Flower Framework: An Efficient Approach to FL}{61}{section.4.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {4.3}NS3: An Event-Driven Network Simulator}{63}{section.4.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {4.4}Posix Sockets \bbl@greek@ampersand \ gRPC}{64}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Posix Sockets}{64}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}gRPC}{64}{subsection.4.4.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {5}Methodology}{65}{chapter.5}%
+\contentsline {section}{\numberline {5.1}System Architecture}{65}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Component Overview}{65}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Interaction Flow}{65}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Dataset Preprocessing \bbl@greek@ampersand Management}{65}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Dataset Sources and Selection Criteria}{65}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Preprocessing Techniques}{65}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Model Development and Training}{65}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Model Architecture}{65}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Training and Optimization}{65}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Federated Learning Implementation}{65}{section.5.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {5.4.1}Client-Server Setup}{66}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Data Partitioning and Distribution}{66}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Model Aggregation}{66}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Communication Protocols and Data Serialization}{66}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Implementation of Communication Protocols}{66}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Data Serialization Technique}{66}{subsection.5.5.2}%
+\contentsline {section}{\numberline {5.6}Network Simulation Integration}{66}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Simulation Tool Configuration}{66}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Simulating Network Conditions}{66}{subsection.5.6.2}%
+\contentsline {subsection}{\numberline {5.6.3}Integration with Federated Learning}{66}{subsection.5.6.3}%
+\contentsline {section}{\numberline {5.7}Evaluation Metrics and Performance Analysis}{66}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Model Evaluation Metrics}{66}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Network Simulation Metrics}{66}{subsection.5.7.2}%
+\contentsline {subsection}{\numberline {5.7.3}Performance Analysis}{66}{subsection.5.7.3}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {6}Experimental Results \bbl@greek@ampersand Discussion}{67}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Overview of Experimental Results}{67}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Analysis of FL performance}{67}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Accuracy and Efficiency}{67}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Scalability and Robustness}{67}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Network Simulation Findings}{67}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Discussion on Designed System Efficacy}{67}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Contributions to Federated Learning Research}{67}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Implications for Real-World Applications}{67}{subsection.6.4.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {subsubsection}{Industry Use Cases}{68}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Comparison with Technologies}{68}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Limitations and Challenges}{68}{section.6.5}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {part}{\EnsureStandardFontEncoding {III}\hspace {1em}Epilogue}{69}{section*.43}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {7}Conclusions}{70}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Research Conclusions}{70}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Contributions of This Thesis}{70}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Recommendations for Future Research}{70}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Final Thoughts}{70}{section.7.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\vspace \bigskipamount 
+\contentsline {chapter}{\foreignlanguage {english}{Bibliography}}{75}{chapter*.44}%
+\contentsline {subparagraph}{}{75}{chapter*.44}%
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 

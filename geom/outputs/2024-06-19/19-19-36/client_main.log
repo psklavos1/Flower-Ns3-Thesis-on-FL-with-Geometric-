@@ -1,0 +1,190 @@
+[2024-06-19 19:19:38,579][utils.model][INFO] - LeNet model built
+[2024-06-19 19:19:39,151][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-19 19:19:39,168][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-19 19:19:39,171][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-19 19:19:39,173][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-19 19:19:39,173][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-19 19:19:39,778][utils.model][INFO] - LeNet model built
+[2024-06-19 19:19:39,945][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-19 19:19:39,953][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-19 19:19:39,955][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-19 19:19:39,956][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-19 19:19:39,958][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-19 19:19:45,403][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:19:45,421][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:19:46,393][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 0.9692 - Mean loss: 2.3323 - acc: 0.0625 - norm: 0.18 - 2.33s
+[2024-06-19 19:19:46,394][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 0.9870 - Mean loss: 2.3239 - acc: 0.0625 - norm: 0.17 - 2.32s
+[2024-06-19 19:19:46,936][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.5310 - Mean loss: 2.1877 - acc: 0.2102 - norm: 1.70 - 2.11s
+[2024-06-19 19:19:46,936][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.5134 - Mean loss: 2.1413 - acc: 0.2898 - norm: 1.93 - 2.00s
+[2024-06-19 19:19:47,484][utils.model][INFO] - (In epoch/Overall): (21/21)| inst_loss: 2.0782 - Mean loss: 1.9759 - acc: 0.3318 - norm: 4.16 - 1.62s
+[2024-06-19 19:19:47,485][utils.model][INFO] - (In epoch/Overall): (21/21)| inst_loss: 2.0604 - Mean loss: 1.9405 - acc: 0.3601 - norm: 4.31 - 1.65s
+[2024-06-19 19:19:47,726][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:19:47,727][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:19:47,729][utils.model][INFO] - (In epoch/Overall): (25/25)| inst_loss: 0.9774 - Mean loss: 1.8369 - acc: 0.4000 - norm: 5.05 - 2.31s
+[2024-06-19 19:19:47,730][utils.model][INFO] - (In epoch/Overall): (25/25)| inst_loss: 1.2651 - Mean loss: 1.8624 - acc: 0.3787 - norm: 5.17 - 2.33s
+[2024-06-19 19:19:49,618][utils.model][INFO] - Evaluation Results - Val Loss: 1.2512, Val Accuracy: 0.6575 in 32 steps
+[2024-06-19 19:19:49,636][utils.model][INFO] - Evaluation Results - Val Loss: 1.2718, Val Accuracy: 0.6620 in 32 steps
+[2024-06-19 19:19:54,333][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:19:54,333][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:19:54,449][utils.model][INFO] - (In epoch/Overall): (1/26)| inst_loss: 0.1141 - Mean loss: 1.2215 - acc: 0.7812 - norm: 0.07 - 1.22s
+[2024-06-19 19:19:54,449][utils.model][INFO] - (In epoch/Overall): (1/26)| inst_loss: 0.1149 - Mean loss: 1.2939 - acc: 0.6562 - norm: 0.06 - 1.29s
+[2024-06-19 19:19:54,953][utils.model][INFO] - (In epoch/Overall): (11/36)| inst_loss: 0.6180 - Mean loss: 1.1724 - acc: 0.6676 - norm: 0.56 - 0.80s
+[2024-06-19 19:19:54,953][utils.model][INFO] - (In epoch/Overall): (11/36)| inst_loss: 0.6191 - Mean loss: 1.1721 - acc: 0.6364 - norm: 0.62 - 0.94s
+[2024-06-19 19:19:55,413][utils.model][INFO] - (In epoch/Overall): (21/46)| inst_loss: 1.0783 - Mean loss: 1.0661 - acc: 0.6890 - norm: 1.22 - 0.85s
+[2024-06-19 19:19:55,413][utils.model][INFO] - (In epoch/Overall): (21/46)| inst_loss: 1.0794 - Mean loss: 1.0592 - acc: 0.6860 - norm: 1.31 - 0.92s
+[2024-06-19 19:19:56,004][utils.model][INFO] - (In epoch/Overall): (31/56)| inst_loss: 1.6689 - Mean loss: 0.9697 - acc: 0.7056 - norm: 2.06 - 0.67s
+[2024-06-19 19:19:56,004][utils.model][INFO] - (In epoch/Overall): (31/56)| inst_loss: 1.6684 - Mean loss: 0.9538 - acc: 0.7198 - norm: 2.05 - 0.50s
+[2024-06-19 19:19:56,599][utils.model][INFO] - (In epoch/Overall): (41/66)| inst_loss: 2.2645 - Mean loss: 0.8851 - acc: 0.7370 - norm: 2.78 - 0.59s
+[2024-06-19 19:19:56,599][utils.model][INFO] - (In epoch/Overall): (41/66)| inst_loss: 2.2638 - Mean loss: 0.8799 - acc: 0.7332 - norm: 2.77 - 0.62s
+[2024-06-19 19:19:57,131][utils.model][INFO] - (In epoch/Overall): (51/76)| inst_loss: 2.7964 - Mean loss: 0.8270 - acc: 0.7457 - norm: 3.47 - 0.48s
+[2024-06-19 19:19:57,132][utils.model][INFO] - (In epoch/Overall): (51/76)| inst_loss: 2.7975 - Mean loss: 0.8501 - acc: 0.7414 - norm: 3.54 - 0.70s
+[2024-06-19 19:19:57,672][utils.model][INFO] - (In epoch/Overall): (61/86)| inst_loss: 3.3368 - Mean loss: 0.7755 - acc: 0.7597 - norm: 4.19 - 0.43s
+[2024-06-19 19:19:57,672][utils.model][INFO] - (In epoch/Overall): (61/86)| inst_loss: 3.3378 - Mean loss: 0.7991 - acc: 0.7602 - norm: 4.32 - 0.38s
+[2024-06-19 19:19:58,208][utils.model][INFO] - (In epoch/Overall): (71/96)| inst_loss: 3.8740 - Mean loss: 0.7492 - acc: 0.7764 - norm: 5.10 - 0.45s
+[2024-06-19 19:19:58,208][utils.model][INFO] - (In epoch/Overall): (71/96)| inst_loss: 3.8732 - Mean loss: 0.7453 - acc: 0.7689 - norm: 5.00 - 0.33s
+[2024-06-19 19:19:58,214][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:19:58,214][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:19:58,217][utils.model][INFO] - (In epoch/Overall): (71/96)| inst_loss: 0.4455 - Mean loss: 0.7492 - acc: 0.7764 - norm: 5.10 - 3.88s
+[2024-06-19 19:19:58,218][utils.model][INFO] - (In epoch/Overall): (71/96)| inst_loss: 0.3263 - Mean loss: 0.7453 - acc: 0.7689 - norm: 5.00 - 3.88s
+[2024-06-19 19:19:59,812][utils.model][INFO] - Evaluation Results - Val Loss: 0.4139, Val Accuracy: 0.8660 in 32 steps
+[2024-06-19 19:19:59,813][utils.model][INFO] - Evaluation Results - Val Loss: 0.4117, Val Accuracy: 0.8680 in 32 steps
+[2024-06-19 19:20:04,290][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:20:04,291][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:20:04,417][utils.model][INFO] - (In epoch/Overall): (1/97)| inst_loss: 0.1244 - Mean loss: 0.5718 - acc: 0.8125 - norm: 0.04 - 0.57s
+[2024-06-19 19:20:04,417][utils.model][INFO] - (In epoch/Overall): (1/97)| inst_loss: 0.1254 - Mean loss: 0.2159 - acc: 1.0000 - norm: 0.02 - 0.22s
+[2024-06-19 19:20:05,049][utils.model][INFO] - (In epoch/Overall): (11/107)| inst_loss: 0.7557 - Mean loss: 0.4674 - acc: 0.8466 - norm: 0.20 - 0.21s
+[2024-06-19 19:20:05,049][utils.model][INFO] - (In epoch/Overall): (11/107)| inst_loss: 0.7567 - Mean loss: 0.4567 - acc: 0.8636 - norm: 0.20 - 0.42s
+[2024-06-19 19:20:05,618][utils.model][INFO] - (In epoch/Overall): (21/117)| inst_loss: 1.3256 - Mean loss: 0.4435 - acc: 0.8586 - norm: 0.40 - 0.33s
+[2024-06-19 19:20:05,618][utils.model][INFO] - (In epoch/Overall): (21/117)| inst_loss: 1.3266 - Mean loss: 0.4328 - acc: 0.8661 - norm: 0.40 - 0.77s
+[2024-06-19 19:20:06,278][utils.model][INFO] - (In epoch/Overall): (31/127)| inst_loss: 1.9855 - Mean loss: 0.4284 - acc: 0.8669 - norm: 0.63 - 0.23s
+[2024-06-19 19:20:06,278][utils.model][INFO] - (In epoch/Overall): (31/127)| inst_loss: 1.9845 - Mean loss: 0.4255 - acc: 0.8659 - norm: 0.64 - 0.37s
+[2024-06-19 19:20:06,879][utils.model][INFO] - (In epoch/Overall): (41/137)| inst_loss: 2.5865 - Mean loss: 0.4277 - acc: 0.8659 - norm: 0.94 - 0.23s
+[2024-06-19 19:20:06,880][utils.model][INFO] - (In epoch/Overall): (41/137)| inst_loss: 2.5873 - Mean loss: 0.4045 - acc: 0.8735 - norm: 0.93 - 0.33s
+[2024-06-19 19:20:07,394][utils.model][INFO] - (In epoch/Overall): (51/147)| inst_loss: 3.1024 - Mean loss: 0.3927 - acc: 0.8768 - norm: 1.20 - 0.23s
+[2024-06-19 19:20:07,394][utils.model][INFO] - (In epoch/Overall): (51/147)| inst_loss: 3.1016 - Mean loss: 0.4243 - acc: 0.8664 - norm: 1.24 - 0.41s
+[2024-06-19 19:20:07,910][utils.model][INFO] - (In epoch/Overall): (61/157)| inst_loss: 3.6176 - Mean loss: 0.3883 - acc: 0.8750 - norm: 1.58 - 0.20s
+[2024-06-19 19:20:07,910][utils.model][INFO] - (In epoch/Overall): (61/157)| inst_loss: 3.6167 - Mean loss: 0.4190 - acc: 0.8663 - norm: 1.53 - 0.44s
+[2024-06-19 19:20:08,545][utils.model][INFO] - (In epoch/Overall): (71/167)| inst_loss: 4.2523 - Mean loss: 0.4111 - acc: 0.8697 - norm: 1.92 - 0.33s
+[2024-06-19 19:20:08,547][utils.model][INFO] - (In epoch/Overall): (71/167)| inst_loss: 4.2536 - Mean loss: 0.3952 - acc: 0.8732 - norm: 2.01 - 0.25s
+[2024-06-19 19:20:09,239][utils.model][INFO] - (In epoch/Overall): (81/177)| inst_loss: 4.9476 - Mean loss: 0.3863 - acc: 0.8754 - norm: 2.34 - 0.14s
+[2024-06-19 19:20:09,239][utils.model][INFO] - (In epoch/Overall): (81/177)| inst_loss: 4.9466 - Mean loss: 0.4019 - acc: 0.8727 - norm: 2.32 - 0.34s
+[2024-06-19 19:20:09,784][utils.model][INFO] - (In epoch/Overall): (91/187)| inst_loss: 5.4915 - Mean loss: 0.3961 - acc: 0.8736 - norm: 2.79 - 0.28s
+[2024-06-19 19:20:09,785][utils.model][INFO] - (In epoch/Overall): (91/187)| inst_loss: 5.4925 - Mean loss: 0.3811 - acc: 0.8771 - norm: 2.79 - 0.60s
+[2024-06-19 19:20:10,382][utils.model][INFO] - (In epoch/Overall): (101/197)| inst_loss: 6.0895 - Mean loss: 0.3765 - acc: 0.8787 - norm: 3.19 - 0.21s
+[2024-06-19 19:20:10,385][utils.model][INFO] - (In epoch/Overall): (101/197)| inst_loss: 6.0887 - Mean loss: 0.3854 - acc: 0.8775 - norm: 3.22 - 0.35s
+[2024-06-19 19:20:10,990][utils.model][INFO] - (In epoch/Overall): (111/207)| inst_loss: 6.6974 - Mean loss: 0.3710 - acc: 0.8840 - norm: 3.64 - 0.31s
+[2024-06-19 19:20:10,991][utils.model][INFO] - (In epoch/Overall): (111/207)| inst_loss: 6.6986 - Mean loss: 0.3654 - acc: 0.8834 - norm: 3.68 - 0.28s
+[2024-06-19 19:20:11,615][utils.model][INFO] - (In epoch/Overall): (121/217)| inst_loss: 7.3224 - Mean loss: 0.3565 - acc: 0.8895 - norm: 4.14 - 0.18s
+[2024-06-19 19:20:11,615][utils.model][INFO] - (In epoch/Overall): (121/217)| inst_loss: 7.3233 - Mean loss: 0.3521 - acc: 0.8889 - norm: 4.19 - 0.34s
+[2024-06-19 19:20:12,107][utils.model][INFO] - (In epoch/Overall): (131/227)| inst_loss: 7.8154 - Mean loss: 0.3453 - acc: 0.8922 - norm: 4.74 - 0.17s
+[2024-06-19 19:20:12,107][utils.model][INFO] - (In epoch/Overall): (131/227)| inst_loss: 7.8146 - Mean loss: 0.3511 - acc: 0.8910 - norm: 4.79 - 0.53s
+[2024-06-19 19:20:12,496][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:20:12,496][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:20:12,499][utils.model][INFO] - (In epoch/Overall): (138/234)| inst_loss: 0.2846 - Mean loss: 0.3462 - acc: 0.8920 - norm: 5.15 - 8.21s
+[2024-06-19 19:20:12,499][utils.model][INFO] - (In epoch/Overall): (138/234)| inst_loss: 0.1427 - Mean loss: 0.3405 - acc: 0.8949 - norm: 5.05 - 8.21s
+[2024-06-19 19:20:14,274][utils.model][INFO] - Evaluation Results - Val Loss: 0.1961, Val Accuracy: 0.9415 in 32 steps
+[2024-06-19 19:20:14,278][utils.model][INFO] - Evaluation Results - Val Loss: 0.1971, Val Accuracy: 0.9385 in 32 steps
+[2024-06-19 19:20:19,477][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:20:19,477][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:20:19,676][utils.model][INFO] - (In epoch/Overall): (1/235)| inst_loss: 0.1949 - Mean loss: 0.3603 - acc: 0.9062 - norm: 0.06 - 0.36s
+[2024-06-19 19:20:19,676][utils.model][INFO] - (In epoch/Overall): (1/235)| inst_loss: 0.1950 - Mean loss: 0.1101 - acc: 0.9688 - norm: 0.01 - 0.11s
+[2024-06-19 19:20:20,441][utils.model][INFO] - (In epoch/Overall): (11/245)| inst_loss: 0.9618 - Mean loss: 0.2256 - acc: 0.9403 - norm: 0.17 - 0.19s
+[2024-06-19 19:20:20,442][utils.model][INFO] - (In epoch/Overall): (11/245)| inst_loss: 0.9620 - Mean loss: 0.2245 - acc: 0.9318 - norm: 0.19 - 0.11s
+[2024-06-19 19:20:21,143][utils.model][INFO] - (In epoch/Overall): (21/255)| inst_loss: 1.6623 - Mean loss: 0.2341 - acc: 0.9315 - norm: 0.32 - 0.30s
+[2024-06-19 19:20:21,144][utils.model][INFO] - (In epoch/Overall): (21/255)| inst_loss: 1.6625 - Mean loss: 0.2376 - acc: 0.9256 - norm: 0.39 - 0.08s
+[2024-06-19 19:20:21,891][utils.model][INFO] - (In epoch/Overall): (31/265)| inst_loss: 2.4127 - Mean loss: 0.2302 - acc: 0.9284 - norm: 0.55 - 0.24s
+[2024-06-19 19:20:21,892][utils.model][INFO] - (In epoch/Overall): (31/265)| inst_loss: 2.4128 - Mean loss: 0.2223 - acc: 0.9325 - norm: 0.52 - 0.13s
+[2024-06-19 19:20:22,430][utils.model][INFO] - (In epoch/Overall): (41/275)| inst_loss: 2.9507 - Mean loss: 0.2247 - acc: 0.9299 - norm: 0.67 - 0.20s
+[2024-06-19 19:20:22,431][utils.model][INFO] - (In epoch/Overall): (41/275)| inst_loss: 2.9509 - Mean loss: 0.2275 - acc: 0.9322 - norm: 0.70 - 0.47s
+[2024-06-19 19:20:23,017][utils.model][INFO] - (In epoch/Overall): (51/285)| inst_loss: 3.5375 - Mean loss: 0.2182 - acc: 0.9320 - norm: 0.89 - 0.32s
+[2024-06-19 19:20:23,017][utils.model][INFO] - (In epoch/Overall): (51/285)| inst_loss: 3.5377 - Mean loss: 0.2250 - acc: 0.9308 - norm: 0.91 - 0.12s
+[2024-06-19 19:20:23,612][utils.model][INFO] - (In epoch/Overall): (61/295)| inst_loss: 4.1331 - Mean loss: 0.2230 - acc: 0.9308 - norm: 1.15 - 0.48s
+[2024-06-19 19:20:23,612][utils.model][INFO] - (In epoch/Overall): (61/295)| inst_loss: 4.1331 - Mean loss: 0.2258 - acc: 0.9288 - norm: 1.16 - 0.17s
+[2024-06-19 19:20:24,248][utils.model][INFO] - (In epoch/Overall): (71/305)| inst_loss: 4.7693 - Mean loss: 0.2274 - acc: 0.9309 - norm: 1.39 - 0.06s
+[2024-06-19 19:20:24,248][utils.model][INFO] - (In epoch/Overall): (71/305)| inst_loss: 4.7694 - Mean loss: 0.2164 - acc: 0.9335 - norm: 1.44 - 0.31s
+[2024-06-19 19:20:24,793][utils.model][INFO] - (In epoch/Overall): (81/315)| inst_loss: 5.3137 - Mean loss: 0.2268 - acc: 0.9302 - norm: 1.73 - 0.43s
+[2024-06-19 19:20:24,793][utils.model][INFO] - (In epoch/Overall): (81/315)| inst_loss: 5.3139 - Mean loss: 0.2238 - acc: 0.9302 - norm: 1.65 - 0.19s
+[2024-06-19 19:20:25,490][utils.model][INFO] - (In epoch/Overall): (91/325)| inst_loss: 6.0114 - Mean loss: 0.2273 - acc: 0.9320 - norm: 1.91 - 0.52s
+[2024-06-19 19:20:25,491][utils.model][INFO] - (In epoch/Overall): (91/325)| inst_loss: 6.0117 - Mean loss: 0.2325 - acc: 0.9279 - norm: 1.97 - 0.27s
+[2024-06-19 19:20:26,078][utils.model][INFO] - (In epoch/Overall): (101/335)| inst_loss: 6.5989 - Mean loss: 0.2239 - acc: 0.9325 - norm: 2.17 - 0.17s
+[2024-06-19 19:20:26,078][utils.model][INFO] - (In epoch/Overall): (101/335)| inst_loss: 6.5991 - Mean loss: 0.2339 - acc: 0.9261 - norm: 2.22 - 0.18s
+[2024-06-19 19:20:26,666][utils.model][INFO] - (In epoch/Overall): (111/345)| inst_loss: 7.1875 - Mean loss: 0.2213 - acc: 0.9319 - norm: 2.46 - 0.16s
+[2024-06-19 19:20:26,666][utils.model][INFO] - (In epoch/Overall): (111/345)| inst_loss: 7.1876 - Mean loss: 0.2290 - acc: 0.9276 - norm: 2.57 - 0.17s
+[2024-06-19 19:20:27,212][utils.model][INFO] - (In epoch/Overall): (121/355)| inst_loss: 7.7325 - Mean loss: 0.2273 - acc: 0.9277 - norm: 2.87 - 0.09s
+[2024-06-19 19:20:27,212][utils.model][INFO] - (In epoch/Overall): (121/355)| inst_loss: 7.7329 - Mean loss: 0.2205 - acc: 0.9323 - norm: 2.82 - 0.14s
+[2024-06-19 19:20:27,822][utils.model][INFO] - (In epoch/Overall): (131/365)| inst_loss: 8.3434 - Mean loss: 0.2213 - acc: 0.9299 - norm: 3.11 - 0.20s
+[2024-06-19 19:20:27,823][utils.model][INFO] - (In epoch/Overall): (131/365)| inst_loss: 8.3435 - Mean loss: 0.2159 - acc: 0.9337 - norm: 3.20 - 0.08s
+[2024-06-19 19:20:28,368][utils.model][INFO] - (In epoch/Overall): (141/375)| inst_loss: 8.8889 - Mean loss: 0.2184 - acc: 0.9297 - norm: 3.40 - 0.20s
+[2024-06-19 19:20:28,368][utils.model][INFO] - (In epoch/Overall): (141/375)| inst_loss: 8.8890 - Mean loss: 0.2155 - acc: 0.9337 - norm: 3.53 - 0.05s
+[2024-06-19 19:20:28,921][utils.model][INFO] - (In epoch/Overall): (151/385)| inst_loss: 9.4428 - Mean loss: 0.2194 - acc: 0.9292 - norm: 3.82 - 0.11s
+[2024-06-19 19:20:28,922][utils.model][INFO] - (In epoch/Overall): (151/385)| inst_loss: 9.4429 - Mean loss: 0.2081 - acc: 0.9358 - norm: 3.79 - 0.09s
+[2024-06-19 19:20:29,591][utils.model][INFO] - (In epoch/Overall): (161/395)| inst_loss: 10.1123 - Mean loss: 0.2037 - acc: 0.9369 - norm: 4.19 - 0.29s
+[2024-06-19 19:20:29,592][utils.model][INFO] - (In epoch/Overall): (161/395)| inst_loss: 10.1123 - Mean loss: 0.2185 - acc: 0.9305 - norm: 4.23 - 0.10s
+[2024-06-19 19:20:30,406][utils.model][INFO] - (In epoch/Overall): (171/405)| inst_loss: 10.9264 - Mean loss: 0.2135 - acc: 0.9320 - norm: 4.41 - 0.14s
+[2024-06-19 19:20:30,406][utils.model][INFO] - (In epoch/Overall): (171/405)| inst_loss: 10.9264 - Mean loss: 0.2016 - acc: 0.9370 - norm: 4.57 - 0.13s
+[2024-06-19 19:20:31,051][utils.model][INFO] - (In epoch/Overall): (181/415)| inst_loss: 11.5710 - Mean loss: 0.1983 - acc: 0.9373 - norm: 4.79 - 0.06s
+[2024-06-19 19:20:31,051][utils.model][INFO] - (In epoch/Overall): (181/415)| inst_loss: 11.5712 - Mean loss: 0.2147 - acc: 0.9321 - norm: 4.82 - 0.18s
+[2024-06-19 19:20:31,443][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:20:31,444][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:20:31,448][utils.model][INFO] - (In epoch/Overall): (186/420)| inst_loss: 0.1654 - Mean loss: 0.1973 - acc: 0.9375 - norm: 4.98 - 11.97s
+[2024-06-19 19:20:31,449][utils.model][INFO] - (In epoch/Overall): (186/420)| inst_loss: 0.1029 - Mean loss: 0.2126 - acc: 0.9326 - norm: 4.98 - 11.97s
+[2024-06-19 19:20:33,418][utils.model][INFO] - Evaluation Results - Val Loss: 0.1204, Val Accuracy: 0.9615 in 32 steps
+[2024-06-19 19:20:33,419][utils.model][INFO] - Evaluation Results - Val Loss: 0.1170, Val Accuracy: 0.9620 in 32 steps
+[2024-06-19 19:20:38,223][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:20:38,224][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 19:20:38,429][utils.model][INFO] - (In epoch/Overall): (1/421)| inst_loss: 0.2037 - Mean loss: 0.1301 - acc: 0.9688 - norm: 0.03 - 0.13s
+[2024-06-19 19:20:38,430][utils.model][INFO] - (In epoch/Overall): (1/421)| inst_loss: 0.2050 - Mean loss: 0.1440 - acc: 0.9375 - norm: 0.05 - 0.14s
+[2024-06-19 19:20:39,003][utils.model][INFO] - (In epoch/Overall): (11/431)| inst_loss: 0.7772 - Mean loss: 0.1141 - acc: 0.9631 - norm: 0.18 - 0.10s
+[2024-06-19 19:20:39,003][utils.model][INFO] - (In epoch/Overall): (11/431)| inst_loss: 0.7778 - Mean loss: 0.1156 - acc: 0.9744 - norm: 0.24 - 0.22s
+[2024-06-19 19:20:39,535][utils.model][INFO] - (In epoch/Overall): (21/441)| inst_loss: 1.3105 - Mean loss: 0.1739 - acc: 0.9435 - norm: 0.47 - 0.16s
+[2024-06-19 19:20:39,536][utils.model][INFO] - (In epoch/Overall): (21/441)| inst_loss: 1.3107 - Mean loss: 0.1574 - acc: 0.9509 - norm: 0.38 - 0.16s
+[2024-06-19 19:20:40,061][utils.model][INFO] - (In epoch/Overall): (31/451)| inst_loss: 1.8355 - Mean loss: 0.1726 - acc: 0.9536 - norm: 0.52 - 0.16s
+[2024-06-19 19:20:40,062][utils.model][INFO] - (In epoch/Overall): (31/451)| inst_loss: 1.8363 - Mean loss: 0.1731 - acc: 0.9415 - norm: 0.58 - 0.03s
+[2024-06-19 19:20:40,569][utils.model][INFO] - (In epoch/Overall): (41/461)| inst_loss: 2.3445 - Mean loss: 0.1557 - acc: 0.9588 - norm: 0.65 - 0.04s
+[2024-06-19 19:20:40,570][utils.model][INFO] - (In epoch/Overall): (41/461)| inst_loss: 2.3454 - Mean loss: 0.1805 - acc: 0.9360 - norm: 0.81 - 0.15s
+[2024-06-19 19:20:41,107][utils.model][INFO] - (In epoch/Overall): (51/471)| inst_loss: 2.8805 - Mean loss: 0.1511 - acc: 0.9602 - norm: 0.86 - 0.11s
+[2024-06-19 19:20:41,107][utils.model][INFO] - (In epoch/Overall): (51/471)| inst_loss: 2.8808 - Mean loss: 0.1763 - acc: 0.9400 - norm: 0.91 - 0.34s
+[2024-06-19 19:20:41,617][utils.model][INFO] - (In epoch/Overall): (61/481)| inst_loss: 3.3922 - Mean loss: 0.1529 - acc: 0.9590 - norm: 1.09 - 0.09s
+[2024-06-19 19:20:41,617][utils.model][INFO] - (In epoch/Overall): (61/481)| inst_loss: 3.3927 - Mean loss: 0.1665 - acc: 0.9452 - norm: 1.08 - 0.07s
+[2024-06-19 19:20:42,107][utils.model][INFO] - (In epoch/Overall): (71/491)| inst_loss: 3.8806 - Mean loss: 0.1500 - acc: 0.9573 - norm: 1.27 - 0.06s
+[2024-06-19 19:20:42,107][utils.model][INFO] - (In epoch/Overall): (71/491)| inst_loss: 3.8810 - Mean loss: 0.1667 - acc: 0.9459 - norm: 1.31 - 0.06s
+[2024-06-19 19:20:42,670][utils.model][INFO] - (In epoch/Overall): (81/501)| inst_loss: 4.4452 - Mean loss: 0.1594 - acc: 0.9491 - norm: 1.51 - 0.13s
+[2024-06-19 19:20:42,671][utils.model][INFO] - (In epoch/Overall): (81/501)| inst_loss: 4.4450 - Mean loss: 0.1463 - acc: 0.9564 - norm: 1.51 - 0.07s
+[2024-06-19 19:20:43,263][utils.model][INFO] - (In epoch/Overall): (91/511)| inst_loss: 5.0374 - Mean loss: 0.1447 - acc: 0.9574 - norm: 1.70 - 0.17s
+[2024-06-19 19:20:43,265][utils.model][INFO] - (In epoch/Overall): (91/511)| inst_loss: 5.0380 - Mean loss: 0.1559 - acc: 0.9492 - norm: 1.73 - 0.06s
+[2024-06-19 19:20:43,915][utils.model][INFO] - (In epoch/Overall): (101/521)| inst_loss: 5.6898 - Mean loss: 0.1451 - acc: 0.9576 - norm: 2.00 - 0.54s
+[2024-06-19 19:20:43,915][utils.model][INFO] - (In epoch/Overall): (101/521)| inst_loss: 5.6903 - Mean loss: 0.1535 - acc: 0.9493 - norm: 2.05 - 0.16s
+[2024-06-19 19:20:44,434][utils.model][INFO] - (In epoch/Overall): (111/531)| inst_loss: 6.2090 - Mean loss: 0.1512 - acc: 0.9502 - norm: 2.30 - 0.22s
+[2024-06-19 19:20:44,434][utils.model][INFO] - (In epoch/Overall): (111/531)| inst_loss: 6.2085 - Mean loss: 0.1463 - acc: 0.9566 - norm: 2.15 - 0.05s
+[2024-06-19 19:20:45,017][utils.model][INFO] - (In epoch/Overall): (121/541)| inst_loss: 6.7923 - Mean loss: 0.1477 - acc: 0.9558 - norm: 2.37 - 0.02s
+[2024-06-19 19:20:45,018][utils.model][INFO] - (In epoch/Overall): (121/541)| inst_loss: 6.7930 - Mean loss: 0.1486 - acc: 0.9504 - norm: 2.47 - 0.02s
+[2024-06-19 19:20:45,606][utils.model][INFO] - (In epoch/Overall): (131/551)| inst_loss: 7.3816 - Mean loss: 0.1464 - acc: 0.9506 - norm: 2.70 - 0.09s
+[2024-06-19 19:20:45,607][utils.model][INFO] - (In epoch/Overall): (131/551)| inst_loss: 7.3812 - Mean loss: 0.1474 - acc: 0.9561 - norm: 2.52 - 0.09s
+[2024-06-19 19:20:46,239][utils.model][INFO] - (In epoch/Overall): (141/561)| inst_loss: 8.0137 - Mean loss: 0.1451 - acc: 0.9512 - norm: 2.98 - 0.19s
+[2024-06-19 19:20:46,240][utils.model][INFO] - (In epoch/Overall): (141/561)| inst_loss: 8.0134 - Mean loss: 0.1490 - acc: 0.9561 - norm: 2.71 - 0.08s
+[2024-06-19 19:20:46,828][utils.model][INFO] - (In epoch/Overall): (151/571)| inst_loss: 8.6016 - Mean loss: 0.1501 - acc: 0.9559 - norm: 3.03 - 0.03s
+[2024-06-19 19:20:46,828][utils.model][INFO] - (In epoch/Overall): (151/571)| inst_loss: 8.6020 - Mean loss: 0.1437 - acc: 0.9526 - norm: 3.24 - 0.09s
+[2024-06-19 19:20:47,390][utils.model][INFO] - (In epoch/Overall): (161/581)| inst_loss: 9.1655 - Mean loss: 0.1422 - acc: 0.9523 - norm: 3.46 - 0.23s
+[2024-06-19 19:20:47,391][utils.model][INFO] - (In epoch/Overall): (161/581)| inst_loss: 9.1657 - Mean loss: 0.1470 - acc: 0.9571 - norm: 3.26 - 0.37s
+[2024-06-19 19:20:48,048][utils.model][INFO] - (In epoch/Overall): (171/591)| inst_loss: 9.8227 - Mean loss: 0.1400 - acc: 0.9539 - norm: 3.61 - 0.03s
+[2024-06-19 19:20:48,048][utils.model][INFO] - (In epoch/Overall): (171/591)| inst_loss: 9.8223 - Mean loss: 0.1434 - acc: 0.9583 - norm: 3.46 - 0.03s
+[2024-06-19 19:20:48,628][utils.model][INFO] - (In epoch/Overall): (181/601)| inst_loss: 10.4029 - Mean loss: 0.1424 - acc: 0.9582 - norm: 3.81 - 0.07s
+[2024-06-19 19:20:48,629][utils.model][INFO] - (In epoch/Overall): (181/601)| inst_loss: 10.4034 - Mean loss: 0.1381 - acc: 0.9546 - norm: 3.86 - 0.32s
+[2024-06-19 19:20:49,253][utils.model][INFO] - (In epoch/Overall): (191/611)| inst_loss: 11.0283 - Mean loss: 0.1386 - acc: 0.9548 - norm: 4.20 - 0.35s
+[2024-06-19 19:20:49,254][utils.model][INFO] - (In epoch/Overall): (191/611)| inst_loss: 11.0280 - Mean loss: 0.1391 - acc: 0.9589 - norm: 4.12 - 0.06s
+[2024-06-19 19:20:49,756][utils.model][INFO] - (In epoch/Overall): (201/621)| inst_loss: 11.5312 - Mean loss: 0.1404 - acc: 0.9548 - norm: 4.46 - 0.04s
+[2024-06-19 19:20:49,756][utils.model][INFO] - (In epoch/Overall): (201/621)| inst_loss: 11.5307 - Mean loss: 0.1390 - acc: 0.9588 - norm: 4.34 - 0.22s
+[2024-06-19 19:20:50,265][utils.model][INFO] - (In epoch/Overall): (211/631)| inst_loss: 12.0405 - Mean loss: 0.1408 - acc: 0.9551 - norm: 4.78 - 0.21s
+[2024-06-19 19:20:50,266][utils.model][INFO] - (In epoch/Overall): (211/631)| inst_loss: 12.0401 - Mean loss: 0.1372 - acc: 0.9596 - norm: 4.53 - 0.03s
+[2024-06-19 19:20:50,743][utils.model][INFO] - (In epoch/Overall): (221/641)| inst_loss: 12.5183 - Mean loss: 0.1390 - acc: 0.9556 - norm: 5.01 - 0.03s
+[2024-06-19 19:20:50,743][utils.model][INFO] - (In epoch/Overall): (221/641)| inst_loss: 12.5181 - Mean loss: 0.1351 - acc: 0.9603 - norm: 4.73 - 0.00s
+[2024-06-19 19:20:50,944][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:20:50,944][utils.model][INFO] - Epoch Results:
+[2024-06-19 19:20:50,947][utils.model][INFO] - (In epoch/Overall): (225/645)| inst_loss: 0.1781 - Mean loss: 0.1372 - acc: 0.9597 - norm: 4.91 - 12.72s
+[2024-06-19 19:20:50,948][utils.model][INFO] - (In epoch/Overall): (225/645)| inst_loss: 0.0703 - Mean loss: 0.1380 - acc: 0.9558 - norm: 5.21 - 12.72s
+[2024-06-19 19:20:52,453][utils.model][INFO] - Evaluation Results - Val Loss: 0.0951, Val Accuracy: 0.9700 in 32 steps
+[2024-06-19 19:20:52,454][utils.model][INFO] - Evaluation Results - Val Loss: 0.0926, Val Accuracy: 0.9690 in 32 steps
+[2024-06-19 19:20:52,883][flwr][DEBUG] - gRPC channel closed
+[2024-06-19 19:20:52,883][flwr][DEBUG] - gRPC channel closed
+[2024-06-19 19:20:52,883][flwr][INFO] - Disconnect and shut down
+[2024-06-19 19:20:52,883][flwr][INFO] - Disconnect and shut down

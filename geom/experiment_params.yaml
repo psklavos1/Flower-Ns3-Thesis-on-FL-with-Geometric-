@@ -1,0 +1,13 @@
+- ann: lenet
+  bias_template: 0
+  client_mobility: false
+  completed: false
+  dataset: mnist
+  eval_batch_size: 64
+  network_template: 2
+  non_iid: false
+  num_clients: 5
+  steps_threshold: 500
+  thres_discount_factor: 1.0
+  threshold: 5
+  train_batch_size: 32

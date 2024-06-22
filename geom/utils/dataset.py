@@ -1,5 +1,6 @@
 # third party
 import tensorflow as tf
+import keras
 
 # built-in
 import math
@@ -62,8 +63,9 @@ def get_dataset(
     ds_name="mnist",
     non_iid=False,
     class_percentages=None,
-    validation=False,
     validation_split=0.1,
+    train_val_split=0.0,
+    seed=20,
 ):
     """
     Load, preprocess, and partition a dataset for federated learning scenarios.
@@ -96,14 +98,11 @@ def get_dataset(
     Raises:
         AssertionError: If non_iid is True but class_percentages is None.
     """
-    (x_train, y_train), (x_test, y_test) = _load_dataset(ds_name)
-    x_train, x_test = _preprocess_data(x_train, x_test, ds_name)
 
-    # If validation support is required, split the training data
-    if validation:
-        x_train, y_train, x_val, y_val = _validation_support(
-            x_train, y_train, validation_split
-        )
+    train_dataset: tf.data.Dataset
+    validation_dataset: tf.data.Dataset
+    train_val_dataset: tf.data.Dataset
+    (x_train, y_train), _ = _load_and_preprocess_dataset(ds_name)
 
     if non_iid:
         assert class_percentages is not None
@@ -117,118 +116,138 @@ def get_dataset(
         )
     else:
         # needed to create a ranodom dataset.
-        x_train_shuffled, y_train_shuffled = _shuffle_data(x_train, y_train)
-        x_train_partition, y_train_partition = _partition_data(
-            x_train_shuffled, y_train_shuffled, num_partitions, partition_index
+        x_train_partition, y_train_partition = _shuffle_and_partition_data(
+            x_train, y_train, num_partitions, partition_index, seed
         )
 
+    # Validation set for client coming from his local trainset distribution.
+
+    (
+        x_train_partition,
+        y_train_partition,
+        x_val_partition,
+        y_val_partition,
+        x_train_val_partition,
+        y_train_val_partition,
+    ) = _dataset_split(
+        x_train_partition, y_train_partition, validation_split, train_val_split
+    )
+
     # Convert to tf.data.Dataset for training
-    train_dataset = tf.data.Dataset.from_tensor_slices(
-        (x_train_partition, y_train_partition)
-    )
-    train_dataset = (
-        train_dataset.cache().shuffle(buffer_size=len(x_train_partition)).repeat()
-    )
+    train_dataset = _prep_dataset(x_train_partition, y_train_partition, repeat=True)
+    validation_dataset = _prep_dataset(x_val_partition, y_val_partition)
+    train_val_dataset = _prep_dataset(x_train_val_partition, y_train_val_partition)
 
-    test_dataset = (x_test, y_test)
+    return train_dataset, validation_dataset, train_val_dataset
 
-    # If validation is enabled, also prepare the validation dataset
-    if validation:
-        validation_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
-    else:
-        validation_dataset = None
 
-    return train_dataset, test_dataset, validation_dataset
+def _prep_dataset(x_partition, y_partition, repeat=False) -> tf.data.Dataset:
+    dataset = None
+    if len(x_partition) != 0:
+        dataset = tf.data.Dataset.from_tensor_slices((x_partition, y_partition))
+        if repeat:
+            dataset = dataset.cache().shuffle(buffer_size=len(x_partition)).repeat()
+        else:
+            dataset = dataset.cache().shuffle(buffer_size=len(x_partition))
+
+    return dataset
+
+
+def get_testset(ds_name="mnist"):
+    """
+    Load and preprocess the test set for the specified dataset.
+
+    This function loads the test set of the specified dataset and preprocesses it
+    to be ready for evaluation.
+
+    Args:
+        ds_name (str, optional): The name of the dataset to load. Defaults to 'mnist'.
+
+    Returns:
+        tf.data.Dataset: The preprocessed test dataset ready for evaluation.
+    """
+    _, (x_test, y_test) = _load_and_preprocess_dataset(ds_name)
+
+    # Convert to tf.data.Dataset for evaluation
+    test_dataset = tf.data.Dataset.from_tensor_slices((x_test, y_test))
+    test_dataset = test_dataset.cache()
+
+    return test_dataset
 
 
 # ==============================================================================================
 # * Utility Functions
 
 
-def _load_dataset(ds_name):
+def _load_and_preprocess_dataset(ds_name):
     """
-    Load a dataset by name from available TensorFlow datasets.
+    Load and preprocess a specified dataset.
+
+    This function loads a dataset by its name from the available TensorFlow datasets and
+    applies the necessary preprocessing steps to prepare the data for training and testing.
 
     Args:
-        ds_name (str): Name of the dataset to load ('mnist', 'fashion_mnist', 'cifar10', 'cifar100').
+        ds_name (str): Name of the dataset to load. Supported values are 'mnist',
+                       'fashion_mnist', 'cifar10', 'cifar100'.
 
     Returns:
-        Tuple containing training and test data.
+        tuple: A tuple containing preprocessed training data (x_train, y_train) and
+               testing data (x_test, y_test).
 
     Raises:
         ValueError: If `ds_name` is not a recognized dataset name.
     """
     datasets = {
-        "mnist": tf.keras.datasets.mnist.load_data,
-        "fashion_mnist": tf.keras.datasets.fashion_mnist.load_data,
-        "cifar10": tf.keras.datasets.cifar10.load_data,
-        "cifar100": tf.keras.datasets.cifar100.load_data,
+        "mnist": keras.datasets.mnist.load_data,
+        "fashion_mnist": keras.datasets.fashion_mnist.load_data,
+        "cifar10": keras.datasets.cifar10.load_data,
+        "cifar100": keras.datasets.cifar100.load_data,
     }
 
     if ds_name not in datasets:
         raise ValueError(f"Invalid dataset name '{ds_name}'")
-    return datasets[ds_name]()
 
+    (x_train, y_train), (x_test, y_test) = datasets[ds_name]()
 
-def _preprocess_data(x_train, x_test, ds_name):
-    """
-    Preprocess training and test data depending on the dataset.
-
-    Args:
-        x_train (ndarray): Training data.
-        x_test (ndarray): Test data.
-        ds_name (str): Name of the dataset for specific preprocessing.
-
-    Returns:
-        Tuple of preprocessed training and test data.
-    """
     if ds_name in ["mnist", "fashion_mnist"]:
         x_train = x_train.reshape(-1, 28, 28, 1).astype("float32") / 255.0
         x_test = x_test.reshape(-1, 28, 28, 1).astype("float32") / 255.0
-    elif ds_name == "cifar10":
+    elif ds_name in ["cifar10", "cifar100"]:
         x_train = x_train.astype("float32") / 255.0
         x_test = x_test.astype("float32") / 255.0
-    return x_train, x_test
+
+    return (x_train, y_train), (x_test, y_test)
 
 
-def _shuffle_data(x_train, y_train, seed=20):
+def _shuffle_and_partition_data(
+    x_train, y_train, num_partitions, partition_index, seed=20
+):
     """
-    Shuffle training data using a fixed seed.
+    Shuffle and partition the training data.
+
+    This function shuffles the training data and partitions it into a specified number of
+    partitions. It returns the partition corresponding to the given partition index.
 
     Args:
         x_train (ndarray): Training features.
         y_train (ndarray): Training labels.
-        seed (int): Seed for reproducibility.
+        num_partitions (int): Number of partitions to split the data into.
+        partition_index (int): Index of the partition to return.
+        seed (int, optional): Seed for reproducibility of the shuffling. Defaults to 20.
 
     Returns:
-        Tuple of shuffled training features and labels.
+        tuple: A tuple containing the features (x_train_partition) and labels (y_train_partition)
+               for the specified partition, as numpy arrays.
     """
-    indices = tf.range(start=0, limit=tf.shape(x_train)[0], dtype=tf.int32)
-    shuffled_indices = tf.random.shuffle(indices, seed=seed)
-    return tf.gather(x_train, shuffled_indices), tf.gather(y_train, shuffled_indices)
-
-
-def _partition_data(x_train, y_train, num_partitions, partition_index):
-    """
-    Evenly partition training data for federated learning simulation.
-
-    Args:
-        x_train (ndarray): Training features.
-        y_train (ndarray): Training labels.
-        num_partitions (int): Number of partitions.
-        partition_index (int): Index of the current partition.
-
-    Returns:
-        Tuple of features and labels for the specified partition.
-    """
-    partition_size = len(x_train) // num_partitions
-    start_idx = partition_index * partition_size
-    end_idx = (
-        start_idx + partition_size
-        if partition_index < num_partitions - 1
-        else len(x_train)
+    dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
+    dataset = dataset.shuffle(buffer_size=len(x_train), seed=seed).batch(
+        len(x_train) // num_partitions
     )
-    return x_train[start_idx:end_idx], y_train[start_idx:end_idx]
+
+    partitioned_data = list(dataset)
+    x_train_partition, y_train_partition = partitioned_data[partition_index]
+
+    return x_train_partition.numpy(), y_train_partition.numpy()
 
 
 # * For non-iid Support
@@ -409,34 +428,46 @@ def _generate_high_bias_class_percentages(num_classes, seed=None):
     return {cls: percentage for cls, percentage in enumerate(percentages)}
 
 
-# * Validation Support
-def _validation_support(x_train, y_train, validation_split=0.1):
+def _dataset_split(x_train, y_train, validation_split=0.1, train_val_split=0.0):
     """
-    Split training data into training and validation sets.
+    Split training data into training, validation, and train_val sets.
 
     Args:
         x_train (ndarray): Original training features.
         y_train (ndarray): Original training labels.
         validation_split (float): Proportion of the data to use for validation.
+        train_val_split (float): Proportion of the data to use for train_val.
 
     Returns:
-        Tuples of new training features, new training labels, validation features, and validation labels.
+        Tuples of new training features, new training labels, validation features, validation labels,
+        train_val features, and train_val labels.
     """
+    # Ensure x_train and y_train are numpy arrays
+    x_train = np.array(x_train)
+    y_train = np.array(y_train)
+
     # Shuffle the training data
-    shuffled_indices = np.random.permutation(len(x_train))
+    shuffled_indices = np.random.permutation(len(x_train)).astype(int)
     x_train_shuffled = x_train[shuffled_indices]
     y_train_shuffled = y_train[shuffled_indices]
 
-    # Calculate the number of samples for validation
+    # Calculate the number of samples for validation and train_val
     num_validation_samples = int(len(x_train) * validation_split)
+    num_train_val_samples = int(len(x_train) * train_val_split)
 
     # Split the data
     x_val = x_train_shuffled[:num_validation_samples]
     y_val = y_train_shuffled[:num_validation_samples]
-    x_train_new = x_train_shuffled[num_validation_samples:]
-    y_train_new = y_train_shuffled[num_validation_samples:]
+    x_train_val = x_train_shuffled[
+        num_validation_samples : num_validation_samples + num_train_val_samples
+    ]
+    y_train_val = y_train_shuffled[
+        num_validation_samples : num_validation_samples + num_train_val_samples
+    ]
+    x_train_new = x_train_shuffled[num_validation_samples + num_train_val_samples :]
+    y_train_new = y_train_shuffled[num_validation_samples + num_train_val_samples :]
 
-    return x_train_new, y_train_new, x_val, y_val
+    return x_train_new, y_train_new, x_val, y_val, x_train_val, y_train_val
 
 
 # * Printing
@@ -472,7 +503,7 @@ def prepare_dataset(
     Returns:
         tuple: A tuple containing lists of training sets, validation sets (empty if validation is not enabled), and the test set.
     """
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
     # Normalize both training and test datasets
     x_train, x_test = x_train / 255.0, x_test / 255.0

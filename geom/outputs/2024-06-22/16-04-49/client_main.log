@@ -1,0 +1,28 @@
+[2024-06-22 16:04:58,496][utils.model][INFO] - LeNet model built
+[2024-06-22 16:04:58,496][utils.model][INFO] - LeNet model built
+[2024-06-22 16:04:58,497][utils.model][INFO] - LeNet model built
+[2024-06-22 16:04:58,502][utils.model][INFO] - LeNet model built
+[2024-06-22 16:04:59,345][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 16:04:59,351][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 16:04:59,353][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 16:04:59,355][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 16:04:59,359][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 16:04:59,368][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 16:04:59,369][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 16:04:59,369][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 16:04:59,382][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 16:04:59,382][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 16:04:59,382][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 16:04:59,382][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 16:04:59,431][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 16:04:59,430][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 16:04:59,431][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 16:04:59,432][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 16:04:59,435][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
+[2024-06-22 16:04:59,436][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
+[2024-06-22 16:04:59,436][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
+[2024-06-22 16:04:59,436][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
+[2024-06-22 16:04:59,638][flwr][DEBUG] - gRPC channel closed
+[2024-06-22 16:04:59,638][flwr][DEBUG] - gRPC channel closed
+[2024-06-22 16:04:59,639][flwr][DEBUG] - gRPC channel closed
+[2024-06-22 16:04:59,639][flwr][DEBUG] - gRPC channel closed

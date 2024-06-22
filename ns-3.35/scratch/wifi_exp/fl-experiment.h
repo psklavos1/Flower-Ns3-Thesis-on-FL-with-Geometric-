@@ -36,11 +36,8 @@
 #include "ns3/packet-socket-address.h"
 #include "flwr-interface.h"
 #include "fl-client-session.h"
-<<<<<<< Updated upstream
-=======
 #include "ns3/netanim-module.h"
 #include "fl-server.h"
->>>>>>> Stashed changes
 
 #include <memory>
 #include <string>
@@ -57,6 +54,8 @@ namespace ns3 {
         /**
         * \brief Constructs Experiment
         * \param numClients             Number of clients in experiment
+        * \param wifi_net_template 
+        * \param moving_clients
         * \param networkType            Network type (wifi or ethernet)
         * \param maxPacketSize          Max packet size for network
         * \param txGain                 TX gain for wifi network
@@ -69,21 +68,27 @@ namespace ns3 {
         * \param server_coordinates     coordinates of server used in NetAnim
         * \param round                  The number of the simulated round 
         */
-        Experiment(int numClients, std::string &networkType, int maxPacketSize, double txGain, std::string &modelType, double modelSize,
-                   std::string &dataRate,std::string &deviceType, bool bAsync, FlwrProvider *pFlwrProvider, FILE *fp,  std::vector<double> server_coordinates,
-        int round);
-
+        Experiment (int numClients, int wifi_net_template, bool moving_clients,
+                        std::string &networkType, int maxPacketSize, double txGain,
+                        std::string &modelType, double modelSize, std::string &dataRate,
+                        std::string &deviceType, bool bAsync, FlwrProvider *flwr_provider, FILE *fp,
+                        std::vector<double> server_coordinates, int round);
         /**
         * \brief Runs network experiment
         * \param packetsReceived   map of <client, client sessions>
         * \param timeOffset        Async, make timeline between rounds continious
         * \return                  map of <client id, message>, messages to send back to flower for each client
         */
-        //TODO: Change to run and change packet recieved
-        std::map<int, FlwrProvider::Message>
-        WeakNetwork(std::map<int, std::shared_ptr<ClientSession> > &packetsReceived, ns3::Time &timeOffset);
+        std::pair<std::map<int, FlwrProvider::Message>, std::vector<std::pair<double, double>>>
+        Run_Round(std::map<int, std::shared_ptr<ClientSession> > &clients, ns3::Time &timeOffset);
+
 
     private:
+        void LogClientCharacteristics (Ptr<Node> clientNode, const Vector &serverPosition,int clientIndex);
+
+        void
+        SetupMobilityForStaNodes (NodeContainer &staNodes,const std::vector<double> &router_coords, double radius);
+        
         /**
         * \brief Set position of node in network
         * \param node        Node to set position of
@@ -113,7 +118,34 @@ namespace ns3 {
         * \param clients   Mapping from ids to client sessions 
         * \return          The Net Device container of all the Wifi devices
         */
-        NetDeviceContainer Wifi(ns3::NodeContainer &c, std::map<int, std::shared_ptr<ClientSession> > &clients);
+        NetDeviceContainer MyWifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients);
+        
+        /**
+        * \brief Sets up Wifi network
+        * \param c         Container of nodes used in network
+        * \param clients   Mapping from ids to client sessions 
+        * \return          The Net Device container of all the Wifi devices
+        */
+        NetDeviceContainer WeakWifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients);
+
+        /**
+        * \brief Sets up Wifi network
+        * \param c         Container of nodes used in network
+        * \param clients   Mapping from ids to client sessions 
+        * \return          The Net Device container of all the Wifi devices
+        */
+        NetDeviceContainer MidWifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients);
+
+        /**
+        * \brief Sets up Wifi network
+        * \param c         Container of nodes used in network
+        * \param clients   Mapping from ids to client sessions 
+        * \return          The Net Device container of all the Wifi devices
+        */
+        NetDeviceContainer FastWifi (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients);
+
+
+
 
         /**
         * \brief Sets up Etherner network
@@ -123,22 +155,6 @@ namespace ns3 {
         */
         NetDeviceContainer Ethernet(NodeContainer &c, std::map<int, std::shared_ptr<ClientSession> > &clients);
 
-<<<<<<< Updated upstream
-        int m_numClients;                 //!< Number of clients in experiment
-        std::string m_networkType;        //!< Network type
-        int m_maxPacketSize;              //!< Max packet size
-        double m_txGain;                  //!< TX gain (for wifi network)
-        std::string m_modelType;            //!< modelType used for training 
-        std::string m_deviceType;         //!< Device type used for training 
-
-        double m_modelSize;               //!< Size of model
-        std::string m_dataRate;           //!< Datarate for server
-        bool m_bAsync;                    //!< Indicator bool for whether experiement is async
-        FlwrProvider *m_flwrProvider;     //!< pointer to an flwr-interface (used to communicate with flower)
-        FILE *m_fp;                       //!< pointer to logfile
-        std::vector<double> m_server_coordinates; //!< coordinates of server used in NetAnim
-        int m_round;                      //!< experiment round
-=======
         /**
         * \brief Sets up the network devices
         * \param c         Container of nodes used in network
@@ -164,7 +180,7 @@ namespace ns3 {
         * \param stop_time  The stop time in simulation for server
         * \return           The Server application
         */
-        Ptr<Server> SetupServer (Ptr<Node> server, Ipv4InterfaceContainer &interfaces, ns3::Time &timeOffset, 
+        Ptr<Server> SetupServer (Ptr<Node> server,int16_t server_port, Ipv4InterfaceContainer &interfaces, ns3::Time &timeOffset, 
             double start_time, double stop_time);
         
         /**
@@ -178,7 +194,7 @@ namespace ns3 {
         * \param stop_time  The stop time in simulation for the clients
         * \return           An application container of client apps
         */
-        ApplicationContainer SetupClients (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients,
+        ApplicationContainer SetupClients (NodeContainer &c, std::map<int, std::shared_ptr<ClientSession>> &clients, int16_t server_port,
                           Ipv4InterfaceContainer &interfaces, std::map<Ipv4Address, int> &m_addrMap,
                           ns3::Time &timeOffset, double start_time, double stop_time);
         
@@ -196,14 +212,18 @@ namespace ns3 {
         * \param interfaces The Ipv4 interfaces container
         * \param stats      An empty mapping from client address to simulation results 
         */
-        void ExtractDownlinkResults(std::map<int, std::shared_ptr<ClientSession>> &clients, Ipv4InterfaceContainer &interfaces, std::map<Ipv4Address, FlwrProvider::Message> &stats);
+        void ExtractDownlinkResults (std::map<int, std::shared_ptr<ClientSession>> &clients,
+                                    int16_t server_port, Ipv4InterfaceContainer &interfaces,
+                                    std::map<Ipv4Address, FlwrProvider::Message> &stats);
         
         /**
         * \brief Extract the uplink phase results of the simulation
         * \param server    The Server Application 
         * \param stats     Mapping from client address to simulation results 
         */
-        void ExtractUplinkResults(Ptr<Server> server, std::map<Ipv4Address, FlwrProvider::Message> &stats);
+        void ExtractUplinkResults (Ptr<Server> server, int16_t server_port,
+                                  Ipv4InterfaceContainer &interfaces,
+                                  std::map<Ipv4Address, FlwrProvider::Message> &stats);
         
         /**
         * \brief Process the results acquired from downlink and uplink fot final result 
@@ -215,6 +235,8 @@ namespace ns3 {
 
 
         int m_numClients;                           //!< Number of clients in experiment
+        int m_wifi_net_template; 
+        bool m_moving_clients;
         std::string m_networkType;                  //!< Network type
         int m_maxPacketSize;                        //!< Max packet size
         double m_txGain;                            //!< TX gain (for wifi network)
@@ -226,8 +248,11 @@ namespace ns3 {
         FlwrProvider *m_flwrProvider;               //!< pointer to an flwr-interface (used to communicate with flower)
         FILE *m_fp;                                 //!< pointer to logfile
         std::vector<double> m_server_coordinates;   //!< coordinates of server used in NetAnim
+        std::vector<double> m_router_coordinates;   //!< coordinates of server used in NetAnim
         int m_round;                                //!< experiment round
->>>>>>> Stashed changes
+        static const int MAX_DISTANCE_FROM_ROUTER = 20;
+
+
 
     };
 }

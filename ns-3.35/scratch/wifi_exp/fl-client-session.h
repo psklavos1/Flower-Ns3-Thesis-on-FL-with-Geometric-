@@ -107,11 +107,15 @@ namespace ns3 {
         */
         double GetX();
 
+        void SetX(double _x);
+
         /**
         * \brief Get y location of client
         * \return y location of client
         */
         double GetY();
+        void SetY(double _y);
+
 
         /**
         * \brief Get id of client

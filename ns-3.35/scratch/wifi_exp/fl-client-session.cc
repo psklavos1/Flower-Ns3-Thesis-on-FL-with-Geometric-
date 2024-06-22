@@ -82,10 +82,21 @@ ClientSession::GetX ()
   return m_x;
 }
 
+void
+ClientSession::SetX (double x)
+{
+  m_x = x;
+}
+
 double
 ClientSession::GetY ()
 {
   return m_y;
+}
+void
+ClientSession::SetY (double y)
+{
+  m_y = y;
 }
 
 std::string

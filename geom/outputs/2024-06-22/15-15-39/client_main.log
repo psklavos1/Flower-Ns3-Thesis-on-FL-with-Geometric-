@@ -1,0 +1,29 @@
+[2024-06-22 15:16:06,907][utils.model][INFO] - LeNet model built
+[2024-06-22 15:16:07,502][utils.model][INFO] - LeNet model built
+[2024-06-22 15:16:07,585][utils.model][INFO] - LeNet model built
+[2024-06-22 15:16:07,708][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 15:16:07,762][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 15:16:07,774][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 15:16:07,780][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-22 15:16:07,964][utils.model][INFO] - LeNet model built
+[2024-06-22 15:16:08,010][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 15:16:08,027][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 15:16:08,033][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 15:16:08,036][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 15:16:08,043][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-22 15:16:08,079][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 15:16:08,111][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 15:16:08,149][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 15:16:08,159][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 15:16:08,161][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-22 15:16:08,426][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 15:16:08,446][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 15:16:08,454][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 15:16:08,456][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 15:16:08,456][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-22 15:16:09,303][utils.model][INFO] - LeNet model built
+[2024-06-22 15:16:09,906][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 15:16:09,923][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 15:16:09,930][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 15:16:09,932][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-22 15:16:09,935][flwr][DEBUG] - ChannelConnectivity.READY

@@ -1,0 +1,7 @@
+[2024-06-19 01:01:22,667][root][INFO] - Initialized DataManager for experiment exp_20240619_010122
+[2024-06-19 01:01:22,670][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=5, round_timeout=None)
+[2024-06-19 01:01:22,673][flwr][INFO] - Flower ECE: gRPC server running (5 rounds), SSL is disabled
+[2024-06-19 01:01:22,676][flwr][INFO] - Initializing global parameters
+[2024-06-19 01:01:22,676][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-19 01:01:25,351][flwr][INFO] - Received initial parameters from one random client
+[2024-06-19 01:01:25,363][flwr][INFO] - Evaluating initial parameters

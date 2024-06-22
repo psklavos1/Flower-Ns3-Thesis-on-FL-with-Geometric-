@@ -1,0 +1,7 @@
+- partition_id=1
+- num_clients=3
+- dataset=mnist
+- ann=lenet
+- non_iid=False
+- bias_template=0
+- keep_log=False

@@ -25,12 +25,13 @@
 #include <fstream>
 #include "fl-experiment.h"
 #include "matrix-topology.h"
+#include <sys/stat.h>
 
 using sysclock_t = std::chrono::system_clock;
 using namespace ns3;
 using namespace std;
 
-FlwrProvider g_FlwrProvider (8080);
+FlwrProvider g_FlwrProvider (9090);
 std::map<int, std::shared_ptr<ClientSession>> g_clients;
 
 NS_LOG_COMPONENT_DEFINE ("Wifi-Adhoc");
@@ -56,8 +57,13 @@ main (int argc, char *argv[])
   std::string learningModel = "sync";
   std::string modelType = "MNIST";
   std::string deviceType = "400";
+  bool moving_clients = false;
+  int wifi_net_template = 0;
 
   cmd.AddValue ("numClients", "Number of clients", numClients);
+  cmd.AddValue ("wifiNetTemplate", "Template of Wifi speed", wifi_net_template);
+  cmd.AddValue ("wifiNetTemplate", "Template of Wifi speed", wifi_net_template);
+  cmd.AddValue ("movingClients", "Assing mobility to clients", moving_clients);
   cmd.AddValue ("networkType", "Type of network", networkType);
   cmd.AddValue ("maxPacketSize", "Maximum size packet that can be sent", maxPacketSize);
   cmd.AddValue ("txGain", "Power transmitted from clients and server", TxGain);
@@ -79,6 +85,8 @@ main (int argc, char *argv[])
     modelType = "FashionMNIST";
   else if (modelType.compare ("cifar10") == 0)
     modelType = "CIFAR-10";
+  else if (modelType.compare ("cifar100") == 0)
+    modelType = "CIFAR-100";
 
   bool bAsync = false;
   if (learningModel.compare ("async") == 0)
@@ -90,6 +98,12 @@ main (int argc, char *argv[])
                                 << ","
                                    "networkType:"
                                 << networkType
+                                << ","
+                                   "wifNetTemplate:"
+                                << wifi_net_template
+                                << ","
+                                   "movingClients:"
+                                << moving_clients
                                 << ","
                                    "maxPacketSize:"
                                 << maxPacketSize
@@ -109,39 +123,22 @@ main (int argc, char *argv[])
 
   // Generetate file to keep ns3 data
   time_t now = sysclock_t::to_time_t (sysclock_t::now ());
+
+  // Output folder
+  const char *outputFolder = "output_logs";
+
+  // Ensure the folder exists or create it if necessary
+  struct stat st;
+  if (stat (outputFolder, &st) != 0)
+    {
+      mkdir (outputFolder, 0700); // Create directory if it does not exist
+    }
+
   char buf[80] = {0};
   std::strftime (buf, sizeof (buf), "%Y-%m-%d_%H-%H-%S.csv", std::localtime (&now));
-  char strbuff[100];
-<<<<<<< Updated upstream
-  snprintf (strbuff, 99, "%s_%s_%.2f_%s", learningModel.c_str (), networkType.c_str (), TxGain,
-            buf);
-
-  FILE *fp = fopen (strbuff, "w");
-
-  std::default_random_engine generator;
-  std::uniform_real_distribution<double> r_dist (1.0, 4.0);
-  //std::uniform_real_distribution<double> t_dist(0,1.0);
-
-  // Generate Coordinates
-  std::string node_coordinates_file_name = "./scratch/wifi_exp/node_coordinates.txt";
-  vector<vector<double>> coord_array = readCoordinatesFile (node_coordinates_file_name);
-  printCoordinatesArray (coord_array, numClients);
-  //  Get DataRates
-  const char *dataRates_file_name = "./scratch/wifi_exp/client_datarates.txt";
-  char **client_dataRates = read_dataRates (dataRates_file_name, numClients);
-  print_dataRates (client_dataRates, numClients);
-  int server = 0;
-  int x;
-  int y;
-  for (int j = 0; j < numClients; j++)
-    {
-      char *client_dataRate = client_dataRates[j];
-      x = coord_array[j + 1][0];
-      y = coord_array[j + 1][1];
-      // NS_LOG_UNCOND ("INIT: ID = " << j << " Distance from server = "
-      //                              << getDistance (coord_array[j + 1], coord_array[server]));
-=======
-  snprintf (strbuff, 99, "%s_%s_%d_%s", networkType.c_str (), modelType.c_str (), numClients, buf);
+  char strbuff[200];
+  snprintf (strbuff, sizeof (strbuff), "%s/%s_%s_%d_%s", outputFolder, networkType.c_str (),
+            modelType.c_str (), numClients, buf);
   FILE *fp = fopen (strbuff, "w");
 
   // Get Coordinates
@@ -151,7 +148,7 @@ main (int argc, char *argv[])
   //  Get DataRates
   std::string dataRates_file_name = "./scratch/wifi_exp/datarates.txt";
   std::vector<std::string> dataRates = readDataRates (dataRates_file_name, numClients + 1);
-  printDataRates (dataRates);
+  // printDataRates (dataRates);
 
   // Assign Clients with characteristics
   int server = 0;
@@ -160,7 +157,6 @@ main (int argc, char *argv[])
       std::string client_dataRate = dataRates[j + 1];
       int x = coord_array[j + 1][0];
       int y = coord_array[j + 1][1];
->>>>>>> Stashed changes
       g_clients[j] = std::shared_ptr<ClientSession> (new ClientSession (j, x, y, client_dataRate));
     }
 
@@ -172,10 +168,10 @@ main (int argc, char *argv[])
     }
 
   int round = 0;
+  std::vector<std::pair<double, double>> updatedPositions;
 
   while (true)
-    {
-
+    { // Repetitive setup as at each round in used Simulator::Destroy that cleans up the setup to avoid leaks
       round++;
 
       if (FlwrProvider)
@@ -189,25 +185,24 @@ main (int argc, char *argv[])
             }
         }
 
-<<<<<<< Updated upstream
       auto experiment =
-          Experiment (numClients, networkType, maxPacketSize, TxGain, modelType, modelSize,
-                      dataRate, deviceType, bAsync, FlwrProvider, fp, coord_array[server], round
+          Experiment (numClients, wifi_net_template, moving_clients, networkType, maxPacketSize,
+                      TxGain, modelType, modelSize, dataRates[server], deviceType, bAsync,
+                      FlwrProvider, fp, coord_array[server], round);
 
-          );
-      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nBefore: " << timeOffset
-                                                           << "\n"
-                                                              ">>>>>>>>>>>>>>>>>>>>>>>>>");
-      auto roundStats = experiment.WeakNetwork (g_clients, timeOffset);
-=======
-      auto experiment = Experiment (numClients, networkType, maxPacketSize, TxGain, modelType,
-                                    modelSize, dataRates[server], deviceType, bAsync, FlwrProvider,
-                                    fp, coord_array[server], round);
->>>>>>> Stashed changes
+      // Print the clients' positions
+      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>> Start >>>>>>>>>>>>>>>>>>>>>>>>>");
+      auto result = experiment.Run_Round (g_clients, timeOffset);
+      auto roundStats = result.first;
+      updatedPositions = result.second;
+      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>> End >>>>>>>>>>>>>>>>>>>>>>>>>");
 
-      NS_LOG_UNCOND (">>>>>>>>>>>>>>>>>>>>>>>>>\nTIME_OFFSET:" << timeOffset
-                                                               << "\n"
-                                                                  ">>>>>>>>>>>>>>>>>>>>>>>>>");
+      // Update client positions with new coordinates after each round
+      for (size_t i = 0; i < updatedPositions.size (); ++i)
+        {
+          g_clients[i]->SetX (updatedPositions[i].first);
+          g_clients[i]->SetY (updatedPositions[i].second);
+        }
 
       if (FlwrProvider && !bAsync)
         {

@@ -1,32 +1,33 @@
 # third party
 import tensorflow as tf
+import keras
 
 # To create graph functions for efficiency
 tf.config.run_functions_eagerly(True)
 tf.data.experimental.enable_debug_mode()
 
 
-class L2_norm(tf.keras.metrics.Metric):
+class L2_norm(keras.metrics.Metric):
     """
     Custom metric to track the L2 norm of weight changes during training.
 
-    Extends `tf.keras.metrics.Metric` to calculate the L2 norm difference between the initial weights and the current
+    Extends `keras.metrics.Metric` to calculate the L2 norm difference between the initial weights and the current
     weights of a model during a training round. This metric helps in monitoring the magnitude of weight updates.
 
     Attributes:
-        initial_weights: Stores the initial model weights at the start of a training round.
+        w_to: Stores the initial global model weights at the start of a training round.
         l2_norm: The calculated L2 norm of the weight differences.
 
     Methods:
         reset_state: Resets the L2 norm calculations to zero.
         result: Returns the current L2 norm value.
         update_state: Updates the L2 norm based on the current weights versus initial weights.
-        set_weight_mean: Sets the initial weights to the provided weights at the start of a training round.
+        set_global_weight_estimate: Sets the initial weights to the provided weights at the start of a training round.
     """
 
     def __init__(self, name="norm"):
         super(L2_norm, self).__init__(name=name)
-        self.initial_weights = None
+        self.w_to = None
         self.l2_norm = self.add_weight(name="l2_norm", initializer="zeros")
 
     def reset_state(self):
@@ -54,20 +55,20 @@ class L2_norm(tf.keras.metrics.Metric):
         Raises:
             ValueError: If initial weights have not been set before calling this method.
         """
-        if self.initial_weights is None:
-            raise ValueError("Call set_weight_mean() with the initial weights first.")
+        if self.w_to is None:
+            raise ValueError("Call set_global_weight_estimate() with the initial weights first.")
 
         # Calculate the squared L2 norm of the weight differences
         norm_change = tf.constant(0.0)
-        for start_w, end_w in zip(self.initial_weights, weights):
+        for start_w, end_w in zip(self.w_to, weights):
             norm_change += tf.reduce_sum(tf.square(end_w - start_w))
         self.l2_norm.assign(norm_change)
 
-    def set_weight_mean(self, weights):
+    def set_global_weight_estimate(self, weights):
         """
         Set the initial weights at the start of a training round.
 
         Args:
             weights (List[tf.Tensor]): The initial weights of the model.
         """
-        self.initial_weights = [tf.identity(w) for w in weights]
+        self.w_to = [tf.identity(w) for w in weights]

@@ -1,0 +1,7 @@
+[2024-06-16 17:58:21,843][root][INFO] - Initialized DataManager for experiment exp_20240616175821841065
+[2024-06-16 17:58:22,974][utils.model][INFO] - LeNet model built
+[2024-06-16 17:58:24,225][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-16 17:58:24,233][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-16 17:58:24,237][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-16 17:58:24,253][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-16 17:58:24,260][flwr][DEBUG] - ChannelConnectivity.READY

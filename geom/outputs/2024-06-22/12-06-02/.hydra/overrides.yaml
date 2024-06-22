@@ -1,0 +1,12 @@
+- num_clients=6
+- dataset=mnist
+- ann=lenet
+- threshold=5
+- thres_discount_factor=1.0
+- steps_threshold=500
+- flower_server_cfg.fit_cfg.batch_size=32
+- flower_server_cfg.eval_cfg.batch_size=64
+- ns3.wifi_net_template=2
+- ns3.moving_clients=False
+- non_iid=False
+- bias_template=0

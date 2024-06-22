@@ -1,0 +1,64 @@
+[2024-06-22 12:21:16,212][root][INFO] - Initialized DataManager for experiment exp_20240622_122116
+[2024-06-22 12:21:16,219][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240622_122116/info.csv
+[2024-06-22 12:21:16,221][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=3, round_timeout=None)
+[2024-06-22 12:21:16,224][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-06-22 12:21:16,224][flwr][INFO] - Initializing global parameters
+[2024-06-22 12:21:16,224][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-22 12:21:28,695][flwr][INFO] - Received initial parameters from one random client
+[2024-06-22 12:21:28,696][flwr][INFO] - Evaluating initial parameters
+[2024-06-22 12:21:28,829][utils.model][INFO] - LeNet model built
+[2024-06-22 12:21:29,039][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 12:21:29,128][utils.model][INFO] - Step 1/40 - val_loss: 2.3054 - val_accuracy: 0.1211
+[2024-06-22 12:21:29,148][utils.model][INFO] - Step 2/40 - val_loss: 2.3018 - val_accuracy: 0.1250
+[2024-06-22 12:21:29,168][utils.model][INFO] - Step 3/40 - val_loss: 2.3050 - val_accuracy: 0.1146
+[2024-06-22 12:21:29,190][utils.model][INFO] - Step 4/40 - val_loss: 2.3065 - val_accuracy: 0.1133
+[2024-06-22 12:21:29,216][utils.model][INFO] - Step 5/40 - val_loss: 2.3067 - val_accuracy: 0.1148
+[2024-06-22 12:21:29,245][utils.model][INFO] - Step 6/40 - val_loss: 2.3051 - val_accuracy: 0.1185
+[2024-06-22 12:21:29,275][utils.model][INFO] - Step 7/40 - val_loss: 2.3053 - val_accuracy: 0.1155
+[2024-06-22 12:21:29,300][utils.model][INFO] - Step 8/40 - val_loss: 2.3064 - val_accuracy: 0.1143
+[2024-06-22 12:21:29,323][utils.model][INFO] - Step 9/40 - val_loss: 2.3063 - val_accuracy: 0.1111
+[2024-06-22 12:21:29,346][utils.model][INFO] - Step 10/40 - val_loss: 2.3057 - val_accuracy: 0.1145
+[2024-06-22 12:21:29,367][utils.model][INFO] - Step 11/40 - val_loss: 2.3052 - val_accuracy: 0.1158
+[2024-06-22 12:21:29,389][utils.model][INFO] - Step 12/40 - val_loss: 2.3049 - val_accuracy: 0.1165
+[2024-06-22 12:21:29,413][utils.model][INFO] - Step 13/40 - val_loss: 2.3059 - val_accuracy: 0.1127
+[2024-06-22 12:21:29,434][utils.model][INFO] - Step 14/40 - val_loss: 2.3067 - val_accuracy: 0.1136
+[2024-06-22 12:21:29,454][utils.model][INFO] - Step 15/40 - val_loss: 2.3063 - val_accuracy: 0.1130
+[2024-06-22 12:21:29,476][utils.model][INFO] - Step 16/40 - val_loss: 2.3054 - val_accuracy: 0.1165
+[2024-06-22 12:21:29,494][utils.model][INFO] - Step 17/40 - val_loss: 2.3041 - val_accuracy: 0.1179
+[2024-06-22 12:21:29,513][utils.model][INFO] - Step 18/40 - val_loss: 2.3044 - val_accuracy: 0.1165
+[2024-06-22 12:21:29,532][utils.model][INFO] - Step 19/40 - val_loss: 2.3040 - val_accuracy: 0.1166
+[2024-06-22 12:21:29,551][utils.model][INFO] - Step 20/40 - val_loss: 2.3040 - val_accuracy: 0.1180
+[2024-06-22 12:21:29,571][utils.model][INFO] - Step 21/40 - val_loss: 2.3037 - val_accuracy: 0.1185
+[2024-06-22 12:21:29,590][utils.model][INFO] - Step 22/40 - val_loss: 2.3037 - val_accuracy: 0.1199
+[2024-06-22 12:21:29,610][utils.model][INFO] - Step 23/40 - val_loss: 2.3038 - val_accuracy: 0.1201
+[2024-06-22 12:21:29,629][utils.model][INFO] - Step 24/40 - val_loss: 2.3041 - val_accuracy: 0.1211
+[2024-06-22 12:21:29,648][utils.model][INFO] - Step 25/40 - val_loss: 2.3042 - val_accuracy: 0.1216
+[2024-06-22 12:21:29,668][utils.model][INFO] - Step 26/40 - val_loss: 2.3040 - val_accuracy: 0.1217
+[2024-06-22 12:21:29,688][utils.model][INFO] - Step 27/40 - val_loss: 2.3043 - val_accuracy: 0.1207
+[2024-06-22 12:21:29,709][utils.model][INFO] - Step 28/40 - val_loss: 2.3045 - val_accuracy: 0.1198
+[2024-06-22 12:21:29,729][utils.model][INFO] - Step 29/40 - val_loss: 2.3047 - val_accuracy: 0.1195
+[2024-06-22 12:21:29,750][utils.model][INFO] - Step 30/40 - val_loss: 2.3045 - val_accuracy: 0.1195
+[2024-06-22 12:21:29,771][utils.model][INFO] - Step 31/40 - val_loss: 2.3043 - val_accuracy: 0.1201
+[2024-06-22 12:21:29,793][utils.model][INFO] - Step 32/40 - val_loss: 2.3043 - val_accuracy: 0.1198
+[2024-06-22 12:21:29,813][utils.model][INFO] - Step 33/40 - val_loss: 2.3045 - val_accuracy: 0.1193
+[2024-06-22 12:21:29,834][utils.model][INFO] - Step 34/40 - val_loss: 2.3044 - val_accuracy: 0.1195
+[2024-06-22 12:21:29,854][utils.model][INFO] - Step 35/40 - val_loss: 2.3043 - val_accuracy: 0.1202
+[2024-06-22 12:21:29,874][utils.model][INFO] - Step 36/40 - val_loss: 2.3047 - val_accuracy: 0.1191
+[2024-06-22 12:21:29,896][utils.model][INFO] - Step 37/40 - val_loss: 2.3046 - val_accuracy: 0.1189
+[2024-06-22 12:21:29,919][utils.model][INFO] - Step 38/40 - val_loss: 2.3045 - val_accuracy: 0.1188
+[2024-06-22 12:21:29,940][utils.model][INFO] - Step 39/40 - val_loss: 2.3046 - val_accuracy: 0.1184
+[2024-06-22 12:21:29,951][utils.model][INFO] - Step 40/40 - val_loss: 2.3052 - val_accuracy: 0.1183
+[2024-06-22 12:21:29,953][utils.model][INFO] - Evaluation Results - Val Loss: 2.3052, Val Accuracy: 0.1183 in 40 steps
+[2024-06-22 12:21:29,984][flwr][INFO] - initial parameters (loss, other metrics): 2.3051724, {'accuracy': 0.1183}
+[2024-06-22 12:21:29,984][flwr][INFO] - FL starting
+[2024-06-22 12:21:56,068][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/psklavos/miniconda3/envs/thesis/lib/python3.10/site-packages/grpc/_server.py", line 599, in _take_response_from_response_iterator
+    return next(response_iterator), True
+  File "/home/psklavos/miniconda3/envs/thesis/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/flower_service_servicer.py", line 113, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+  File "/home/psklavos/miniconda3/envs/thesis/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 165, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/psklavos/miniconda3/envs/thesis/lib/python3.10/site-packages/flwr/server/fleet/grpc_bidi/grpc_bridge.py", line 81, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed

@@ -1,0 +1,10 @@
+[2024-06-21 21:23:44,961][root][INFO] - Initialized DataManager for experiment exp_20240621_212344
+[2024-06-21 21:23:44,967][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212344/info.csv
+[2024-06-21 21:23:44,968][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=3, round_timeout=None)
+[2024-06-21 21:23:44,970][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-06-21 21:23:44,970][flwr][INFO] - Initializing global parameters
+[2024-06-21 21:23:44,971][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-21 21:23:52,865][flwr][INFO] - Received initial parameters from one random client
+[2024-06-21 21:23:52,866][flwr][INFO] - Evaluating initial parameters
+[2024-06-21 21:23:52,972][utils.model][INFO] - LeNet model built
+[2024-06-21 21:23:53,150][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes

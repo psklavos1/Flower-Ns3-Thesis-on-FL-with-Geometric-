@@ -1,0 +1,8 @@
+[2024-06-20 16:49:19,507][root][INFO] - Initialized DataManager for experiment exp_20240620_164919
+[2024-06-20 16:49:19,511][root][INFO] - Added data to info for client None: {'experiment_id': 'exp_20240620_164919', 'algorithm': 'fda', 'num_clients': 3, 'dataset': 'mnist', 'ann': 'lenet', 'threshold': 5, 'thres_discount_factor': 1.0, 'steps_threshold': 500, 'train_batch_size': 32, 'eval_batch_size': 64, 'network_template': 1, 'client_mobility': True, 'non_iid': False}
+[2024-06-20 16:49:19,512][root][INFO] - Added info data: {'experiment_id': 'exp_20240620_164919', 'algorithm': 'fda', 'num_clients': 3, 'dataset': 'mnist', 'ann': 'lenet', 'threshold': 5, 'thres_discount_factor': 1.0, 'steps_threshold': 500, 'train_batch_size': 32, 'eval_batch_size': 64, 'network_template': 1, 'client_mobility': True, 'non_iid': False}
+[2024-06-20 16:49:19,513][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240620_164919/info.csv
+[2024-06-20 16:49:19,514][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=5, round_timeout=None)
+[2024-06-20 16:49:19,517][flwr][INFO] - Flower ECE: gRPC server running (5 rounds), SSL is disabled
+[2024-06-20 16:49:19,518][flwr][INFO] - Initializing global parameters
+[2024-06-20 16:49:19,519][flwr][INFO] - Requesting initial parameters from one random client

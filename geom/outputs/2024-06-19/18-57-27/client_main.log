@@ -1,0 +1,27 @@
+[2024-06-19 18:57:28,800][utils.model][INFO] - LeNet model built
+[2024-06-19 18:57:29,268][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-19 18:57:29,279][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-19 18:57:29,282][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-19 18:57:29,297][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-19 18:57:29,458][utils.model][INFO] - LeNet model built
+[2024-06-19 18:57:29,747][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-19 18:57:29,756][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-19 18:57:29,759][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-19 18:57:29,763][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-19 18:57:29,764][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-19 18:57:35,381][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 18:57:35,383][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 18:57:35,876][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 0.4915 - Mean loss: 2.3058 - acc: 0.0938 - norm: 0.19 - 2.31s
+[2024-06-19 18:57:35,876][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 0.4939 - Mean loss: 2.3105 - acc: 0.1250 - norm: 0.18 - 2.31s
+[2024-06-19 18:57:36,385][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.0001 - Mean loss: 2.1854 - acc: 0.2557 - norm: 1.63 - 1.93s
+[2024-06-19 18:57:36,385][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.0024 - Mean loss: 2.1454 - acc: 0.2898 - norm: 1.82 - 1.81s
+[2024-06-19 18:57:36,854][utils.model][INFO] - (In epoch/Overall): (21/21)| inst_loss: 1.4716 - Mean loss: 1.9207 - acc: 0.3810 - norm: 3.86 - 1.47s
+[2024-06-19 18:57:36,855][utils.model][INFO] - (In epoch/Overall): (21/21)| inst_loss: 1.4699 - Mean loss: 1.9694 - acc: 0.3646 - norm: 4.04 - 1.34s
+[2024-06-19 18:57:37,101][utils.model][INFO] - Epoch Results:
+[2024-06-19 18:57:37,101][utils.model][INFO] - Epoch Results:
+[2024-06-19 18:57:37,104][utils.model][INFO] - (In epoch/Overall): (26/26)| inst_loss: 0.9580 - Mean loss: 1.8159 - acc: 0.4267 - norm: 5.35 - 1.72s
+[2024-06-19 18:57:37,104][utils.model][INFO] - (In epoch/Overall): (26/26)| inst_loss: 1.1612 - Mean loss: 1.7898 - acc: 0.4279 - norm: 5.02 - 1.72s
+[2024-06-19 18:57:38,818][utils.model][INFO] - Evaluation Results - Val Loss: 1.2329, Val Accuracy: 0.6850 in 32 steps
+[2024-06-19 18:57:38,818][utils.model][INFO] - Evaluation Results - Val Loss: 1.2159, Val Accuracy: 0.7160 in 32 steps
+[2024-06-19 18:57:39,822][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-19 18:57:39,822][flwr][DEBUG] - ChannelConnectivity.IDLE

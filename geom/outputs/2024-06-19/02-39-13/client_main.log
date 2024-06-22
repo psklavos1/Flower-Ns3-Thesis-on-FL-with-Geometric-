@@ -1,0 +1,12 @@
+[2024-06-19 02:39:14,659][utils.model][INFO] - LeNet model built
+[2024-06-19 02:39:14,982][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-19 02:39:14,998][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-19 02:39:14,999][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-19 02:39:15,006][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-19 02:39:20,481][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-19 02:39:20,948][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 2.2857 - Mean loss: 2.2857 - acc: 0.0312 - norm: 0.19 - 0.47s
+[2024-06-19 02:39:21,433][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.9868 - Mean loss: 2.1541 - acc: 0.2301 - norm: 2.24 - 0.95s
+[2024-06-19 02:39:21,910][utils.model][INFO] - Epoch Results:
+[2024-06-19 02:39:21,914][utils.model][INFO] - (In epoch/Overall): (20/20)| inst_loss: 1.6296 - Mean loss: 1.9623 - acc: 0.3375 - norm: 4.71 - 1.43s
+[2024-06-19 02:39:23,569][utils.model][INFO] - Evaluation Results - Val Loss: 1.4376, Val Accuracy: 0.6140 in 32 steps
+[2024-06-19 02:40:33,299][utils.model][INFO] - ========================== Epoch Start ==========================

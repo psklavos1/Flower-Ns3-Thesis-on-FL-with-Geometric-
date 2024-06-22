@@ -35,9 +35,29 @@
 //                                   ================
 //                                     LAN 10.1.2.0
 
+// Default Network Topology
+//
+//           WIFI 192.168.3.0
+//        AP
+//        *       *    *    *
+// srvr   |       |    |    |
+//  no   n1      n2   n3   n4
+//   |    |
+//   =======
+// CSMA 192.168.1.0
+//
+//                                 
 using namespace ns3;
 
 NS_LOG_COMPONENT_DEFINE ("ThirdScriptExample");
+void
+Monitor (std::string context, Ptr<const Packet> pkt, uint16_t channel, WifiTxVector tx,
+         MpduInfo mpdu, SignalNoiseDbm snr)
+{
+  std::cout << context << std::endl;
+  std::cout << "\tChannel: " << channel << "Tx: " << tx.GetMode () << "\tSignal= " << snr.signal
+            << "\tNoise: " << snr.noise << std::endl;
+}
 
 int
 main (int argc, char *argv[])
@@ -166,6 +186,8 @@ main (int argc, char *argv[])
   Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
 
   Simulator::Stop (Seconds (10.0));
+  Config::Connect ("/NodeList/*/DeviceList/*/$ns3::WifiNetDevice/Phy/MonitorSnifferRx",
+                   MakeCallback (&Monitor));
 
   if (tracing)
     {
@@ -174,7 +196,6 @@ main (int argc, char *argv[])
       phy.EnablePcap ("third", apDevices.Get (0));
       csma.EnablePcap ("third", csmaDevices.Get (0), true);
     }
-
   Simulator::Run ();
   Simulator::Destroy ();
   return 0;

@@ -1,5 +1,7 @@
+import time
+
 # third party
-from tensorflow import keras
+import keras
 
 # local
 from protos import metric_service_pb2
@@ -8,7 +10,7 @@ from utils.model import CustomModel
 
 class CustomCallback(keras.callbacks.Callback):
     """
-    @extends tensorflow.keras.callbacks.Callback
+    @extends keras.callbacks.Callback
     Custom callbacks implemetations to use in client side during training
 
     Methods:
@@ -31,14 +33,18 @@ class CustomCallback(keras.callbacks.Callback):
             logs (Any): passed to repclicate a state. Could be a dict of metrics or something else that neeeds processing.
         """
 
-        l2_norm = self.model.train_l2_norm.result()
+        start_time = time.perf_counter()
 
+        l2_norm = self.model.train_l2_norm.result()
         # Send the metric to the server and get the response
-        stub = self.model.stub
-        response = stub.SendMetricAndWait(
+        response = self.model.stub.SendMetricAndWait(
             metric_service_pb2.MetricRequest(l2_norm=l2_norm)
         )
+
         # Determine if the round has been stopped
         if response.stop_round:
             print("Round Stopped")
             self.model.stop_training = True
+
+        logs["rtc_check_time"] = time.perf_counter() - start_time
+        logs["batch_time"] += logs["rtc_check_time"]

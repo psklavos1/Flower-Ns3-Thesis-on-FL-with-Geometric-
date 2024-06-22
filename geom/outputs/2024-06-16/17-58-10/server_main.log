@@ -1,0 +1,7 @@
+[2024-06-16 17:58:15,101][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=5, round_timeout=None)
+[2024-06-16 17:58:15,104][flwr][INFO] - Flower ECE: gRPC server running (5 rounds), SSL is disabled
+[2024-06-16 17:58:15,104][flwr][INFO] - Initializing global parameters
+[2024-06-16 17:58:15,104][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-16 17:58:24,514][flwr][INFO] - Received initial parameters from one random client
+[2024-06-16 17:58:24,550][flwr][INFO] - Evaluating initial parameters
+[2024-06-16 17:58:26,844][utils.model][INFO] - LeNet model built

@@ -1,0 +1,85 @@
+server_address: 0.0.0.0:8090
+metric_server_address: 127.0.0.1:8091
+dataset: mnist
+ann: lenet
+num_clients: 2
+steps_threshold: 500
+non_iid: false
+bias_template: default
+ns3:
+  wifi_net_template: 2
+  moving_clients: false
+  tcp_ip: 127.0.0.1
+  port: 8080
+  path: ../../ns-3.35/
+  program: wifi_exp
+  visualize: false
+  network_type: wifi
+  network:
+    wifi:
+      tx_gain: 0
+      max_packet_size: 1024
+    ethernet:
+      max_packet_size: 1024
+  dataset: ${dataset}
+  ann: ${ann}
+  model_sizes:
+    mnist:
+      vgg: 0
+      resnet: 0
+      alexnet: 111434
+      lenet: 279
+      default: 1387
+    fashion_mnist:
+      vgg: 0
+      resnet: 0
+      alexnet: 111434
+      lenet: 279
+      default: 1932
+    cifar10:
+      vgg: 131473
+      resnet: 92677
+      alexnet: 140110
+      lenet: 363
+      default: 5040
+    cifar100:
+      vgg: 132913
+      resnet: 93397
+      alexnet: 141551
+      lenet: 392
+      default: 69739
+  device_type: '400'
+  server: sync
+threshold: 5
+thres_discount_factor: 1.0
+flower_server_cfg:
+  dataset: ${dataset}
+  ann: ${ann}
+  num_clients: ${num_clients}
+  wifi_net_template: ${ns3.wifi_net_template}
+  moving_clients: ${ns3.moving_clients}
+  non_iid: ${non_iid}
+  bias_template: ${bias_template}
+  flower_server_address: ${server_address}
+  metric_server_address: ${metric_server_address}
+  num_rounds: 5
+  wait_ns3_establishment: 4
+  clients:
+    total: ${num_clients}
+    for_fit: ${num_clients}
+    for_eval: ${num_clients}
+  fit_cfg:
+    epochs: 1
+    verbose: 2
+    batch_size: 32
+  eval_cfg:
+    verbose: 0
+    batch_size: 64
+  threshold: ${threshold}
+  thres_discount_factor: ${thres_discount_factor}
+  steps_threshold: ${steps_threshold}
+metric_server_cfg:
+  threshold: ${threshold}
+  thres_discount_factor: ${thres_discount_factor}
+  thread_max_workers: 30
+  metric_server_address: ${metric_server_address}

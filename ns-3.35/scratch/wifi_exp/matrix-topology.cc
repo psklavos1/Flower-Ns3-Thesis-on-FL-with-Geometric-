@@ -74,19 +74,10 @@ printCoordinates (vector<vector<double>> coord_array)
                 }
               else
                 {
-<<<<<<< Updated upstream
-
-                  std::cout << "Client_" << i << ": (" << std::setw (6) << std::left
-                            << coord_array[i][0] << ", " << std::setw (6) << std::left
-                            << coord_array[i][1] << ") " << std::setw (20) << std::right
-                            << "-> Distance From Server: " << std::setw (6) << std::left
-                            << getDistance (coord_array[i], coord_array[0]) << "\n";
-=======
                   cout << "Client_" << i - 1 << ": (" << setw (6) << left << coord_array[i][0]
                        << ", " << setw (6) << left << coord_array[i][1] << ") " << setw (20)
                        << right << "-> Distance From Server: " << setw (6) << left
                        << getDistance (coord_array[i], coord_array[0]) << "\n";
->>>>>>> Stashed changes
                 }
             }
         }
@@ -128,20 +119,7 @@ readDataRates (std::string filename, int numEntries)
 void
 printDataRates (std::vector<std::string> dataRates)
 {
-<<<<<<< Updated upstream
-  printf ("===================== Data Rates =====================\n");
-  if (dataRates != NULL)
-    {
-      for (int i = 0; i < numEntries; i++)
-        {
-          printf ("%s\n", dataRates[i]);
-        }
-    }
-  printf ("======================================================\n");
-}
-=======
   std::cout << "===================== Data Rates =====================\n";
->>>>>>> Stashed changes
 
   for (size_t i = 0; i < dataRates.size (); ++i)
     {

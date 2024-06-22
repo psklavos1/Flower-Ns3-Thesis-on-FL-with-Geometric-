@@ -1,0 +1,6 @@
+[2024-06-22 17:44:25,582][utils.model][INFO] - LeNet model built
+[2024-06-22 17:44:25,952][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-22 17:44:25,963][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-22 17:44:25,965][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-22 17:44:25,968][flwr][DEBUG] - ChannelConnectivity.TRANSIENT_FAILURE
+[2024-06-22 17:44:26,171][flwr][DEBUG] - gRPC channel closed

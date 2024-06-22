@@ -1,32 +1,49 @@
+
 defaults:
   - common
   - network
+  - _self_ 
+
+threshold: 5  # * =================== EXPERIMENT VAR ===================
+thres_discount_factor: 1.0  # * =================== EXPERIMENT VAR ===================
 
 # Configuration to be passed to flower server side
 flower_server_cfg:
+  dataset: ${dataset}
+  ann: ${ann}
+  num_clients: ${num_clients}
+  wifi_net_template: ${ns3.wifi_net_template}
+  moving_clients: ${ns3.moving_clients}
+  non_iid: ${non_iid}
+  bias_template: ${bias_template}
+
   flower_server_address: ${server_address}
   metric_server_address: ${metric_server_address}
-  num_rounds: 20
+  num_rounds: 3 # * =================== EXPERIMENT VAR ===================
 
   wait_ns3_establishment: 4 # Time in sleep to setup ns3 before attempting to connect
 
   clients: 
     total: ${num_clients}
-    for_fit: 3
-    for_eval: 2
+    for_fit: ${num_clients}  # * =================== EXPERIMENT VAR ===================
+    for_eval: ${num_clients} # * =================== EXPERIMENT VAR ===================
 
   fit_cfg: 
     epochs: 1
     verbose: 2
-    batch_size: 32
+    batch_size: 32 # * =================== EXPERIMENT VAR ===================
 
   eval_cfg: 
-    verbose: 1
-    batch_size: 64
+    verbose: 0
+    batch_size: 64 # * =================== EXPERIMENT VAR ===================
+  
+  threshold: ${threshold}
+  thres_discount_factor: ${thres_discount_factor}
+  steps_threshold: ${steps_threshold}
 
 # Configuration to be passed metric tracking server side
 metric_server_cfg:
-  threshold: 25
-  thres_discount_factor: 0.9
-  thread_max_workers: 10
+  threshold: ${threshold}
+  thres_discount_factor: ${thres_discount_factor}
+  thread_max_workers: 30 # experiment with value
   metric_server_address: ${metric_server_address}

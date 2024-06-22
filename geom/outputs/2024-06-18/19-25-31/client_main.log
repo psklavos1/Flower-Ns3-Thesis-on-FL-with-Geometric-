@@ -1,0 +1,26 @@
+[2024-06-18 19:25:31,392][root][INFO] - Initialized DataManager for experiment exp_20240618192531390091
+[2024-06-18 19:25:32,484][utils.model][INFO] - LeNet model built
+[2024-06-18 19:25:32,904][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-18 19:25:32,914][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-18 19:25:32,918][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-18 19:25:32,919][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-18 19:25:32,947][utils.model][INFO] - LeNet model built
+[2024-06-18 19:25:33,255][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-18 19:25:33,410][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-18 19:25:33,419][flwr][INFO] - Opened insecure gRPC connection (no certificates were passed)
+[2024-06-18 19:25:33,422][flwr][DEBUG] - ChannelConnectivity.IDLE
+[2024-06-18 19:25:33,424][flwr][DEBUG] - ChannelConnectivity.CONNECTING
+[2024-06-18 19:25:33,425][flwr][DEBUG] - ChannelConnectivity.READY
+[2024-06-18 19:25:42,018][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-18 19:25:42,019][utils.model][INFO] - ========================== Epoch Start ==========================
+[2024-06-18 19:25:42,389][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 2.2997 - Mean loss: 2.2997 - acc: 0.0938 - norm: 0.20 - 0.37s
+[2024-06-18 19:25:42,389][utils.model][INFO] - (In epoch/Overall): (1/1)| inst_loss: 2.2977 - Mean loss: 2.2977 - acc: 0.1875 - norm: 0.22 - 0.37s
+[2024-06-18 19:25:42,881][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.8511 - Mean loss: 2.1203 - acc: 0.2898 - norm: 1.81 - 0.86s
+[2024-06-18 19:25:42,881][utils.model][INFO] - (In epoch/Overall): (11/11)| inst_loss: 1.8861 - Mean loss: 2.1517 - acc: 0.2955 - norm: 1.86 - 0.86s
+[2024-06-18 19:25:43,401][utils.model][INFO] - (In epoch/Overall): (21/21)| inst_loss: 1.3880 - Mean loss: 1.8847 - acc: 0.4033 - norm: 4.32 - 1.38s
+[2024-06-18 19:25:43,402][utils.model][INFO] - (In epoch/Overall): (21/21)| inst_loss: 1.4332 - Mean loss: 1.8875 - acc: 0.3958 - norm: 4.08 - 1.38s
+[2024-06-18 19:25:43,682][utils.model][INFO] - Epoch Results:
+[2024-06-18 19:25:43,686][utils.model][INFO] - (In epoch/Overall): (26/26)| inst_loss: 1.0973 - Mean loss: 1.7836 - acc: 0.4435 - norm: 5.23 - 1.67s
+[2024-06-18 19:25:43,685][utils.model][INFO] - Epoch Results:
+[2024-06-18 19:25:43,689][utils.model][INFO] - (In epoch/Overall): (26/26)| inst_loss: 1.1498 - Mean loss: 1.7755 - acc: 0.4363 - norm: 5.21 - 1.67s
+[2024-06-18 19:25:43,750][flwr][DEBUG] - gRPC channel closed

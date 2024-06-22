@@ -1,0 +1,6 @@
+[2024-06-21 18:13:34,786][root][INFO] - Initialized DataManager for experiment exp_20240621_181334
+[2024-06-21 18:13:34,793][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_181334/info.csv
+[2024-06-21 18:13:34,795][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=5, round_timeout=None)
+[2024-06-21 18:13:34,798][flwr][INFO] - Flower ECE: gRPC server running (5 rounds), SSL is disabled
+[2024-06-21 18:13:34,798][flwr][INFO] - Initializing global parameters
+[2024-06-21 18:13:34,798][flwr][INFO] - Requesting initial parameters from one random client

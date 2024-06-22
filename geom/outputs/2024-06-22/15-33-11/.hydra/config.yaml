@@ -1,0 +1,12 @@
+server_address: 0.0.0.0:8090
+metric_server_address: 127.0.0.1:8091
+dataset: mnist
+ann: lenet
+num_clients: 12
+steps_threshold: 500
+non_iid: false
+bias_template: 0
+partition_id: 8
+val_ratio: 0.1
+train_val_ratio: 0.0
+keep_log: false

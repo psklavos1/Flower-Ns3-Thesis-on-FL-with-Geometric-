@@ -1,4 +1,4 @@
-/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+ /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2022 Emily Ekaireb
  *
@@ -66,14 +66,6 @@ namespace ns3
     virtual void StartApplication (void);  //Called when application starts
     virtual void StopApplication (void);   //Called at the end of simulation
 
-<<<<<<< Updated upstream
-    /**
-     * \brief Begins the process of sending the model to the server
-     */
-    void StartWriting ();
-
-=======
->>>>>>> Stashed changes
     /**
      * \brief Callback function for when a connection to remote host succeeds,
      * used to trigger receiving for model from server

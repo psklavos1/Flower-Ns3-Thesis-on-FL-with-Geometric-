@@ -1,6 +1,10 @@
+
 ns3:
+  # Wifi speed templates: 0: slow, 1: home device speed, 2: high speed network
+  wifi_net_template: 1 # * =================== EXPERIMENT VAR ===================
+  moving_clients: False # * =================== EXPERIMENT VAR ===================
   tcp_ip: "127.0.0.1"
-  port: 8080
+  port: 9090
   path: "../../ns-3.35/"
   program: "wifi_exp"
   visualize: False # To Run PyVis for replication(Not working well in parallel with sim. Prefer NetAnim)
@@ -11,17 +15,35 @@ ns3:
       max_packet_size: 1024
     ethernet:
       max_packet_size: 1024
-  model_type: ${dataset} # Used merged in server.yaml to load together. 
+
+  dataset: ${dataset}
+  ann: ${ann} # Used merged in server.yaml to load together. 
   
-  model: # Approximation of serialized model sizes
+  model_sizes: # Serialized model sizes
     mnist:
-      size: 1400.00
+      vgg: 0
+      resnet: 0
+      alexnet: 111434
+      lenet: 279
+      default: 1387
     fashion_mnist:
-      size: 2000.00
+      vgg: 0
+      resnet: 0
+      alexnet: 111434
+      lenet: 279
+      default: 1932
     cifar10:
-      size: 5000.00
+      vgg: 131473
+      resnet: 92677
+      alexnet: 140110
+      lenet: 363
+      default: 5040
     cifar100:
-      size: 70000.00
+      vgg: 132913
+      resnet: 93397
+      alexnet: 141551
+      lenet: 392
+      default: 69739
   
   # Not being utilized currently
   device_type: "400"

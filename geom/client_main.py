@@ -3,6 +3,8 @@ import flwr as fl
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
+from pathlib import Path
+
 # local
 from client.client import FlexibleClient
 
@@ -19,8 +21,12 @@ def client_main(cfg: DictConfig):
             num_clients=cfg.num_clients,
             partition_id=cfg.partition_id,
             ds_name=cfg.dataset,
+            ann_name=cfg.ann,
             non_iid=cfg.non_iid,
             bias_template=cfg.bias_template,
+            val_ratio=cfg.val_ratio,
+            train_val_ratio=cfg.train_val_ratio,
+            keep_log=cfg.keep_log,
         ).to_client(),  # <-- where FlowerClient is of type flwr.client.NumPyClient object
     )
 

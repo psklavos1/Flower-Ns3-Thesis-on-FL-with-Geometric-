@@ -7,9 +7,9 @@ hydra:
     root:
       handlers: null  # This will disable logging to files
 
-minX: 10
-maxX: 140
-minY: 15
-maxY: 90
+minX: 25
+maxX: 85
+minY: 25
+maxY: 85
 output_path: "./node_coordinates.txt"
-num_nodes: 20
+num_nodes: 21

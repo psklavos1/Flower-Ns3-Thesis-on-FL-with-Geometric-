@@ -25,6 +25,7 @@ class Network(object):
     def __init__(self, config: Dict[str, Any], client_cfg: Dict[str, Any]):
         # Class variables extracted from config
         self.tcp_ip = config.tcp_ip
+        self.wifi_net_template = config.wifi_net_template
         self.port = config.port
         self.path = config.path
         self.program = config.program
@@ -32,7 +33,10 @@ class Network(object):
         self.clients_for_fit = client_cfg.for_fit
         self.network_type = config.network_type
         self.server_type = config.server
-        self.model_type = config.model_type
+        self.dataset = config.dataset
+        self.ann = config.ann
+        self.moving_clients = config.moving_clients
+
         self.device_type = config.device_type
         self.net_cfg = (
             config.network.wifi
@@ -40,16 +44,14 @@ class Network(object):
             else self.config.network.ethernet
         )
 
-        if config.model_type == "mnist":
-            self.model_size = config.model.mnist.size
-        elif config.model_type == "fashion_mnist":
-            self.model_size = config.model.fashion_mnist.size
-        elif config.model_type == "cifar10":
-            self.model_size = config.model.cifar10.size
-        elif config.model_type == "cifar100":
-            self.model_size = config.model.cifar100.size
-        else:
-            raise ValueError(f"Error Server Config for model type {config.model_type}")
+        if self.dataset not in config.model_sizes:
+            raise ValueError(
+                f"Error Server Config for Dataset {self.dataset} and ANN: {self.ann}"
+            )
+
+        model_sizes = config.model_sizes[self.dataset]
+        self.model_size = model_sizes.get(self.ann, model_sizes["default"])
+        print(f"Model size for {self.dataset} with {self.ann}: {self.model_size}")
 
     # =====================================================================================================================
     # * Utility functions *
@@ -74,7 +76,7 @@ class Network(object):
         if not self._is_configured():
             print("Project configure")
             proc = subprocess.Popen(
-                "./waf configure",
+                "./waf configure --build-profile=optimized",
                 shell=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -100,72 +102,15 @@ class Network(object):
 
             print("Configure complete!\n\n\n")
 
-        print("Wait For Buld to Complete. Might take a while\n")
-        proc = subprocess.Popen(
-            "./waf build",
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            universal_newlines=True,
-            cwd=self.path,
-        )
-        # Read and print output and errors
-        while True:
-            output = proc.stdout.readline()
-            if output == "" and proc.poll() is not None:
-                break
-            if output:
-                print(output.strip())
-
-        rc = proc.poll()
-        print(f"Process exited with code {rc}")
-
-        proc.wait()
-
-        if proc.returncode != 0:
-            print("A problem occured while building")
-            exit(-1)
-
-        print("Build complete!\n\n\n", flush=True)
-
-        command = (
-            './waf -v --run "'
-            + self.program
-            + " --numClients="
-            + str(self.num_clients)
-            + " --networkType="
-            + self.network_type
-        )
-
-        command += " --modelSize=" + str(self.model_size)
-
-        """print(self.config.network)
-        for net in self.config.network:s
-            if net == self.network_type:
-                print(net.items())"""
-
-        if self.network_type == "wifi":
-            command += " --txGain=" + str(self.net_cfg.tx_gain)
-            command += " --maxPacketSize=" + str(self.net_cfg.max_packet_size)
-        else:  # else assume ethernet
-            command += " --maxPacketSize=" + str(self.net_cfg.max_packet_size)
-
-        command += " --learningModel=" + str(self.server_type)
-        command += " --deviceType=" + str(self.device_type)
-        command += " --modelType=" + str(self.model_type)
-
-        command += '" --vis' if visualize else '"'
-        title = "NS3"
-        print(f"Command to execute: {command}")
-        terminal_command = f"gnome-terminal --title={title} -- {command}"
-
-        proc = subprocess.Popen(
-            terminal_command,
-            shell=True,
-            cwd=self.path,
-        )
-
-<<<<<<< Updated upstream
+        # print("Wait For Buld to Complete. Might take a while\n")
+        # proc = subprocess.Popen(
+        #     "./waf build",
+        #     shell=True,
+        #     stdout=subprocess.PIPE,
+        #     stderr=subprocess.PIPE,
+        #     universal_newlines=True,
+        #     cwd=self.path,
+        # )
         # # Read and print output and errors
         # while True:
         #     output = proc.stdout.readline()
@@ -177,19 +122,67 @@ class Network(object):
         # rc = proc.poll()
         # print(f"Process exited with code {rc}")
 
+        # proc.wait()
+
         # if proc.returncode != 0:
-        #     print("Error Occured executing command")
+        #     print("A problem occured while building")
         #     exit(-1)
 
-        # print("Execution completed successfully")
+        # print("Build complete!\n\n\n", flush=True)
+        moving_clients_str = "true" if self.moving_clients else "false"
+        command = (
+            './waf --run "'
+            + self.program
+            + " --numClients="
+            + str(self.num_clients)
+            + " --networkType="
+            + self.network_type
+            + " --movingClients="
+            + str(moving_clients_str)
+            + " --modelSize="
+            + str(self.model_size)
+            + " --wifiNetTemplate="
+            + str(self.wifi_net_template)
+        )
 
-    def is_configured(self) -> bool:
-=======
+        """print(self.config.network)
+        for net in self.config.network:
+            if net == self.network_type:
+                print(net.items())"""
+
+        if self.network_type == "wifi":
+            command += " --txGain=" + str(self.net_cfg.tx_gain)
+            command += " --maxPacketSize=" + str(self.net_cfg.max_packet_size)
+        else:  # else assume ethernet
+            command += " --maxPacketSize=" + str(self.net_cfg.max_packet_size)
+
+        command += (
+            " --learningModel="
+            + str(self.server_type)
+            + " --deviceType="
+            + str(self.device_type)
+            + " --modelType="
+            + str(self.dataset)
+        )
+
+        command += '" --vis ' if visualize else '"'
+        title = "NS3"
+        print(f"Command to execute: {command}")
+
+        terminal_command = f"screen -dmS NS3 bash -c '{command}; echo \"Press any key to close...\"; read -n 1'"
+
+        # terminal_command = f"gnome-terminal --title={title} -- bash -c '{command}; echo \"Press any key to close...\"; read -n 1'"
+
+        proc = subprocess.Popen(
+            terminal_command,
+            shell=True,
+            cwd=self.path,
+        )
+
     def _is_configured(self) -> bool:
         """
         Check if waf is configured.
         """
->>>>>>> Stashed changes
         # Path to a file or directory that indicates configuration is done
         config_marker = os.path.join(self.path, "build/config.log")
 
@@ -216,18 +209,17 @@ class Network(object):
 
     # =====================================================================================================================
     # * Communication Interface Methods *
-
     def connect(self):
-        """
-        Try to establish socket connection with Ns3.
-        """
-        print(f"Ns3_connect(): Tcp Ip: {self.tcp_ip}, Port: {self.port}")
-        self.socket = socket.create_connection(
-            (
-                self.tcp_ip,
-                self.port,
-            )
-        )
+        try:
+            print(f"Attempting to connect to NS3 at {self.tcp_ip}:{self.port}")
+            self.socket = socket.create_connection((self.tcp_ip, self.port))
+            print(f"Successfully connected to NS3 at {self.tcp_ip}:{self.port}")
+        except ConnectionRefusedError as e:
+            print(f"ConnectionRefusedError: Failed to connect to NS3 at {self.tcp_ip}:{self.port} - {e}")
+            raise
+        except Exception as e:
+            print(f"Unexpected error occurred while connecting to NS3 at {self.tcp_ip}:{self.port} - {e}")
+            raise
 
     def sendRequest(self, requestType: int, array: list) -> Dict[int, Dict[str, float]]:
         """
@@ -259,12 +251,19 @@ class Network(object):
         command, nItems = struct.unpack("II", resp)
         ret = {}
         for i in range(nItems):
-            dr = self.socket.recv(8 * 5)
-            eid, throughput, downlinkTime,computationTime, uplinkTime,  = struct.unpack(
-                "Qdddd", dr
-            )
-            
-            temp = {"downlinkTime": downlinkTime, "computationTime": computationTime,"uplinkTime": uplinkTime, "throughput": throughput}
+            dr = self.socket.recv(8 * 4)
+            (
+                eid,
+                throughput,
+                downlinkTime,
+                uplinkTime,
+            ) = struct.unpack("Qddd", dr)
+
+            temp = {
+                "downlinkTime": downlinkTime,
+                "uplinkTime": uplinkTime,
+                "throughput": throughput,
+            }
             ret[eid] = temp
         print("Response received")
 

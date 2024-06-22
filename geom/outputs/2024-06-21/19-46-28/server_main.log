@@ -1,0 +1,12 @@
+[2024-06-21 19:46:33,528][root][INFO] - Initialized DataManager for experiment exp_20240621_194633
+[2024-06-21 19:46:33,536][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_194633/info.csv
+[2024-06-21 19:46:33,538][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=5, round_timeout=None)
+[2024-06-21 19:46:33,540][flwr][INFO] - Flower ECE: gRPC server running (5 rounds), SSL is disabled
+[2024-06-21 19:46:33,540][flwr][INFO] - Initializing global parameters
+[2024-06-21 19:46:33,540][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-21 19:46:38,759][flwr][INFO] - Received initial parameters from one random client
+[2024-06-21 19:46:38,759][flwr][INFO] - Evaluating initial parameters
+[2024-06-21 19:46:38,869][utils.model][INFO] - LeNet model built
+[2024-06-21 19:46:39,077][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-21 19:46:39,138][utils.model][INFO] - Step 1/40 - val_loss: 2.3040 - val_accuracy: 0.0859
+[2024-06-21 19:46:39,162][utils.model][INFO] - Step 2/40 - val_loss: 2.3022 - val_accuracy: 0.0820

@@ -126,12 +126,15 @@ Server::StartApplication () // Called at time specified by Start
         {
           NS_FATAL_ERROR ("Failed to bind socket");
         }
+
       if (m_socket->Listen () == -1)
         {
           NS_FATAL_ERROR ("Failed to listen socket");
         }
+      // NS_LOG_UNCOND ("Accept is called from server " << Simulator::Now ().GetSeconds () << "s");
     }
 
+  NS_LOG_UNCOND ("Server Starts " << Simulator::Now ().GetSeconds () << "s");
   m_socket->SetRecvCallback (MakeCallback (&Server::ReceivedDataCallback, this));
   m_socket->SetAcceptCallback (MakeCallback (&Server::ConnectionRequestCallback, this),
                                MakeCallback (&Server::NewConnectionCreatedCallback, this));
@@ -185,7 +188,7 @@ Server::NewConnectionCreatedCallback (Ptr<Socket> socket, const Address &from)
 
   StartSendingModel (socket);
 
-  NS_LOG_UNCOND ("Accept:" << m_clientSessionManager->ResolveToIdFromServer (socket));
+  // NS_LOG_UNCOND ("Accept:" << m_clientSessionManager->ResolveToIdFromServer (socket));
 
   Ptr<Packet> packet;
   while ((packet = socket->Recv ()))
@@ -230,9 +233,11 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
       if (itr->second->m_bytesModelToReceive == 0)
         {
-          // NS_LOG_UNCOND ("Received whole model from client");
-
           itr->second->m_timeEndReceivingModelFromClient = Simulator::Now ();
+
+          NS_LOG_UNCOND ("Received whole model from client: "
+                         << m_clientSessionManager->ResolveToIdFromServer (socket) << " at "
+                         << itr->second->m_timeEndReceivingModelFromClient.GetSeconds () << "s");
 
           auto endUplink = itr->second->m_timeEndReceivingModelFromClient.GetSeconds () +
                            m_timeOffset.GetSeconds ();
@@ -243,19 +248,22 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
           auto endDownlink =
               itr->second->m_timeEndSendingModelToClient.GetSeconds () + m_timeOffset.GetSeconds ();
 
-          auto energy = FLEnergy ();
-          // NS_LOG_UNCOND ("To Setup ");
+          // Not using energy in thiis experiment
+          // auto energy = FLEnergy ();
+          // // NS_LOG_UNCOND ("To Setup ");
 
-          energy.SetDeviceType (m_deviceType);
-          energy.SetLearningModel (m_modelType);
-          energy.SetEpochs (1);
-          double compEnergy = energy.CalcComputationalEnergy (beginUplink - endDownlink);
-          double tranEnergy = energy.CalcTransmissionEnergy (endUplink - beginUplink);
+          // energy.SetDeviceType (m_deviceType);
+          // energy.SetLearningModel (m_modelType);
+          // energy.SetEpochs (1);
+          // double compEnergy = energy.CalcComputationalEnergy (beginUplink - endDownlink);
+          // double tranEnergy = energy.CalcTransmissionEnergy (endUplink - beginUplink);
           // Uncomment to see energy consumption
           // NS_LOG_UNCOND ("Energy: " << energy.GetA ());
-          fprintf (m_fp, "%i,%u,%f,%f,%f,%f,%f,%f\n", m_round,
-                   m_clientSessionManager->ResolveToIdFromServer (socket), beginUplink, endUplink,
-                   beginDownlink, endDownlink, compEnergy, tranEnergy);
+          fprintf (m_fp,
+                   "Round: %i, Id: %u, beginUplink: %f, endUplink: %f, beginDownlink "
+                   "%f,endDownlink: %f,\n",
+                   m_round, m_clientSessionManager->ResolveToIdFromServer (socket), beginUplink,
+                   endUplink, beginDownlink, endDownlink);
           fflush (m_fp);
 
           if (m_bAsync)
@@ -314,57 +322,10 @@ Server::ReceivedDataCallback (Ptr<Socket> socket)
 
       socket->GetSockName (localAddress);
     }
-  // NS_LOG_UNCOND ("Out of loop");
 }
 
 void
-<<<<<<< Updated upstream
-Server::HandlePeerClose (Ptr<Socket> socket)
-{
-  NS_LOG_FUNCTION (this << socket);
-}
-
-void
-Server::HandlePeerError (Ptr<Socket> socket)
-{
-  NS_LOG_FUNCTION (this << socket);
-}
-
-bool
-Server::ConnectionRequestCallback (Ptr<Socket> socket, const Address &address)
-{
-  NS_LOG_FUNCTION (this << socket << address);
-  return true;
-}
-
-void
-Server::NewConnectionCreatedCallback (Ptr<Socket> socket, const Address &from)
-{
-  NS_LOG_FUNCTION (this << socket << from);
-  auto clientSession = std::make_shared<ClientSessionData> ();
-
-  auto nsess = m_socketList.insert (std::make_pair (socket, clientSession));
-  nsess.first->second->m_address = from;
-  socket->SetRecvCallback (MakeCallback (&Server::ReceivedDataCallback, this));
-  StartSendingModel (socket);
-
-  NS_LOG_UNCOND ("Accept:" << m_clientSessionManager->ResolveToIdFromServer (socket));
-
-  Ptr<Packet> packet;
-  while ((packet = socket->Recv ()))
-    {
-      if (packet->GetSize () == 0)
-        {
-          break; // EOF
-        }
-    }
-}
-
-void
-Server::ServerHandleSend (Ptr<Socket> socket, uint32_t available)
-=======
 Server::HandleReadytoSend (Ptr<Socket> socket, uint32_t available)
->>>>>>> Stashed changes
 {
   m_socket->SetSendCallback (MakeNullCallback<void, Ptr<Socket>, uint32_t> ());
 
@@ -384,7 +345,9 @@ Server::StartSendingModel (Ptr<Socket> socket)
     itr->second->m_timeBeginSendingModelToClient;
   else
     itr->second->m_timeBeginSendingModelToClient = Simulator::Now ();
-  NS_LOG_UNCOND ("Server Start Sending : " << Simulator::Now ().GetSeconds () << "s");
+  NS_LOG_UNCOND ("Server Start Sending : "
+                 << Simulator::Now ().GetSeconds ()
+                 << "s To Client: " << m_clientSessionManager->ResolveToIdFromServer (socket) + 1);
 
   SendModel (socket);
 }
@@ -411,6 +374,9 @@ Server::SendModel (Ptr<Socket> socket)
 
   auto bytes = std::min (std::min (itr->second->m_bytesModelToSend, available), m_packetSize);
 
+  // Measure the time before sending the packet
+  Time startTime = Simulator::Now ();
+
   auto bytesSent = socket->Send (Create<Packet> (bytes));
 
   if (bytesSent == -1)
@@ -418,20 +384,23 @@ Server::SendModel (Ptr<Socket> socket)
       return;
     }
 
+  // Measure the time after sending the packet
+  Time endTime = Simulator::Now ();
+
   itr->second->m_bytesSent += bytesSent;
   itr->second->m_bytesModelToSend -= bytesSent;
-  // NS_LOG_UNCOND ("In Send Model Debug Datarate:" << m_dataRate);
 
   if (itr->second->m_bytesModelToSend)
     {
+      // Calculate the actual transmission time
+      Time actualTransmissionTime = endTime - startTime;
 
-      Time nextTime (Seconds ((bytes * 8) / static_cast<double> (m_dataRate.GetBitRate ())));
-
-      m_sendEvent = Simulator::Schedule (nextTime, &Server::SendModel, this, socket);
+      // Schedule the next packet based on the actual transmission time
+      m_sendEvent = Simulator::Schedule (actualTransmissionTime, &Server::SendModel, this, socket);
     }
   else
     {
-      // NS_LOG_UNCOND ("Server Sent Whole Model: " << Simulator::Now ().GetSeconds () << "s");
+      // All data sent
       itr->second->m_timeEndSendingModelToClient = Simulator::Now ();
     }
 }

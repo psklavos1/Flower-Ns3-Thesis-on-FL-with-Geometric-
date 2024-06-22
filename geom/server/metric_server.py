@@ -58,7 +58,6 @@ class MetricServer(metric_service_pb2_grpc.MetricServiceServicer):
         Returns:
             MetricResponse-Boolean: True if to continue training
         """
-
         num_clients = self.monitor.get_fit_clients()
         # num_clients = max(
         #     self.monitor.get_eval_clients(), self.monitor.get_fit_clients()
@@ -69,7 +68,13 @@ class MetricServer(metric_service_pb2_grpc.MetricServiceServicer):
                 self.condition.wait()
             else:
                 self.condition.notify_all()
-            stop_round = any(norm > self.threshold for norm in self.client_metrics)
+            # stop_round = any(
+            #     norm > self.threshold for norm in self.client_metrics
+            # )  # If one of them surpasses the threshold
+            stop_round = (
+                sum(self.client_metrics) / num_clients
+            ) > self.threshold  # If The average surpasses the threshold.
+
             self.processed_clients += 1
             if self.processed_clients == num_clients:
                 self._batch_reset()

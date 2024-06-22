@@ -1,6 +1,7 @@
 # third party
 import hydra
 from omegaconf import DictConfig, OmegaConf
+from pathlib import Path
 
 # built-in
 import threading
@@ -10,17 +11,20 @@ from server.flower_server import FlowerServer
 from server.metric_server import MetricServer
 from utils.monitor import Monitor
 
+
 @hydra.main(config_path="conf", config_name="server", version_base="1.1")
 def server_main(cfg: DictConfig):
     print("\n\n=================== Server Config File ===================\n")
     print(OmegaConf.to_yaml(cfg))
+    root_dir = Path(hydra.utils.get_original_cwd()).parent
+    print(root_dir)
     print("=========================== End ==========================\n")
 
     monitor = Monitor()
     # Thread for Flower server
     # print(OmegaConf.to_yaml(cfg.network))
 
-    flower_server = FlowerServer(cfg.flower_server_cfg, cfg.ns3, monitor)
+    flower_server = FlowerServer(cfg.flower_server_cfg, cfg.ns3, monitor, root_dir)
     flower_thread = threading.Thread(target=flower_server.start)
     flower_thread.start()
     print("Flower Server Starts")

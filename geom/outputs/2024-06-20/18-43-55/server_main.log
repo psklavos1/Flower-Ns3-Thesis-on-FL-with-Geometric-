@@ -1,0 +1,60 @@
+[2024-06-20 18:43:59,983][root][INFO] - Initialized DataManager for experiment exp_20240620_184359
+[2024-06-20 18:43:59,990][root][INFO] - Added data to info for client None: {'experiment_id': 'exp_20240620_184359', 'algorithm': 'fda', 'num_clients': 3, 'dataset': 'mnist', 'ann': 'lenet', 'threshold': 5, 'thres_discount_factor': 1.0, 'steps_threshold': 500, 'train_batch_size': 32, 'eval_batch_size': 64, 'network_template': 2, 'client_mobility': True, 'non_iid': False}
+[2024-06-20 18:43:59,990][root][INFO] - Added info data: {'experiment_id': 'exp_20240620_184359', 'algorithm': 'fda', 'num_clients': 3, 'dataset': 'mnist', 'ann': 'lenet', 'threshold': 5, 'thres_discount_factor': 1.0, 'steps_threshold': 500, 'train_batch_size': 32, 'eval_batch_size': 64, 'network_template': 2, 'client_mobility': True, 'non_iid': False}
+[2024-06-20 18:43:59,992][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240620_184359/info.csv
+[2024-06-20 18:43:59,994][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=5, round_timeout=None)
+[2024-06-20 18:43:59,999][flwr][INFO] - Flower ECE: gRPC server running (5 rounds), SSL is disabled
+[2024-06-20 18:43:59,999][flwr][INFO] - Initializing global parameters
+[2024-06-20 18:43:59,999][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-20 18:44:06,177][flwr][INFO] - Received initial parameters from one random client
+[2024-06-20 18:44:06,177][flwr][INFO] - Evaluating initial parameters
+[2024-06-20 18:44:06,354][utils.model][INFO] - LeNet model built
+[2024-06-20 18:44:06,585][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-20 18:44:06,658][utils.model][INFO] - Step 1/40 - val_loss: 2.3359 - val_accuracy: 0.0586
+[2024-06-20 18:44:06,687][utils.model][INFO] - Step 2/40 - val_loss: 2.3274 - val_accuracy: 0.0566
+[2024-06-20 18:44:06,722][utils.model][INFO] - Step 3/40 - val_loss: 2.3258 - val_accuracy: 0.0534
+[2024-06-20 18:44:06,747][utils.model][INFO] - Step 4/40 - val_loss: 2.3249 - val_accuracy: 0.0576
+[2024-06-20 18:44:06,769][utils.model][INFO] - Step 5/40 - val_loss: 2.3250 - val_accuracy: 0.0594
+[2024-06-20 18:44:06,790][utils.model][INFO] - Step 6/40 - val_loss: 2.3255 - val_accuracy: 0.0605
+[2024-06-20 18:44:06,816][utils.model][INFO] - Step 7/40 - val_loss: 2.3256 - val_accuracy: 0.0636
+[2024-06-20 18:44:06,841][utils.model][INFO] - Step 8/40 - val_loss: 2.3240 - val_accuracy: 0.0649
+[2024-06-20 18:44:06,866][utils.model][INFO] - Step 9/40 - val_loss: 2.3235 - val_accuracy: 0.0638
+[2024-06-20 18:44:06,889][utils.model][INFO] - Step 10/40 - val_loss: 2.3240 - val_accuracy: 0.0637
+[2024-06-20 18:44:06,912][utils.model][INFO] - Step 11/40 - val_loss: 2.3231 - val_accuracy: 0.0650
+[2024-06-20 18:44:06,932][utils.model][INFO] - Step 12/40 - val_loss: 2.3232 - val_accuracy: 0.0654
+[2024-06-20 18:44:06,953][utils.model][INFO] - Step 13/40 - val_loss: 2.3230 - val_accuracy: 0.0658
+[2024-06-20 18:44:06,976][utils.model][INFO] - Step 14/40 - val_loss: 2.3233 - val_accuracy: 0.0670
+[2024-06-20 18:44:06,999][utils.model][INFO] - Step 15/40 - val_loss: 2.3230 - val_accuracy: 0.0682
+[2024-06-20 18:44:07,019][utils.model][INFO] - Step 16/40 - val_loss: 2.3228 - val_accuracy: 0.0684
+[2024-06-20 18:44:07,040][utils.model][INFO] - Step 17/40 - val_loss: 2.3234 - val_accuracy: 0.0671
+[2024-06-20 18:44:07,061][utils.model][INFO] - Step 18/40 - val_loss: 2.3234 - val_accuracy: 0.0673
+[2024-06-20 18:44:07,082][utils.model][INFO] - Step 19/40 - val_loss: 2.3231 - val_accuracy: 0.0681
+[2024-06-20 18:44:07,104][utils.model][INFO] - Step 20/40 - val_loss: 2.3235 - val_accuracy: 0.0672
+[2024-06-20 18:44:07,126][utils.model][INFO] - Step 21/40 - val_loss: 2.3238 - val_accuracy: 0.0675
+[2024-06-20 18:44:07,153][utils.model][INFO] - Step 22/40 - val_loss: 2.3234 - val_accuracy: 0.0689
+[2024-06-20 18:44:07,176][utils.model][INFO] - Step 23/40 - val_loss: 2.3232 - val_accuracy: 0.0686
+[2024-06-20 18:44:07,200][utils.model][INFO] - Step 24/40 - val_loss: 2.3229 - val_accuracy: 0.0693
+[2024-06-20 18:44:07,227][utils.model][INFO] - Step 25/40 - val_loss: 2.3228 - val_accuracy: 0.0702
+[2024-06-20 18:44:07,252][utils.model][INFO] - Step 26/40 - val_loss: 2.3228 - val_accuracy: 0.0696
+[2024-06-20 18:44:07,277][utils.model][INFO] - Step 27/40 - val_loss: 2.3226 - val_accuracy: 0.0699
+[2024-06-20 18:44:07,298][utils.model][INFO] - Step 28/40 - val_loss: 2.3226 - val_accuracy: 0.0705
+[2024-06-20 18:44:07,324][utils.model][INFO] - Step 29/40 - val_loss: 2.3225 - val_accuracy: 0.0699
+[2024-06-20 18:44:07,348][utils.model][INFO] - Step 30/40 - val_loss: 2.3226 - val_accuracy: 0.0699
+[2024-06-20 18:44:07,373][utils.model][INFO] - Step 31/40 - val_loss: 2.3224 - val_accuracy: 0.0708
+[2024-06-20 18:44:07,401][utils.model][INFO] - Step 32/40 - val_loss: 2.3223 - val_accuracy: 0.0707
+[2024-06-20 18:44:07,433][utils.model][INFO] - Step 33/40 - val_loss: 2.3222 - val_accuracy: 0.0704
+[2024-06-20 18:44:07,460][utils.model][INFO] - Step 34/40 - val_loss: 2.3221 - val_accuracy: 0.0708
+[2024-06-20 18:44:07,483][utils.model][INFO] - Step 35/40 - val_loss: 2.3225 - val_accuracy: 0.0700
+[2024-06-20 18:44:07,503][utils.model][INFO] - Step 36/40 - val_loss: 2.3224 - val_accuracy: 0.0700
+[2024-06-20 18:44:07,522][utils.model][INFO] - Step 37/40 - val_loss: 2.3222 - val_accuracy: 0.0708
+[2024-06-20 18:44:07,542][utils.model][INFO] - Step 38/40 - val_loss: 2.3224 - val_accuracy: 0.0710
+[2024-06-20 18:44:07,562][utils.model][INFO] - Step 39/40 - val_loss: 2.3222 - val_accuracy: 0.0710
+[2024-06-20 18:44:07,571][utils.model][INFO] - Step 40/40 - val_loss: 2.3225 - val_accuracy: 0.0709
+[2024-06-20 18:44:07,573][utils.model][INFO] - Evaluation Results - Val Loss: 2.3225, Val Accuracy: 0.0709 in 40 steps
+[2024-06-20 18:44:07,576][root][INFO] - Added data to server for client None: {'round': 0, 'experiment_id': 'exp_20240620_184359', 'centralized_loss': 0.0, 'centralized_acc': 0.0, 'distributed_loss': 0.0, 'distributed_acc': 0.0, 'dropouts': 0, 'average_norm': 0.0, 'round_time': 0.0, 'average_downlink_time': 0.0, 'average_rtc_check_time': 0.0, 'average_uplink_time': 0.0, 'average_computation_time': 0.0, 'average_communication_time': 0.0, 'average_fit_time': 0.0, 'average_throughput': 0.0}
+[2024-06-20 18:44:07,576][root][INFO] - Added server data: {'round': 0, 'experiment_id': 'exp_20240620_184359', 'centralized_loss': 0.0, 'centralized_acc': 0.0, 'distributed_loss': 0.0, 'distributed_acc': 0.0, 'dropouts': 0, 'average_norm': 0.0, 'round_time': 0.0, 'average_downlink_time': 0.0, 'average_rtc_check_time': 0.0, 'average_uplink_time': 0.0, 'average_computation_time': 0.0, 'average_communication_time': 0.0, 'average_fit_time': 0.0, 'average_throughput': 0.0}
+[2024-06-20 18:44:07,577][root][INFO] - Appended data to last row of column centralized_loss in server data for client None
+[2024-06-20 18:44:07,577][root][INFO] - Appended data to last row of column centralized_acc in server data for client None
+[2024-06-20 18:44:07,577][root][INFO] - Appended {'centralized_loss': 2.32246, 'centralized_acc': 0.0709} to the last row of server data
+[2024-06-20 18:44:07,577][flwr][INFO] - initial parameters (loss, other metrics): 2.32246, {'accuracy': 0.0709}
+[2024-06-20 18:44:07,577][flwr][INFO] - FL starting

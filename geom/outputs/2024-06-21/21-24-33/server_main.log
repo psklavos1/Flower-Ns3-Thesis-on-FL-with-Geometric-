@@ -1,0 +1,212 @@
+[2024-06-21 21:24:37,628][root][INFO] - Initialized DataManager for experiment exp_20240621_212437
+[2024-06-21 21:24:37,634][root][INFO] - Info data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/info.csv
+[2024-06-21 21:24:37,635][flwr][INFO] - Starting Flower server, config: ServerConfig(num_rounds=3, round_timeout=None)
+[2024-06-21 21:24:37,637][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-06-21 21:24:37,637][flwr][INFO] - Initializing global parameters
+[2024-06-21 21:24:37,637][flwr][INFO] - Requesting initial parameters from one random client
+[2024-06-21 21:24:45,167][flwr][INFO] - Received initial parameters from one random client
+[2024-06-21 21:24:45,168][flwr][INFO] - Evaluating initial parameters
+[2024-06-21 21:24:45,294][utils.model][INFO] - LeNet model built
+[2024-06-21 21:24:45,523][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-21 21:24:45,576][utils.model][INFO] - Step 1/40 - val_loss: 2.3028 - val_accuracy: 0.1289
+[2024-06-21 21:24:45,600][utils.model][INFO] - Step 2/40 - val_loss: 2.3111 - val_accuracy: 0.1152
+[2024-06-21 21:24:45,624][utils.model][INFO] - Step 3/40 - val_loss: 2.3084 - val_accuracy: 0.1276
+[2024-06-21 21:24:45,648][utils.model][INFO] - Step 4/40 - val_loss: 2.3105 - val_accuracy: 0.1201
+[2024-06-21 21:24:45,678][utils.model][INFO] - Step 5/40 - val_loss: 2.3079 - val_accuracy: 0.1203
+[2024-06-21 21:24:45,702][utils.model][INFO] - Step 6/40 - val_loss: 2.3092 - val_accuracy: 0.1191
+[2024-06-21 21:24:45,729][utils.model][INFO] - Step 7/40 - val_loss: 2.3090 - val_accuracy: 0.1183
+[2024-06-21 21:24:45,758][utils.model][INFO] - Step 8/40 - val_loss: 2.3107 - val_accuracy: 0.1167
+[2024-06-21 21:24:45,787][utils.model][INFO] - Step 9/40 - val_loss: 2.3091 - val_accuracy: 0.1172
+[2024-06-21 21:24:45,815][utils.model][INFO] - Step 10/40 - val_loss: 2.3091 - val_accuracy: 0.1168
+[2024-06-21 21:24:45,844][utils.model][INFO] - Step 11/40 - val_loss: 2.3108 - val_accuracy: 0.1112
+[2024-06-21 21:24:45,876][utils.model][INFO] - Step 12/40 - val_loss: 2.3110 - val_accuracy: 0.1117
+[2024-06-21 21:24:45,900][utils.model][INFO] - Step 13/40 - val_loss: 2.3107 - val_accuracy: 0.1124
+[2024-06-21 21:24:45,925][utils.model][INFO] - Step 14/40 - val_loss: 2.3103 - val_accuracy: 0.1136
+[2024-06-21 21:24:45,948][utils.model][INFO] - Step 15/40 - val_loss: 2.3103 - val_accuracy: 0.1138
+[2024-06-21 21:24:45,972][utils.model][INFO] - Step 16/40 - val_loss: 2.3113 - val_accuracy: 0.1128
+[2024-06-21 21:24:45,995][utils.model][INFO] - Step 17/40 - val_loss: 2.3122 - val_accuracy: 0.1098
+[2024-06-21 21:24:46,017][utils.model][INFO] - Step 18/40 - val_loss: 2.3123 - val_accuracy: 0.1094
+[2024-06-21 21:24:46,034][utils.model][INFO] - Step 19/40 - val_loss: 2.3124 - val_accuracy: 0.1092
+[2024-06-21 21:24:46,059][utils.model][INFO] - Step 20/40 - val_loss: 2.3120 - val_accuracy: 0.1100
+[2024-06-21 21:24:46,080][utils.model][INFO] - Step 21/40 - val_loss: 2.3120 - val_accuracy: 0.1097
+[2024-06-21 21:24:46,100][utils.model][INFO] - Step 22/40 - val_loss: 2.3121 - val_accuracy: 0.1103
+[2024-06-21 21:24:46,129][utils.model][INFO] - Step 23/40 - val_loss: 2.3125 - val_accuracy: 0.1101
+[2024-06-21 21:24:46,156][utils.model][INFO] - Step 24/40 - val_loss: 2.3130 - val_accuracy: 0.1094
+[2024-06-21 21:24:46,180][utils.model][INFO] - Step 25/40 - val_loss: 2.3128 - val_accuracy: 0.1102
+[2024-06-21 21:24:46,208][utils.model][INFO] - Step 26/40 - val_loss: 2.3131 - val_accuracy: 0.1086
+[2024-06-21 21:24:46,231][utils.model][INFO] - Step 27/40 - val_loss: 2.3130 - val_accuracy: 0.1097
+[2024-06-21 21:24:46,255][utils.model][INFO] - Step 28/40 - val_loss: 2.3131 - val_accuracy: 0.1101
+[2024-06-21 21:24:46,279][utils.model][INFO] - Step 29/40 - val_loss: 2.3133 - val_accuracy: 0.1103
+[2024-06-21 21:24:46,301][utils.model][INFO] - Step 30/40 - val_loss: 2.3134 - val_accuracy: 0.1104
+[2024-06-21 21:24:46,329][utils.model][INFO] - Step 31/40 - val_loss: 2.3138 - val_accuracy: 0.1092
+[2024-06-21 21:24:46,353][utils.model][INFO] - Step 32/40 - val_loss: 2.3139 - val_accuracy: 0.1095
+[2024-06-21 21:24:46,375][utils.model][INFO] - Step 33/40 - val_loss: 2.3138 - val_accuracy: 0.1100
+[2024-06-21 21:24:46,398][utils.model][INFO] - Step 34/40 - val_loss: 2.3140 - val_accuracy: 0.1102
+[2024-06-21 21:24:46,416][utils.model][INFO] - Step 35/40 - val_loss: 2.3140 - val_accuracy: 0.1100
+[2024-06-21 21:24:46,437][utils.model][INFO] - Step 36/40 - val_loss: 2.3139 - val_accuracy: 0.1094
+[2024-06-21 21:24:46,458][utils.model][INFO] - Step 37/40 - val_loss: 2.3143 - val_accuracy: 0.1092
+[2024-06-21 21:24:46,475][utils.model][INFO] - Step 38/40 - val_loss: 2.3142 - val_accuracy: 0.1092
+[2024-06-21 21:24:46,495][utils.model][INFO] - Step 39/40 - val_loss: 2.3137 - val_accuracy: 0.1099
+[2024-06-21 21:24:46,509][utils.model][INFO] - Step 40/40 - val_loss: 2.3140 - val_accuracy: 0.1100
+[2024-06-21 21:24:46,511][utils.model][INFO] - Evaluation Results - Val Loss: 2.3140, Val Accuracy: 0.1100 in 40 steps
+[2024-06-21 21:24:46,515][flwr][INFO] - initial parameters (loss, other metrics): 2.3139892, {'accuracy': 0.11}
+[2024-06-21 21:24:46,515][flwr][INFO] - FL starting
+[2024-06-21 21:24:50,284][flwr][DEBUG] - fit_round 1: strategy sampled 3 clients (out of 3)
+[2024-06-21 21:24:53,188][flwr][DEBUG] - fit_round 1 received 3 results and 0 failures
+[2024-06-21 21:24:53,250][utils.model][INFO] - LeNet model built
+[2024-06-21 21:24:53,369][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-21 21:24:53,413][utils.model][INFO] - Step 1/40 - val_loss: 0.6336 - val_accuracy: 0.8555
+[2024-06-21 21:24:53,436][utils.model][INFO] - Step 2/40 - val_loss: 0.6599 - val_accuracy: 0.8242
+[2024-06-21 21:24:53,456][utils.model][INFO] - Step 3/40 - val_loss: 0.6933 - val_accuracy: 0.8086
+[2024-06-21 21:24:53,481][utils.model][INFO] - Step 4/40 - val_loss: 0.6805 - val_accuracy: 0.8115
+[2024-06-21 21:24:53,504][utils.model][INFO] - Step 5/40 - val_loss: 0.7110 - val_accuracy: 0.8008
+[2024-06-21 21:24:53,525][utils.model][INFO] - Step 6/40 - val_loss: 0.7172 - val_accuracy: 0.7962
+[2024-06-21 21:24:53,544][utils.model][INFO] - Step 7/40 - val_loss: 0.7268 - val_accuracy: 0.7935
+[2024-06-21 21:24:53,564][utils.model][INFO] - Step 8/40 - val_loss: 0.7200 - val_accuracy: 0.7988
+[2024-06-21 21:24:53,587][utils.model][INFO] - Step 9/40 - val_loss: 0.7278 - val_accuracy: 0.7973
+[2024-06-21 21:24:53,608][utils.model][INFO] - Step 10/40 - val_loss: 0.7210 - val_accuracy: 0.8004
+[2024-06-21 21:24:53,634][utils.model][INFO] - Step 11/40 - val_loss: 0.7176 - val_accuracy: 0.8033
+[2024-06-21 21:24:53,657][utils.model][INFO] - Step 12/40 - val_loss: 0.7126 - val_accuracy: 0.8047
+[2024-06-21 21:24:53,681][utils.model][INFO] - Step 13/40 - val_loss: 0.7129 - val_accuracy: 0.8050
+[2024-06-21 21:24:53,706][utils.model][INFO] - Step 14/40 - val_loss: 0.7148 - val_accuracy: 0.8050
+[2024-06-21 21:24:53,727][utils.model][INFO] - Step 15/40 - val_loss: 0.7188 - val_accuracy: 0.8060
+[2024-06-21 21:24:53,749][utils.model][INFO] - Step 16/40 - val_loss: 0.7174 - val_accuracy: 0.8081
+[2024-06-21 21:24:53,772][utils.model][INFO] - Step 17/40 - val_loss: 0.7170 - val_accuracy: 0.8081
+[2024-06-21 21:24:53,794][utils.model][INFO] - Step 18/40 - val_loss: 0.7168 - val_accuracy: 0.8095
+[2024-06-21 21:24:53,816][utils.model][INFO] - Step 19/40 - val_loss: 0.7142 - val_accuracy: 0.8100
+[2024-06-21 21:24:53,838][utils.model][INFO] - Step 20/40 - val_loss: 0.7104 - val_accuracy: 0.8121
+[2024-06-21 21:24:53,857][utils.model][INFO] - Step 21/40 - val_loss: 0.6999 - val_accuracy: 0.8153
+[2024-06-21 21:24:53,880][utils.model][INFO] - Step 22/40 - val_loss: 0.6896 - val_accuracy: 0.8185
+[2024-06-21 21:24:53,902][utils.model][INFO] - Step 23/40 - val_loss: 0.6858 - val_accuracy: 0.8195
+[2024-06-21 21:24:53,923][utils.model][INFO] - Step 24/40 - val_loss: 0.6857 - val_accuracy: 0.8195
+[2024-06-21 21:24:53,946][utils.model][INFO] - Step 25/40 - val_loss: 0.6771 - val_accuracy: 0.8216
+[2024-06-21 21:24:53,965][utils.model][INFO] - Step 26/40 - val_loss: 0.6771 - val_accuracy: 0.8223
+[2024-06-21 21:24:53,986][utils.model][INFO] - Step 27/40 - val_loss: 0.6737 - val_accuracy: 0.8235
+[2024-06-21 21:24:54,006][utils.model][INFO] - Step 28/40 - val_loss: 0.6660 - val_accuracy: 0.8259
+[2024-06-21 21:24:54,026][utils.model][INFO] - Step 29/40 - val_loss: 0.6603 - val_accuracy: 0.8291
+[2024-06-21 21:24:54,047][utils.model][INFO] - Step 30/40 - val_loss: 0.6593 - val_accuracy: 0.8298
+[2024-06-21 21:24:54,065][utils.model][INFO] - Step 31/40 - val_loss: 0.6572 - val_accuracy: 0.8295
+[2024-06-21 21:24:54,087][utils.model][INFO] - Step 32/40 - val_loss: 0.6511 - val_accuracy: 0.8315
+[2024-06-21 21:24:54,106][utils.model][INFO] - Step 33/40 - val_loss: 0.6480 - val_accuracy: 0.8330
+[2024-06-21 21:24:54,126][utils.model][INFO] - Step 34/40 - val_loss: 0.6415 - val_accuracy: 0.8355
+[2024-06-21 21:24:54,151][utils.model][INFO] - Step 35/40 - val_loss: 0.6322 - val_accuracy: 0.8395
+[2024-06-21 21:24:54,174][utils.model][INFO] - Step 36/40 - val_loss: 0.6317 - val_accuracy: 0.8394
+[2024-06-21 21:24:54,195][utils.model][INFO] - Step 37/40 - val_loss: 0.6271 - val_accuracy: 0.8411
+[2024-06-21 21:24:54,216][utils.model][INFO] - Step 38/40 - val_loss: 0.6268 - val_accuracy: 0.8409
+[2024-06-21 21:24:54,233][utils.model][INFO] - Step 39/40 - val_loss: 0.6333 - val_accuracy: 0.8387
+[2024-06-21 21:24:54,244][utils.model][INFO] - Step 40/40 - val_loss: 0.6268 - val_accuracy: 0.8389
+[2024-06-21 21:24:54,246][utils.model][INFO] - Evaluation Results - Val Loss: 0.6268, Val Accuracy: 0.8389 in 40 steps
+[2024-06-21 21:24:54,248][flwr][INFO] - fit progress: (1, 0.62680674, {'accuracy': 0.8389}, 7.732265653001377)
+[2024-06-21 21:24:54,248][flwr][DEBUG] - evaluate_round 1: strategy sampled 3 clients (out of 3)
+[2024-06-21 21:24:54,782][flwr][DEBUG] - evaluate_round 1 received 3 results and 0 failures
+[2024-06-21 21:24:54,786][root][INFO] - Epoch data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/clients/client_0/epoch.csv
+[2024-06-21 21:24:54,837][root][INFO] - Batch data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/clients/client_0/batch.csv
+[2024-06-21 21:24:54,838][root][INFO] - Server data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/server/server.csv
+[2024-06-21 21:24:58,432][flwr][DEBUG] - fit_round 2: strategy sampled 3 clients (out of 3)
+[2024-06-21 21:25:07,372][flwr][DEBUG] - fit_round 2 received 3 results and 0 failures
+[2024-06-21 21:25:07,430][utils.model][INFO] - LeNet model built
+[2024-06-21 21:25:07,543][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-21 21:25:07,575][utils.model][INFO] - Step 1/40 - val_loss: 0.1300 - val_accuracy: 0.9688
+[2024-06-21 21:25:07,602][utils.model][INFO] - Step 2/40 - val_loss: 0.1921 - val_accuracy: 0.9336
+[2024-06-21 21:25:07,624][utils.model][INFO] - Step 3/40 - val_loss: 0.2010 - val_accuracy: 0.9297
+[2024-06-21 21:25:07,646][utils.model][INFO] - Step 4/40 - val_loss: 0.1914 - val_accuracy: 0.9365
+[2024-06-21 21:25:07,669][utils.model][INFO] - Step 5/40 - val_loss: 0.2156 - val_accuracy: 0.9289
+[2024-06-21 21:25:07,691][utils.model][INFO] - Step 6/40 - val_loss: 0.2259 - val_accuracy: 0.9271
+[2024-06-21 21:25:07,712][utils.model][INFO] - Step 7/40 - val_loss: 0.2333 - val_accuracy: 0.9286
+[2024-06-21 21:25:07,735][utils.model][INFO] - Step 8/40 - val_loss: 0.2301 - val_accuracy: 0.9297
+[2024-06-21 21:25:07,755][utils.model][INFO] - Step 9/40 - val_loss: 0.2424 - val_accuracy: 0.9266
+[2024-06-21 21:25:07,773][utils.model][INFO] - Step 10/40 - val_loss: 0.2378 - val_accuracy: 0.9277
+[2024-06-21 21:25:07,796][utils.model][INFO] - Step 11/40 - val_loss: 0.2312 - val_accuracy: 0.9300
+[2024-06-21 21:25:07,813][utils.model][INFO] - Step 12/40 - val_loss: 0.2276 - val_accuracy: 0.9310
+[2024-06-21 21:25:07,834][utils.model][INFO] - Step 13/40 - val_loss: 0.2252 - val_accuracy: 0.9312
+[2024-06-21 21:25:07,857][utils.model][INFO] - Step 14/40 - val_loss: 0.2237 - val_accuracy: 0.9316
+[2024-06-21 21:25:07,879][utils.model][INFO] - Step 15/40 - val_loss: 0.2284 - val_accuracy: 0.9302
+[2024-06-21 21:25:07,900][utils.model][INFO] - Step 16/40 - val_loss: 0.2320 - val_accuracy: 0.9290
+[2024-06-21 21:25:07,921][utils.model][INFO] - Step 17/40 - val_loss: 0.2342 - val_accuracy: 0.9288
+[2024-06-21 21:25:07,942][utils.model][INFO] - Step 18/40 - val_loss: 0.2326 - val_accuracy: 0.9299
+[2024-06-21 21:25:07,963][utils.model][INFO] - Step 19/40 - val_loss: 0.2322 - val_accuracy: 0.9299
+[2024-06-21 21:25:07,984][utils.model][INFO] - Step 20/40 - val_loss: 0.2321 - val_accuracy: 0.9297
+[2024-06-21 21:25:08,006][utils.model][INFO] - Step 21/40 - val_loss: 0.2273 - val_accuracy: 0.9308
+[2024-06-21 21:25:08,028][utils.model][INFO] - Step 22/40 - val_loss: 0.2195 - val_accuracy: 0.9334
+[2024-06-21 21:25:08,047][utils.model][INFO] - Step 23/40 - val_loss: 0.2172 - val_accuracy: 0.9343
+[2024-06-21 21:25:08,070][utils.model][INFO] - Step 24/40 - val_loss: 0.2197 - val_accuracy: 0.9334
+[2024-06-21 21:25:08,090][utils.model][INFO] - Step 25/40 - val_loss: 0.2150 - val_accuracy: 0.9347
+[2024-06-21 21:25:08,108][utils.model][INFO] - Step 26/40 - val_loss: 0.2154 - val_accuracy: 0.9346
+[2024-06-21 21:25:08,133][utils.model][INFO] - Step 27/40 - val_loss: 0.2133 - val_accuracy: 0.9353
+[2024-06-21 21:25:08,151][utils.model][INFO] - Step 28/40 - val_loss: 0.2080 - val_accuracy: 0.9369
+[2024-06-21 21:25:08,170][utils.model][INFO] - Step 29/40 - val_loss: 0.2036 - val_accuracy: 0.9380
+[2024-06-21 21:25:08,193][utils.model][INFO] - Step 30/40 - val_loss: 0.2016 - val_accuracy: 0.9384
+[2024-06-21 21:25:08,214][utils.model][INFO] - Step 31/40 - val_loss: 0.1989 - val_accuracy: 0.9394
+[2024-06-21 21:25:08,232][utils.model][INFO] - Step 32/40 - val_loss: 0.1953 - val_accuracy: 0.9404
+[2024-06-21 21:25:08,254][utils.model][INFO] - Step 33/40 - val_loss: 0.1926 - val_accuracy: 0.9412
+[2024-06-21 21:25:08,276][utils.model][INFO] - Step 34/40 - val_loss: 0.1884 - val_accuracy: 0.9427
+[2024-06-21 21:25:08,298][utils.model][INFO] - Step 35/40 - val_loss: 0.1836 - val_accuracy: 0.9443
+[2024-06-21 21:25:08,319][utils.model][INFO] - Step 36/40 - val_loss: 0.1813 - val_accuracy: 0.9449
+[2024-06-21 21:25:08,341][utils.model][INFO] - Step 37/40 - val_loss: 0.1785 - val_accuracy: 0.9456
+[2024-06-21 21:25:08,362][utils.model][INFO] - Step 38/40 - val_loss: 0.1788 - val_accuracy: 0.9457
+[2024-06-21 21:25:08,381][utils.model][INFO] - Step 39/40 - val_loss: 0.1855 - val_accuracy: 0.9435
+[2024-06-21 21:25:08,390][utils.model][INFO] - Step 40/40 - val_loss: 0.1823 - val_accuracy: 0.9436
+[2024-06-21 21:25:08,393][utils.model][INFO] - Evaluation Results - Val Loss: 0.1823, Val Accuracy: 0.9436 in 40 steps
+[2024-06-21 21:25:08,400][flwr][INFO] - fit progress: (2, 0.18230529, {'accuracy': 0.9436}, 21.884429625992198)
+[2024-06-21 21:25:08,400][flwr][DEBUG] - evaluate_round 2: strategy sampled 3 clients (out of 3)
+[2024-06-21 21:25:08,997][flwr][DEBUG] - evaluate_round 2 received 3 results and 0 failures
+[2024-06-21 21:25:09,000][root][INFO] - Epoch data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/clients/client_0/epoch.csv
+[2024-06-21 21:25:09,153][root][INFO] - Batch data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/clients/client_0/batch.csv
+[2024-06-21 21:25:09,154][root][INFO] - Server data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/server/server.csv
+[2024-06-21 21:25:13,005][flwr][DEBUG] - fit_round 3: strategy sampled 3 clients (out of 3)
+[2024-06-21 21:25:29,565][flwr][DEBUG] - fit_round 3 received 3 results and 0 failures
+[2024-06-21 21:25:29,630][utils.model][INFO] - LeNet model built
+[2024-06-21 21:25:29,759][utils.model][INFO] - Size of serialized model: 279.0341796875 kbytes
+[2024-06-21 21:25:29,796][utils.model][INFO] - Step 1/40 - val_loss: 0.0494 - val_accuracy: 0.9805
+[2024-06-21 21:25:29,816][utils.model][INFO] - Step 2/40 - val_loss: 0.0924 - val_accuracy: 0.9648
+[2024-06-21 21:25:29,838][utils.model][INFO] - Step 3/40 - val_loss: 0.1045 - val_accuracy: 0.9583
+[2024-06-21 21:25:29,861][utils.model][INFO] - Step 4/40 - val_loss: 0.1073 - val_accuracy: 0.9600
+[2024-06-21 21:25:29,885][utils.model][INFO] - Step 5/40 - val_loss: 0.1174 - val_accuracy: 0.9594
+[2024-06-21 21:25:29,911][utils.model][INFO] - Step 6/40 - val_loss: 0.1248 - val_accuracy: 0.9583
+[2024-06-21 21:25:29,942][utils.model][INFO] - Step 7/40 - val_loss: 0.1267 - val_accuracy: 0.9593
+[2024-06-21 21:25:29,966][utils.model][INFO] - Step 8/40 - val_loss: 0.1271 - val_accuracy: 0.9585
+[2024-06-21 21:25:29,989][utils.model][INFO] - Step 9/40 - val_loss: 0.1357 - val_accuracy: 0.9540
+[2024-06-21 21:25:30,017][utils.model][INFO] - Step 10/40 - val_loss: 0.1335 - val_accuracy: 0.9551
+[2024-06-21 21:25:30,052][utils.model][INFO] - Step 11/40 - val_loss: 0.1272 - val_accuracy: 0.9577
+[2024-06-21 21:25:30,086][utils.model][INFO] - Step 12/40 - val_loss: 0.1252 - val_accuracy: 0.9587
+[2024-06-21 21:25:30,118][utils.model][INFO] - Step 13/40 - val_loss: 0.1231 - val_accuracy: 0.9597
+[2024-06-21 21:25:30,147][utils.model][INFO] - Step 14/40 - val_loss: 0.1237 - val_accuracy: 0.9593
+[2024-06-21 21:25:30,168][utils.model][INFO] - Step 15/40 - val_loss: 0.1268 - val_accuracy: 0.9581
+[2024-06-21 21:25:30,188][utils.model][INFO] - Step 16/40 - val_loss: 0.1280 - val_accuracy: 0.9575
+[2024-06-21 21:25:30,208][utils.model][INFO] - Step 17/40 - val_loss: 0.1300 - val_accuracy: 0.9573
+[2024-06-21 21:25:30,230][utils.model][INFO] - Step 18/40 - val_loss: 0.1292 - val_accuracy: 0.9575
+[2024-06-21 21:25:30,254][utils.model][INFO] - Step 19/40 - val_loss: 0.1290 - val_accuracy: 0.9574
+[2024-06-21 21:25:30,274][utils.model][INFO] - Step 20/40 - val_loss: 0.1280 - val_accuracy: 0.9582
+[2024-06-21 21:25:30,297][utils.model][INFO] - Step 21/40 - val_loss: 0.1244 - val_accuracy: 0.9591
+[2024-06-21 21:25:30,319][utils.model][INFO] - Step 22/40 - val_loss: 0.1201 - val_accuracy: 0.9608
+[2024-06-21 21:25:30,344][utils.model][INFO] - Step 23/40 - val_loss: 0.1205 - val_accuracy: 0.9608
+[2024-06-21 21:25:30,368][utils.model][INFO] - Step 24/40 - val_loss: 0.1231 - val_accuracy: 0.9600
+[2024-06-21 21:25:30,393][utils.model][INFO] - Step 25/40 - val_loss: 0.1199 - val_accuracy: 0.9613
+[2024-06-21 21:25:30,421][utils.model][INFO] - Step 26/40 - val_loss: 0.1199 - val_accuracy: 0.9617
+[2024-06-21 21:25:30,442][utils.model][INFO] - Step 27/40 - val_loss: 0.1173 - val_accuracy: 0.9627
+[2024-06-21 21:25:30,473][utils.model][INFO] - Step 28/40 - val_loss: 0.1140 - val_accuracy: 0.9637
+[2024-06-21 21:25:30,498][utils.model][INFO] - Step 29/40 - val_loss: 0.1108 - val_accuracy: 0.9650
+[2024-06-21 21:25:30,521][utils.model][INFO] - Step 30/40 - val_loss: 0.1087 - val_accuracy: 0.9659
+[2024-06-21 21:25:30,553][utils.model][INFO] - Step 31/40 - val_loss: 0.1072 - val_accuracy: 0.9664
+[2024-06-21 21:25:30,576][utils.model][INFO] - Step 32/40 - val_loss: 0.1049 - val_accuracy: 0.9673
+[2024-06-21 21:25:30,598][utils.model][INFO] - Step 33/40 - val_loss: 0.1031 - val_accuracy: 0.9678
+[2024-06-21 21:25:30,620][utils.model][INFO] - Step 34/40 - val_loss: 0.1008 - val_accuracy: 0.9685
+[2024-06-21 21:25:30,645][utils.model][INFO] - Step 35/40 - val_loss: 0.0980 - val_accuracy: 0.9694
+[2024-06-21 21:25:30,672][utils.model][INFO] - Step 36/40 - val_loss: 0.0962 - val_accuracy: 0.9699
+[2024-06-21 21:25:30,693][utils.model][INFO] - Step 37/40 - val_loss: 0.0946 - val_accuracy: 0.9702
+[2024-06-21 21:25:30,715][utils.model][INFO] - Step 38/40 - val_loss: 0.0947 - val_accuracy: 0.9700
+[2024-06-21 21:25:30,742][utils.model][INFO] - Step 39/40 - val_loss: 0.0993 - val_accuracy: 0.9686
+[2024-06-21 21:25:30,752][utils.model][INFO] - Step 40/40 - val_loss: 0.0969 - val_accuracy: 0.9687
+[2024-06-21 21:25:30,754][utils.model][INFO] - Evaluation Results - Val Loss: 0.0969, Val Accuracy: 0.9687 in 40 steps
+[2024-06-21 21:25:30,755][flwr][INFO] - fit progress: (3, 0.09693113, {'accuracy': 0.9687}, 44.23964736101334)
+[2024-06-21 21:25:30,755][flwr][DEBUG] - evaluate_round 3: strategy sampled 3 clients (out of 3)
+[2024-06-21 21:25:31,385][flwr][DEBUG] - evaluate_round 3 received 3 results and 0 failures
+[2024-06-21 21:25:31,389][root][INFO] - Epoch data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/clients/client_0/epoch.csv
+[2024-06-21 21:25:31,678][root][INFO] - Batch data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/clients/client_0/batch.csv
+[2024-06-21 21:25:31,679][root][INFO] - Server data saved to /home/psklavos/fl/geom_aio/csv_logs/exp_20240621_212437/server/server.csv
+[2024-06-21 21:25:31,679][flwr][INFO] - FL finished in 45.163901238993276
+[2024-06-21 21:25:31,680][flwr][INFO] - app_fit: losses_distributed [(1, 0.676966110865275), (2, 0.22058389584223428), (3, 0.1335968871911367)]
+[2024-06-21 21:25:31,680][flwr][INFO] - app_fit: metrics_distributed_fit {'average_norm': [(1, 10.062475522359213), (2, 10.046616236368815), (3, 10.02767531077067)], 'round_time': [(1, 3.184429966669434), (2, 10.044315871000732), (3, 17.33665432807715)], 'average_downlink_time': [(1, 0.22509247566666665), (2, 0.45243906566666664), (3, 0.3729854203333333)], 'average_rtc_check_time': [(1, 0.18128011937369592), (2, 0.60380268569376), (3, 1.1186343402659986)], 'average_uplink_time': [(1, 0.04868516233333334), (2, 0.058652849666666666), (3, 0.03691804233333333)], 'average_computation_time': [(1, 2.47822642326355), (2, 7.820833285649617), (3, 14.503731886545816)], 'average_communication_time': [(1, 0.45505775737369597), (2, 1.1148946010270935), (3, 1.5285378029326653)], 'average_fit_time': [(1, 2.863705635070801), (2, 8.920231024424234), (3, 16.53259030977885)], 'average_throughput': [(1, 57.7522942268075), (2, 38.89440674264392), (3, 74.04370641938628)], 'dropouts': [(1, 0), (2, 0), (3, 0)]}
+[2024-06-21 21:25:31,680][flwr][INFO] - app_fit: metrics_distributed {'accuracy': [(1, 0.8174999952316284), (2, 0.9304999907811483), (3, 0.9616666634877523)]}
+[2024-06-21 21:25:31,680][flwr][INFO] - app_fit: losses_centralized [(0, 2.3139892), (1, 0.62680674), (2, 0.18230529), (3, 0.09693113)]
+[2024-06-21 21:25:31,680][flwr][INFO] - app_fit: metrics_centralized {'accuracy': [(0, 0.11), (1, 0.8389), (2, 0.9436), (3, 0.9687)]}

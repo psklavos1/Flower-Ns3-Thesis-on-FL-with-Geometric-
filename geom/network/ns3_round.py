@@ -22,7 +22,7 @@ class Ns3_Round:
         self.round = round
         self.network = network
         self.throughputs = []
-        self.roundTimes = []
+        self.latencies = []
         self.dropouts = []
         self.clients = clients
         self.processed_clients = []
@@ -50,7 +50,6 @@ class Ns3_Round:
             if (
                 net_sim_data[client]["downlinkTime"] <= 0
                 or net_sim_data[client]["uplinkTime"] <= 0
-                or net_sim_data[client]["computationTime"] <= 0
             ):
                 ret_dict[client]["dropout"] = 1
                 self.dropouts.append(1)
@@ -61,9 +60,8 @@ class Ns3_Round:
             ret_dict[client]["dropout"] = 0
             self.dropouts.append(0)
             self.throughputs.append(net_sim_data[client]["throughput"])
-            self.roundTimes.append(
+            self.latencies.append(
                 net_sim_data[client]["downlinkTime"]
-                + net_sim_data[client]["computationTime"]
                 + net_sim_data[client]["uplinkTime"]
             )
             self.processed_clients.append(client)
@@ -73,15 +71,9 @@ class Ns3_Round:
                 self.throughputs
             )
 
-<<<<<<< Updated upstream
-        print("================ Ns3 Stats ================")
-        self.total_round_time = max(self.roundTimes)
-        print(f"Total Round Time: {self.total_round_time}")
-=======
         print("=================== Ns3 Stats ===================")
         self.total_latency = max(self.latencies)
         print(f"Total Time in Latencies: {self.total_latency}")
->>>>>>> Stashed changes
         print(f"Average throughput: {self.avg_throughput}")
         print(f"Dropouts: {self.dropouts}")
         print("=================================================\n")
@@ -93,8 +85,8 @@ class Ns3_Round:
     def get_throughputs(self):
         return self.throughputs
 
-    def get_roundTimes(self):
-        return self.roundTimes
+    def get_latencies(self):
+        return self.latencies
 
     def get_clients(self):
         return self.clients

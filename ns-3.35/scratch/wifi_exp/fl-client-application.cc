@@ -127,7 +127,8 @@ ClientApplication::StartApplication (void)
   m_socket->Connect (m_peer);
 
   m_timeBeginReceivingModelFromServer = Simulator::Now ();
-  NS_LOG_UNCOND ("Client Sent connection Request: " << Simulator::Now ().GetSeconds () << "s.");
+  NS_LOG_UNCOND ("Client " << (m_socket->GetNode ()->GetId () - 1) << " Sent connection Request: "
+                           << Simulator::Now ().GetSeconds () << "s.");
 
   m_socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
 }
@@ -151,19 +152,20 @@ void
 ClientApplication::ConnectionSucceeded (Ptr<Socket> socket)
 {
 
-  NS_LOG_UNCOND ("Client Connected: " << Simulator::Now ().GetSeconds () << "s");
+  NS_LOG_UNCOND ("Client " << (m_socket->GetNode ()->GetId () - 1)
+                           << " Connected: " << Simulator::Now ().GetSeconds () << "s");
   socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
 
   m_bytesModelToReceive = m_bytesModel;
   m_bytesModelToSend = 0;
 
-  NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " " << m_bytesModelToReceive);
+  // NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " " << m_bytesModelToReceive);
 }
 
 void
 ClientApplication::ConnectionFailed (Ptr<Socket> socket)
 {
-  NS_LOG_UNCOND ("Not Connected ..." << socket->GetNode ()->GetId () - 1);
+  NS_LOG_UNCOND ("Not Connected ... ID: " << socket->GetNode ()->GetId () - 1);
 }
 
 void
@@ -188,10 +190,10 @@ ClientApplication::HandleRead (Ptr<Socket> socket)
       if (m_bytesModelToReceive == 0) //All bytes received, start transmitting
         {
           m_timeEndReceivingModelFromServer = Simulator::Now ();
-          NS_LOG_UNCOND ("Received whole model :");
 
           NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " "
-                                   << "recv full model");
+                                   << "recv full model at time "
+                                   << m_timeEndReceivingModelFromServer.GetSeconds ());
 
           // At this moment not using computational time calculations because of Lab setup complexity
           // auto energy = FLEnergy ();
@@ -216,15 +218,15 @@ void
 ClientApplication::StartWriting ()
 {
   m_bytesModelToSend = m_bytesModel;
-  NS_LOG_UNCOND ("Client Start Sending : " << Simulator::Now ().GetSeconds () << "s");
-
+  NS_LOG_UNCOND ("Client " << (m_socket->GetNode ()->GetId () - 1)
+                           << " Start Sending : " << Simulator::Now ().GetSeconds () << "s");
   Send (m_socket);
 }
 
 void
 ClientApplication::Send (Ptr<Socket> socket)
 {
-  //If nothing to  send, return
+  // If nothing to send, return
   if (m_bytesModelToSend == 0)
     {
       return;
@@ -234,9 +236,13 @@ ClientApplication::Send (Ptr<Socket> socket)
 
   if (available)
     {
-
+      // Calculate the number of bytes to send
       auto bytes = std::min (std::min (m_bytesModelToSend, available), m_packetSize);
 
+      // Measure the time before sending the packet
+      Time startTime = Simulator::Now ();
+
+      // Send the packet
       auto bytesSent = socket->Send (Create<Packet> (bytes));
 
       if (bytesSent == -1)
@@ -244,22 +250,25 @@ ClientApplication::Send (Ptr<Socket> socket)
           return;
         }
 
+      // Measure the time after sending the packet
+      Time endTime = Simulator::Now ();
+
       m_bytesSent += bytesSent;
       m_bytesModelToSend -= bytesSent;
 
       if (m_bytesModelToSend)
         {
+          // Calculate the actual transmission time
+          Time actualTransmissionTime = endTime - startTime;
 
-          Time nextTime (
-              Seconds ((bytesSent * 8) /
-                       static_cast<double> (m_dataRate.GetBitRate ()))); // Time till next packet
-
-          m_sendEvent = Simulator::Schedule (nextTime, &ClientApplication::Send, this, socket);
-          // NS_LOG_UNCOND ("Schedule Send by Clent");
+          // Schedule the next packet based on the actual transmission time
+          m_sendEvent =
+              Simulator::Schedule (actualTransmissionTime, &ClientApplication::Send, this, socket);
         }
       else
         {
-          NS_LOG_UNCOND ("Client Sent Whole Model: " << Simulator::Now ().GetSeconds () << "s");
+          // NS_LOG_UNCOND ("Client " << (m_socket->GetNode ()->GetId () - 1) << " Sent Whole Model: "
+          //                          << Simulator::Now ().GetSeconds () << "s");
           m_bytesModelToReceive = m_bytesModel;
         }
     }
@@ -272,137 +281,13 @@ ClientApplication::Send (Ptr<Socket> socket)
 void
 ClientApplication::NormalClose (Ptr<Socket> socket)
 {
-<<<<<<< Updated upstream
-
-  NS_LOG_UNCOND ("Client Connected");
-  socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
-
-  m_bytesModelToReceive = m_bytesModel;
-  m_bytesModelToSend = 0;
-
-  NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " " << m_bytesModelToReceive);
-=======
   NS_LOG_UNCOND (" Close ...");
->>>>>>> Stashed changes
 }
 
 void
 ClientApplication::ErrorClose (Ptr<Socket> socket)
 {
-<<<<<<< Updated upstream
-
-  Ptr<Packet> packet;
-
-  while ((packet = socket->Recv ()))
-    {
-
-      if (packet->GetSize () == 0)
-        { //EOF
-          break;
-        }
-
-      if (m_bytesModelReceived % m_bytesModel == 0 && m_bytesModelReceived != 0)
-        {
-          m_timeBeginReceivingModelFromServer = Simulator::Now ();
-        }
-
-      m_bytesModelReceived += packet->GetSize (); //Increment total bytes received
-      m_bytesModelToReceive -= packet->GetSize (); //Decrement bytes expected this round
-
-      if (m_bytesModelToReceive == 0) //All bytes received, start transmitting
-        {
-          m_timeEndReceivingModelFromServer = Simulator::Now ();
-          NS_LOG_UNCOND ("Received whole model :");
-
-          NS_LOG_UNCOND ("Client " << (socket->GetNode ()->GetId () - 1) << " "
-                                   << "recv full model");
-
-          //
-          //Todo[] Add a meaningful delay
-          auto energy = FLEnergy ();
-          energy.SetDeviceType (m_deviceType);
-          energy.SetLearningModel (m_learningModel);
-          energy.SetEpochs (1);
-          Simulator::Schedule (Seconds (energy.CalcComputationTime ()),
-                               &ClientApplication::StartWriting, this);
-          // NS_LOG_UNCOND ("Schedule Start Writing Client");
-        }
-    }
-}
-
-void
-ClientApplication::StartWriting ()
-{
-
-  m_bytesModelToSend = m_bytesModel;
-  NS_LOG_UNCOND ("Client Start Sending : " << Simulator::Now ().GetSeconds () << "s");
-
-  Send (m_socket);
-}
-
-void
-ClientApplication::ConnectionFailed (Ptr<Socket> socket)
-{
-  NS_LOG_UNCOND ("Not Connected ..." << socket->GetNode ()->GetId () - 1);
-}
-
-ClientApplication::~ClientApplication ()
-{
-}
-
-void
-ClientApplication::Setup (Ptr<Socket> socket, Address address, uint32_t packetSize,
-                          uint32_t nBytesModel, DataRate dataRate, std::string deviceType,
-                          std::string learningModel)
-{
-  m_socket = socket;
-  m_peer = address;
-  m_packetSize = packetSize;
-  m_bytesModel = nBytesModel;
-  m_dataRate = dataRate;
-  m_deviceType = deviceType;
-  m_learningModel = learningModel;
-}
-
-void
-ClientApplication::StartApplication (void)
-{
-
-  m_model.SetDeviceType ("RaspberryPi");
-  m_model.SetDataSize (DoubleValue (m_bytesModel));
-  m_model.SetPacketSize (DoubleValue (m_packetSize));
-
-  m_model.SetApplication ("kNN", DoubleValue (m_packetSize));
-
-  m_socket->SetCloseCallbacks (MakeCallback (&ClientApplication::NormalClose, this),
-                               MakeCallback (&ClientApplication::ErrorClose, this));
-  m_socket->SetConnectCallback (MakeCallback (&ClientApplication::ConnectionSucceeded, this),
-                                MakeCallback (&ClientApplication::ConnectionFailed, this));
-
-  m_socket->Bind ();
-  m_socket->Connect (m_peer);
-
-  m_timeBeginReceivingModelFromServer = Simulator::Now ();
-
-  m_socket->SetRecvCallback (MakeCallback (&ClientApplication::HandleRead, this));
-}
-
-void
-ClientApplication::StopApplication (void)
-{
-
-  if (m_sendEvent.IsRunning ())
-    {
-      Simulator::Cancel (m_sendEvent);
-    }
-
-  if (m_socket)
-    {
-      //m_socket->Close ();
-    }
-=======
   NS_LOG_UNCOND ("Error Close ...");
->>>>>>> Stashed changes
 }
 
 } // namespace ns3

@@ -1,0 +1,11 @@
+# Ignore all .log files
+*.log
+*/outputs/
+
+# Ignore the node_modules directory
+csv_logs/
+
+# Ignore all files in the /build directory
+ns-3.35/build/
+ns-3.35/output_logs/
+

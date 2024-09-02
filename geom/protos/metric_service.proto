@@ -1,0 +1,23 @@
+// `metric_service`.proto
+
+syntax = "proto3";
+package metricservice;
+
+service MetricService {
+    rpc SendMetricAndWait(MetricRequest) returns (MetricResponse) {}
+    rpc ResetRoundState(RoundRequest) returns (Empty) {}
+}
+
+message MetricRequest {
+    float l2_norm = 1;
+}
+
+message RoundRequest {
+    int32 round = 1;
+}
+
+message MetricResponse {
+    bool stop_round = 1;
+}
+
+message Empty {}

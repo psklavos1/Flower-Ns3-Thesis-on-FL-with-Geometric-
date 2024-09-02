@@ -1,0 +1,11 @@
+
+
+defaults:
+  - common
+
+partition_id: 0
+# Used only when non_iid True. 
+# 0 means random, 1 means low bias, 2 means medium bias ,3 means high bias
+val_ratio: 0.1
+train_val_ratio: 0.0
+keep_log: False 
